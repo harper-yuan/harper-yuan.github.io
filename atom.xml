@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-03T10:08:43.266Z</updated>
+  <updated>2022-10-04T13:24:51.281Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>intel_sgx环境配置</title>
+    <link href="http://example.com/2022/10/03/intel-sgx%E9%85%8D%E7%BD%AE/"/>
+    <id>http://example.com/2022/10/03/intel-sgx%E9%85%8D%E7%BD%AE/</id>
+    <published>2022-10-03T14:50:03.000Z</published>
+    <updated>2022-10-04T13:24:51.281Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="sgx的配置文档"><a href="#sgx的配置文档" class="headerlink" title="sgx的配置文档"></a>sgx的配置文档</h1><h2 id="本人所用的配置"><a href="#本人所用的配置" class="headerlink" title="本人所用的配置"></a>本人所用的配置</h2><h3 id="电脑环境"><a href="#电脑环境" class="headerlink" title="电脑环境"></a>电脑环境</h3><p>由于现在用的电脑是锐龙处理器，而且没有trustzone，所以使用很久没用的、尘封已久的老、但是跟了我一年的老电脑。操作系统用的是ubuntu（鬼知道重装系统用了多久的时间），装完之后开机要很久，也不知道是不是坏了。</p><blockquote><ul><li>电脑：联想Thinkpad E14</li><li>操作系统：ubuntu18.04</li><li>处理器：i5-10210U</li><li>内存：8G</li><li>硬盘：1TB</li></ul></blockquote><h3 id="参考的文献-amp-博客"><a href="#参考的文献-amp-博客" class="headerlink" title="参考的文献&amp;博客"></a>参考的文献&amp;博客</h3><ul><li><p><a href="https://flxdu.cn/2022/04/08/Intel-R-SGX环境在Ubuntu-18-04的安装/">Intel(R) SGX环境在Ubuntu 18.04的安装 | 小木槌 (flxdu.cn)</a></p></li><li><p><a href="[(25条消息">Ubuntu 18.04安装Intel SGX 2.3.1</a> Ubuntu 18.04安装Intel SGX 2.3.1<em>cyLee</em>的博客-CSDN博客](<a href="https://blog.csdn.net/cyLee_/article/details/90245344">https://blog.csdn.net/cyLee_/article/details/90245344</a>))</p></li><li><p><a href="https://blog.csdn.net/cyLee_/article/details/90200470">Ubuntu 16.04下Intel SGX SDK环境搭建（硬件不支持情况）</a></p></li></ul><h2 id="开始正式配置环境nvme0n1p1"><a href="#开始正式配置环境nvme0n1p1" class="headerlink" title="开始正式配置环境nvme0n1p1"></a>开始正式配置环境nvme0n1p1</h2><p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221004013611170.png" alt="image-20221004013611170"></p>]]></content>
+    
+    
+    <summary type="html">harper的数据库小笔记，参考的书籍《数据库系统概论》——王珊</summary>
+    
+    
+    
+    <category term="sgx" scheme="http://example.com/categories/sgx/"/>
+    
+    
+    <category term="环境配置" scheme="http://example.com/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    
+    <category term="linux操作系统" scheme="http://example.com/tags/linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>数据库笔记</title>

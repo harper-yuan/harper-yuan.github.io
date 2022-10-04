@@ -258,7 +258,7 @@
       
         <span id="leancloud-page-views-container" class="post-meta" style="display: none">
           <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="leancloud-page-views"></span>次，行不行啊细狗
+          <span id="leancloud-page-views"></span>次
         </span>
         
       
@@ -1138,6 +1138,12 @@ OR
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/10/03/intel-sgx%E9%85%8D%E7%BD%AE/" title="intel_sgx环境配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">intel_sgx环境配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
@@ -1156,6 +1162,28 @@ OR
             
   <article id="comments" lazyload>
     
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"szBSpkOySYd14Z7mfyVaCFlW-MdYXbMMI","appKey":"PCuhMfqgPp6dwalTou5cg5z4","path":"window.location.pathname","placeholder":"欢迎大家发表评论","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
 
   </article>
 
