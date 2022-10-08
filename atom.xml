@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-10-07T15:33:29.174Z</updated>
+  <updated>2022-10-08T10:58:54.893Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,15 +21,14 @@
     <link href="http://example.com/2022/10/07/hexo%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/"/>
     <id>http://example.com/2022/10/07/hexo%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/</id>
     <published>2022-10-07T15:09:12.000Z</published>
-    <updated>2022-10-07T15:33:29.174Z</updated>
+    <updated>2022-10-08T10:58:54.893Z</updated>
     
-    <content type="html"><![CDATA[<p><a href="https://linzeen.me/2022/07/24/mac样式代码块教程/">Hexo-Fluid实现mac-panel风格代码块 - LINZEEN’s Gossip Blog</a></p><p><a href="https://forsure.live/customize-some-effects-for-hexofluid/#Mac风格代码块4">为Hexo-Fluid自定义一些效果 - ForSure’s Blog</a></p>]]></content>
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://linzeen.me/2022/07/24/mac样式代码块教程/">Hexo-Fluid实现mac-panel风格代码块 - LINZEEN’s Gossip Blog</a></p><p><a href="https://forsure.live/customize-some-effects-for-hexofluid/#Mac风格代码块4">为Hexo-Fluid自定义一些效果 - ForSure’s Blog</a></p><p><a href="https://blog.yleao.com/2018/0902/hexo上的aplayer应用.html">hexo上的aplayer应用 | Y’s BLOG (yleao.com)</a></p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://linzeen.me/2022/07/24/mac样式代码块教程/&quot;&gt;Hexo-Fluid实现mac-panel风格代码块 - LINZEEN’s Gossip Blog&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://forsur</summary>
+    <summary type="html">&lt;link rel=&quot;stylesheet&quot; class=&quot;aplayer-secondary-style-marker&quot; href=&quot;\assets\css\APlayer.min.css&quot;&gt;&lt;script src=&quot;\assets\js\APlayer.min.js&quot; cla</summary>
       
     
     
