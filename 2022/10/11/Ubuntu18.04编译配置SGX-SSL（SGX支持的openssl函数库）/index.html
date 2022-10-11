@@ -16,23 +16,25 @@
   <meta name="author" content="harper">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Hexo-Fluid实现mac-panel风格代码块 - LINZEEN’s Gossip Blog 为Hexo-Fluid自定义一些效果 - ForSure’s Blog hexo上的aplayer应用 | Y’s BLOG (yleao.com) (25条消息) hexo博客fluid主题添加aplayer组件_ccjoffrey的博客-CSDN博客_fluid主题">
+    <meta name="description" content="Hope is a dangerous thing. Hope can drive a man insane.       ——《肖申克的救赎》">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo配置博客心路历程">
-<meta property="og:url" content="http://example.com/2022/10/07/hexo%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/index.html">
+<meta property="og:title" content="编译配置SGX-SSL">
+<meta property="og:url" content="http://example.com/2022/10/11/Ubuntu18.04%E7%BC%96%E8%AF%91%E9%85%8D%E7%BD%AESGX-SSL%EF%BC%88SGX%E6%94%AF%E6%8C%81%E7%9A%84openssl%E5%87%BD%E6%95%B0%E5%BA%93%EF%BC%89/index.html">
 <meta property="og:site_name" content="Harper">
-<meta property="og:description" content="Hexo-Fluid实现mac-panel风格代码块 - LINZEEN’s Gossip Blog 为Hexo-Fluid自定义一些效果 - ForSure’s Blog hexo上的aplayer应用 | Y’s BLOG (yleao.com) (25条消息) hexo博客fluid主题添加aplayer组件_ccjoffrey的博客-CSDN博客_fluid主题">
+<meta property="og:description" content="Hope is a dangerous thing. Hope can drive a man insane.       ——《肖申克的救赎》">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-07T15:09:12.000Z">
-<meta property="article:modified_time" content="2022-10-08T14:49:42.988Z">
+<meta property="article:published_time" content="2022-10-11T12:34:51.000Z">
+<meta property="article:modified_time" content="2022-10-11T13:03:22.972Z">
 <meta property="article:author" content="harper">
+<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="linux操作系统">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>hexo配置博客心路历程 - Harper</title>
+  <title>编译配置SGX-SSL - Harper</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -218,7 +220,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="hexo配置博客心路历程"></span>
+            <span id="subtitle" data-typed-text="编译配置SGX-SSL"></span>
           
         </div>
 
@@ -229,8 +231,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-07 23:09" pubdate>
-          2022年10月7日 晚上
+        <time datetime="2022-10-11 20:34" pubdate>
+          2022年10月11日 晚上
         </time>
       </span>
     
@@ -241,7 +243,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          171 字
+          1.2k 字
         
       </span>
     
@@ -252,7 +254,7 @@
         
         
         
-          2 分钟
+          10 分钟
         
       </span>
     
@@ -298,15 +300,52 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">hexo配置博客心路历程</h1>
+            <h1 style="display: none">编译配置SGX-SSL</h1>
             
             
               <div class="markdown-body">
                 
-                <p><a href="https://linzeen.me/2022/07/24/mac样式代码块教程/">Hexo-Fluid实现mac-panel风格代码块 - LINZEEN’s Gossip Blog</a></p>
-<p><a href="https://forsure.live/customize-some-effects-for-hexofluid/#Mac风格代码块4">为Hexo-Fluid自定义一些效果 - ForSure’s Blog</a></p>
-<p><a href="https://blog.yleao.com/2018/0902/hexo上的aplayer应用.html">hexo上的aplayer应用 | Y’s BLOG (yleao.com)</a></p>
-<p><a href="https://blog.csdn.net/qq_41380292/article/details/121886741">(25条消息) hexo博客fluid主题添加aplayer组件_ccjoffrey的博客-CSDN博客_fluid主题</a></p>
+                <h1 id="编译配置SGX-SSL（SGX支持的openssl函数库）"><a href="#编译配置SGX-SSL（SGX支持的openssl函数库）" class="headerlink" title="编译配置SGX-SSL（SGX支持的openssl函数库）"></a>编译配置SGX-SSL（SGX支持的openssl函数库）</h1><p>由于在sgx中需要对超级大的整数进行操作，于是引入openssl库，下面是一些安装步骤，主要参考的了官方github给出的教程：</p>
+<ul>
+<li><a href="https://github.com/intel/intel-sgx-ssl">intel/intel-sgx-ssl: Intel® Software Guard Extensions SSL (github.com)</a></li>
+</ul>
+<h2 id="所用的电脑配置"><a href="#所用的电脑配置" class="headerlink" title="所用的电脑配置"></a>所用的电脑配置</h2><blockquote>
+<ul>
+<li><p>电脑：联想Thinkpad E14</p>
+</li>
+<li><p>操作系统：ubuntu18.04</p>
+</li>
+<li><p>处理器：i5-10210U</p>
+</li>
+<li><p>内存：8G</p>
+</li>
+<li><p>硬盘：1TB</p>
+</li>
+<li><p>在电脑BIOS中<strong>启用</strong>Intel SGX。重装系统不会更改BIOS中的设置，所以即使重装系统，Intel SGX也会一直保持启用状态。</p>
+</li>
+<li><p>安装如下工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install gcc git cpuid<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h2 id="正式开始配置"><a href="#正式开始配置" class="headerlink" title="正式开始配置"></a>正式开始配置</h2><h3 id="预备"><a href="#预备" class="headerlink" title="预备"></a>预备</h3><ul>
+<li>Perl</li>
+<li>Toolchain（需要的工具，参照我的上一个博客<a href="https://harper.city/2022/10/04/intel-sgx%E9%85%8D%E7%BD%AE/">安装sgxsdk</a>，执行下面的指令之后可以看到这些工具的路径）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">cp</span> external/toolset/&#123;current_distr&#125;/&#123;as,ld,ld.gold,objdump&#125; /usr/local/bin<br><span class="hljs-built_in">which</span> as ld ld.gold objdump<br></code></pre></td></tr></table></figure>
+<ul>
+<li>Intel SGX driver、SDK和PSW</li>
+<li>准备好OpenSSL源码压缩包openssl-${version}.tar.gz。本博客使用的是openssl-1.1.1q版本，之前计划使用openssl-1.1.1p版本，<font color = "red">但是编译的时候报错让我使用openssl-1.1.1q版本</font>，随着时间的推移官方的更新可能之后还需要其他版本，大家自行辨别。</li>
+</ul>
+<h3 id="下载sgx-ssl项目"><a href="#下载sgx-ssl项目" class="headerlink" title="下载sgx-ssl项目"></a>下载sgx-ssl项目</h3><p>从GitHub拉取intel-sgx-ssl项目，这个网站也是可以访问的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/intel/intel-sgx-ssl<br></code></pre></td></tr></table></figure>
+<h3 id="下载openssl压缩包"><a href="#下载openssl压缩包" class="headerlink" title="下载openssl压缩包"></a>下载openssl压缩包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> intel-sgx-ssl/openssl_source<br>wget https://openssl.org/source/openssl-1.1.1q.tar.gz<br></code></pre></td></tr></table></figure>
+<p>这样openssl-1.1.1q.tar.gz压缩包就到了/intel-sgx-ssl/openssl_source/目录下</p>
+<h3 id="编译并安装"><a href="#编译并安装" class="headerlink" title="编译并安装"></a>编译并安装</h3><p>我们现在在openssl_source目录，下面进入linux目录Linux/directory</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> ../Linux<br><span class="hljs-built_in">source</span> /opt/intel/sgxsdk/environment  //这里应填写sgx的安装路径，我的是/opt/intel/sgxsdk/<br></code></pre></td></tr></table></figure>
+<p>使得sgx开发环境生效。<br>无脑编译安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">make all <span class="hljs-built_in">test</span><br>sudo make install<br></code></pre></td></tr></table></figure>
+<p>安装完毕，可以在/opt/intel/sgxssl/找到编译好的库函数。</p>
 
                 
               </div>
@@ -315,6 +354,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/sgx/" class="category-chain-item">sgx</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+      
+        <a href="/tags/linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#linux操作系统</a>
+      
+    </div>
   
 </div>
 
@@ -324,8 +393,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>hexo配置博客心路历程</div>
-      <div>http://example.com/2022/10/07/hexo配置博客心路历程/</div>
+      <div>编译配置SGX-SSL</div>
+      <div>http://example.com/2022/10/11/Ubuntu18.04编译配置SGX-SSL（SGX支持的openssl函数库）/</div>
     </div>
     <div class="license-meta">
       
@@ -337,7 +406,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月7日</div>
+          <div>2022年10月11日</div>
         </div>
       
       
@@ -373,8 +442,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/06/%E7%8E%B0%E4%BB%A3%E5%AF%86%E7%A0%81%E5%AD%A6%E4%BD%9C%E4%B8%9A10-7/" title="现代密码学作业10.7">
-                        <span class="hidden-mobile">现代密码学作业10.7</span>
+                      <a href="/2022/10/07/trash/hexo%E9%85%8D%E7%BD%AE%E5%8D%9A%E5%AE%A2%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/" title="hexo配置博客心路历程">
+                        <span class="hidden-mobile">hexo配置博客心路历程</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
