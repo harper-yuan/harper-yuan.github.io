@@ -18,7 +18,7 @@
   
     <meta name="description" content="一个合格的程序员，敢于配置各种各样复杂的环境">
 <meta property="og:type" content="article">
-<meta property="og:title" content="intel sgx环境配置">
+<meta property="og:title" content="intel sgx开发环境配置">
 <meta property="og:url" content="http://example.com/2022/10/04/intel-sgx%E9%85%8D%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Harper">
 <meta property="og:description" content="一个合格的程序员，敢于配置各种各样复杂的环境">
@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://example.com/2022/10/04/intel-sgx%E9%85%8D%E7%BD%AE/debhelper%E6%8A%A5%E9%94%99.png">
 <meta property="og:image" content="http://example.com/2022/10/04/intel-sgx%E9%85%8D%E7%BD%AE/%E8%BF%90%E8%A1%8C%E6%88%90%E5%8A%9F.png">
 <meta property="article:published_time" content="2022-10-04T14:50:03.000Z">
-<meta property="article:modified_time" content="2022-10-09T05:53:43.861Z">
+<meta property="article:modified_time" content="2022-10-09T10:02:53.833Z">
 <meta property="article:author" content="harper">
 <meta property="article:tag" content="环境配置">
 <meta property="article:tag" content="linux操作系统">
@@ -37,7 +37,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>intel sgx环境配置 - Harper</title>
+  <title>intel sgx开发环境配置 - Harper</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -222,7 +222,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="intel sgx环境配置"></span>
+            <span id="subtitle" data-typed-text="intel sgx开发环境配置"></span>
           
         </div>
 
@@ -245,7 +245,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4k 字
+          4.1k 字
         
       </span>
     
@@ -302,12 +302,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">intel sgx环境配置</h1>
+            <h1 style="display: none">intel sgx开发环境配置</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="sgx的配置文档"><a href="#sgx的配置文档" class="headerlink" title="sgx的配置文档"></a>sgx的配置文档</h1><h2 id="参考的文献-amp-博客"><a href="#参考的文献-amp-博客" class="headerlink" title="参考的文献&amp;博客"></a>参考的文献&amp;博客</h2><ul>
+                <h1 id="sgx的开发环境配置"><a href="#sgx的开发环境配置" class="headerlink" title="sgx的开发环境配置"></a>sgx的开发环境配置</h1><h2 id="参考的文献-amp-博客"><a href="#参考的文献-amp-博客" class="headerlink" title="参考的文献&amp;博客"></a>参考的文献&amp;博客</h2><ul>
 <li><p><a href="https://flxdu.cn/2022/04/08/Intel-R-SGX环境在Ubuntu-18-04的安装/">Intel(R) SGX环境在Ubuntu 18.04的安装 | 小木槌 (flxdu.cn)</a></p>
 </li>
 <li><p><a href="https://blog.csdn.net/cyLee_/article/details/90245344">Ubuntu 18.04安装Intel SGX 2.3.1</a></p>
@@ -396,7 +396,7 @@
 <p>此步会输出大约八千行内容，请耐心等待。</p>
 <h4 id="添加本地软件源"><a href="#添加本地软件源" class="headerlink" title="添加本地软件源"></a>添加本地软件源</h4><p>按照github上的英文教程，需要先生成sgx_debian_local_repo文件夹，最后在~/linux-sgx/linux/installer/deb目录下可以看见这个文件夹，输入如下指令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">make deb_local_repo<br></code></pre></td></tr></table></figure>
-<p>需要将本地路径追加到软件源文件中，使用<code>sudo vi /etc/apt/sources.list</code>编辑文件，将下面内容添加到文件末尾，注意：你需要把PATH_TO_LOCAL_REPO替换成<code>~/linux-sgx/linux/installer/deb/sgx_debian_local_repo</code>的绝对路径，注意这里的路径需要自己慢慢调节，直接用~/linux-sgx之后apt-get update的时候系统识别不了，建议改成绝对路径。</p>
+<p>需要将本地路径追加到软件源文件中，使用<code>sudo vi /etc/apt/sources.list</code>编辑文件，将下面内容添加到文件末尾，<font color = "red">注意：你需要把PATH_TO_LOCAL_REPO替换成<code>~/linux-sgx/linux/installer/deb/sgx_debian_local_repo</code>的绝对路径</font>，注意这里的路径需要自己根据自己的位置设置，建议改成绝对路径，我的添加方式如下，大家自己添加的时候注意改成自己的路径哦！</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">deb [trusted=<span class="hljs-built_in">yes</span> <span class="hljs-built_in">arch</span>=amd64] file:/home/harper/inux-sgx/linux/installer/deb/sgx_debian_local_repo bionic main<br></code></pre></td></tr></table></figure>
 <p>添加完之后，刷新软件源</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get update	<br></code></pre></td></tr></table></figure>
@@ -416,6 +416,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./bin/app<br></code></pre></td></tr></table></figure>
 <p>如果看到如下输出，说明安装成功</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">succeed to load enclaves.<br>succeed to establish secure channel.<br>Succeed to exchange secure message...<br>Succeed to close Session...<br></code></pre></td></tr></table></figure>
+<p>我自己跑出来是显示没有成功（狗头），应该是aesmd服务出了点问题，大家可以测试下面的enclave样例</p>
 <h3 id="测试enclave样例"><a href="#测试enclave样例" class="headerlink" title="测试enclave样例"></a>测试enclave样例</h3><p>我们运行enclave代码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /opt/intel/sgxsdk/SampleCode/SampleEnclave<br></code></pre></td></tr></table></figure>
 <p> 编译代码</p>
@@ -471,7 +472,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>intel sgx环境配置</div>
+      <div>intel sgx开发环境配置</div>
       <div>http://example.com/2022/10/04/intel-sgx配置/</div>
     </div>
     <div class="license-meta">
