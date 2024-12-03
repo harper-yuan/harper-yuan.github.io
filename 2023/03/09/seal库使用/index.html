@@ -16,24 +16,23 @@
   <meta name="author" content="harper">
   <meta name="keywords" content="">
   
-    <meta name="description" content="难道需要我等你一辈子嘛？">
+    <meta name="description" content="seal库BGV同态加密解析 seal库参数设置 先看seal库源码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455const map&lt;size_t, vector&lt;Modulus&gt;&gt; &amp;GetDefaul">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NTT的实现及其加速">
-<meta property="og:url" content="http://example.com/2022/12/14/NTT%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%85%B6%E5%8A%A0%E9%80%9F/index.html">
+<meta property="og:title" content="Harper">
+<meta property="og:url" content="http://example.com/2023/03/09/seal%E5%BA%93%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="Harper">
-<meta property="og:description" content="难道需要我等你一辈子嘛？">
+<meta property="og:description" content="seal库BGV同态加密解析 seal库参数设置 先看seal库源码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455const map&lt;size_t, vector&lt;Modulus&gt;&gt; &amp;GetDefaul">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-12-14T03:31:21.000Z">
-<meta property="article:modified_time" content="2023-04-20T08:08:33.106Z">
+<meta property="article:published_time" content="2023-03-09T07:08:17.128Z">
+<meta property="article:modified_time" content="2023-03-09T07:54:21.174Z">
 <meta property="article:author" content="harper">
-<meta property="article:tag" content="NTT">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>NTT的实现及其加速 - Harper</title>
+  <title>Harper</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,7 +218,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="NTT的实现及其加速"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -230,8 +229,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-12-14 11:31" pubdate>
-          2022年12月14日 中午
+        <time datetime="2023-03-09 15:08" pubdate>
+          2023年3月9日 下午
         </time>
       </span>
     
@@ -242,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          1.7k 字
         
       </span>
     
@@ -253,7 +252,7 @@
         
         
         
-          32 分钟
+          14 分钟
         
       </span>
     
@@ -299,185 +298,25 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">NTT的实现及其加速</h1>
+            <h1 style="display: none"></h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="ntt的实现及其加速">NTT的实现及其加速</h1>
-<h2 id="ntt快速数论变换原理">NTT快速数论变换原理</h2>
-<h3 id="多项式相乘的困难">多项式相乘的困难</h3>
-<p>假设有多项式A(x)，一共有n项,最高次项为<span
-class="math inline">\(x^{n-1}\)</span>,设其系数为<span
-class="math inline">\(a =
-(a[0],a[1],\cdots,a[n-1])\)</span>，类似的假设另一个多项式B(x),设其系数为<span
-class="math inline">\(b =
-(b[0],b[1],\cdots,b[n-1])\)</span>，如果想要将两个多项式相乘，很明显一共要乘<span
-class="math inline">\(n^2\)</span>次，能不能减少乘法的次数，使其复杂度比<span
-class="math inline">\(O(n^2)\)</span>更少呢？</p>
-<h3
-id="基于fft快速傅里叶变换的多项式相乘">基于FFT(快速傅里叶变换)的多项式相乘</h3>
-<p>把<span
-class="math inline">\(x=x_0\)</span>代入A(x)可以得到多项式在点x0处的值，类似的，我们代入n个这样的点$
-(x_0,x_1,,x_{n-1})<span
-class="math inline">\(,可以得到n个多项式取值\)</span>
-(A(x_0),A(x_1),,A(x_{n-1}))$，可以证明，仅通过这n个多项式取值，我们可以还原出原本的多项式。</p>
-<blockquote>
-<p>证明：</p>
-<p>假设还原出的多项式不唯一，分别设为f(x)和g(x)，这个两个多项式的最高次为n-1,否则还原失败</p>
-<p>令h(x) = f(x)-g(x) ，这个多项式的最高次至少为n-1</p>
-<p>那么代入$
-(x_0,x_1,,x_{n-1})$个点，h(x)均等于0，即这个多项式有n个解</p>
-<p>而即使在复数域上n-1次方程也至多有n-1个解，矛盾</p>
-<p>故只能还原出唯一的一个多项式</p>
-</blockquote>
-<p>类似的，代入多项式B(x)得到$
-(B(x_0),B(x_1),,B(x_{n-1}))$，我们在进行下面的点乘操作得到 <span
-class="math display">\[
-(A(x_0)*B(x_0),A(x_1)*B(x_1),\cdots,A(x_{n-1})*B(x_{n-1}))
-\]</span>
-这是一个n维向量，按照这个向量还原多项式，我们就可以得到两个多项式的乘积
+                <h1 id="seal库bgv同态加密解析">seal库BGV同态加密解析</h1>
+<h2 id="seal库参数设置">seal库参数设置</h2>
+<p>先看seal库源码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-type">const</span> map&lt;<span class="hljs-type">size_t</span>, vector&lt;Modulus&gt;&gt; &amp;<span class="hljs-built_in">GetDefaultCoeffModulus128</span>()<br>            &#123;<br>                <span class="hljs-type">static</span> <span class="hljs-type">const</span> map&lt;<span class="hljs-type">size_t</span>, vector&lt;Modulus&gt;&gt; default_coeff_modulus_128&#123;<br>                    <span class="hljs-comment">/*</span><br><span class="hljs-comment">                    Polynomial modulus: 1x^1024 + 1</span><br><span class="hljs-comment">                    Modulus count: 1</span><br><span class="hljs-comment">                    Total bit count: 27</span><br><span class="hljs-comment">                    */</span><br>                    &#123; <span class="hljs-number">1024</span>, &#123; <span class="hljs-number">0x7e00001</span> &#125; &#125;,<br><br>                    <span class="hljs-comment">/*</span><br><span class="hljs-comment">                    Polynomial modulus: 1x^2048 + 1</span><br><span class="hljs-comment">                    Modulus count: 1</span><br><span class="hljs-comment">                    Total bit count: 54</span><br><span class="hljs-comment">                    */</span><br>                    &#123; <span class="hljs-number">2048</span>, &#123; <span class="hljs-number">0x3fffffff000001</span> &#125; &#125;,<br><br>                    <span class="hljs-comment">/*</span><br><span class="hljs-comment">                    Polynomial modulus: 1x^4096 + 1</span><br><span class="hljs-comment">                    Modulus count: 3</span><br><span class="hljs-comment">                    Total bit count: 109 = 2 * 36 + 37</span><br><span class="hljs-comment">                    */</span><br>                    &#123; <span class="hljs-number">4096</span>, &#123; <span class="hljs-number">0xffffee001</span>, <span class="hljs-number">0xffffc4001</span>, <span class="hljs-number">0x1ffffe0001</span> &#125; &#125;,<br><br>                    <span class="hljs-comment">/*</span><br><span class="hljs-comment">                    Polynomial modulus: 1x^8192 + 1</span><br><span class="hljs-comment">                    Modulus count: 5</span><br><span class="hljs-comment">                    Total bit count: 218 = 2 * 43 + 3 * 44</span><br><span class="hljs-comment">                    */</span><br>                    &#123; <span class="hljs-number">8192</span>, &#123; <span class="hljs-number">0x7fffffd8001</span>, <span class="hljs-number">0x7fffffc8001</span>, <span class="hljs-number">0xfffffffc001</span>,                               <span class="hljs-number">0xffffff6c001</span>, <span class="hljs-number">0xfffffebc001</span> &#125; &#125;,<br><br>                    <span class="hljs-comment">/*</span><br><span class="hljs-comment">                    Polynomial modulus: 1x^16384 + 1</span><br><span class="hljs-comment">                    Modulus count: 9</span><br><span class="hljs-comment">                    Total bit count: 438 = 3 * 48 + 6 * 49</span><br><span class="hljs-comment">                    */</span><br>                    &#123; <span class="hljs-number">16384</span>,<br>                      &#123; <span class="hljs-number">0xfffffffd8001</span>, <span class="hljs-number">0xfffffffa0001</span>, <span class="hljs-number">0xfffffff00001</span>, <span class="hljs-number">0x1fffffff68001</span>, <span class="hljs-number">0x1fffffff50001</span>,<br>                        <span class="hljs-number">0x1ffffffee8001</span>, <span class="hljs-number">0x1ffffffea0001</span>, <span class="hljs-number">0x1ffffffe88001</span>, <span class="hljs-number">0x1ffffffe48001</span> &#125; &#125;,<br><br>                    <span class="hljs-comment">/*</span><br><span class="hljs-comment">                    Polynomial modulus: 1x^32768 + 1</span><br><span class="hljs-comment">                    Modulus count: 16</span><br><span class="hljs-comment">                    Total bit count: 881 = 15 * 55 + 56</span><br><span class="hljs-comment">                    */</span><br>                    &#123; <span class="hljs-number">32768</span>,<br>                      &#123; <span class="hljs-number">0x7fffffffe90001</span>, <span class="hljs-number">0x7fffffffbf0001</span>, <span class="hljs-number">0x7fffffffbd0001</span>, <span class="hljs-number">0x7fffffffba0001</span>, <span class="hljs-number">0x7fffffffaa0001</span>,<br>                        <span class="hljs-number">0x7fffffffa50001</span>, <span class="hljs-number">0x7fffffff9f0001</span>, <span class="hljs-number">0x7fffffff7e0001</span>, <span class="hljs-number">0x7fffffff770001</span>, <span class="hljs-number">0x7fffffff380001</span>,<br>                        <span class="hljs-number">0x7fffffff330001</span>, <span class="hljs-number">0x7fffffff2d0001</span>, <span class="hljs-number">0x7fffffff170001</span>, <span class="hljs-number">0x7fffffff150001</span>, <span class="hljs-number">0x7ffffffef00001</span>,<br>                        <span class="hljs-number">0xfffffffff70001</span> &#125; &#125;<br>                &#125;;<br><br>                <span class="hljs-keyword">return</span> default_coeff_modulus_128;<br>            &#125;<br><br></code></pre></td></tr></table></figure>
+<p>这是BGV的128bit安全性参数设置，随着模多项式的次数<span
+class="math inline">\(n\)</span>不同，对应的密文模数的大小<span
+class="math inline">\(log(q)\)</span>也有调整，具体的公式可以按照下面的方法计算：
 <span class="math display">\[
-C(x) = A(x)*B(X)
-\]</span>
-注意这里的乘法为多项式乘法，这样多项式相乘就巧妙的转化为点乘，复杂度只有O(n)</p>
-<p>但有个疑问，把点代入多项式计算不是也有计算量吗？这个算法快就是因为，我们可以设置点$
-(x_0,x_1,,x_{n-1})$，这些点经过精心设置，可以在计算例如A(x0)的时候很快。</p>
-<h3 id="基于ct蝴蝶变换的ntt算法">基于CT蝴蝶变换的NTT算法</h3>
-<p>注意这里的参数需要满足一些条件</p>
-<ul>
-<li><p><span class="math inline">\(q \equiv 1 \mod{2n}\)</span></p></li>
-<li><p><span class="math inline">\(n = 2^k,k\in Z_+\)</span></p></li>
-<li><p><span
-class="math inline">\(\psi\)</span>为模数q的2N次单位根，即满足<span
-class="math inline">\(\psi^{2n} \equiv 1 \mod{q}\)</span></p></li>
-<li><p>数组$= (1,<sup>1,</sup>2,,^{n-1}) $</p></li>
-<li><p>数组<span class="math inline">\(\psi_{rev}\)</span>是把数组<span
-class="math inline">\(\phi\)</span>按照bit-reversed顺序重新排列出来的，见下面的例子(多项式次数n
-= 8)</p>
-<blockquote>
-<p>X(0) = X(0,0,0) --&gt; X(0,0,0) = X(0)</p>
-<p>X(1) = X(0,0,1) --&gt; X(1,0,0) = X(4)</p>
-<p>X(2) = X(0,1,0) --&gt; X(0,1,0) = X(2)</p>
-<p>X(3) = X(0,1,1) --&gt; X(1,1,0) = X(6)</p>
-<p>以此类推</p>
-</blockquote></li>
-</ul>
-<p>下面是蝴蝶变换算法</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221215122722792.png" srcset="/img/loading.gif" lazyload
-alt="image-20221215122722792" />
-<figcaption aria-hidden="true">image-20221215122722792</figcaption>
-</figure>
-<h3 id="基于gs蝴蝶变换的ntt逆变换">基于GS蝴蝶变换的NTT逆变换</h3>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221215122822035.png" srcset="/img/loading.gif" lazyload
-alt="image-20221215122822035" />
-<figcaption aria-hidden="true">image-20221215122822035</figcaption>
-</figure>
-<h3 id="ntt的一些性质">NTT的一些性质</h3>
-<p>假设"$<span
-class="math inline">\(&quot;代表多项式乘法，&quot;\)</span>$"代表分量乘法</p>
-<ul>
-<li>NTT(a) + NTT(b) = NTT(a+b)</li>
-<li>NTT(INTT(a)<span class="math inline">\(\cdot\)</span> INTT(b)) = a
-$$b</li>
-<li></li>
-</ul>
-<h2 id="barrett-reduction-乘法取模加速">Barrett Reduction
-乘法取模加速</h2>
-<h3 id="参考博客">参考博客</h3>
-<ul>
-<li><a
-href="https://blog.csdn.net/YKRY35/article/details/79179285">(37条消息)
-大数取模运算Barrett reduction_YKRY35的博客-CSDN博客_大数取模</a></li>
-<li><a
-href="https://www.luogu.com.cn/blog/Sweetlemon/barrett-reduction">Barrett
-Reduction 乘法取模加速 - Sweetlemon 的博客 - 洛谷博客
-(luogu.com.cn)</a></li>
-</ul>
-<p>Barrett
-reduction是一种求模运算的优化方法，它可以将求模运算的时间复杂度从O(n)降低到O(log
-n)。</p>
-<h3 id="原理简述">原理简述</h3>
-<p>一般来说，32位整数加法操作比乘法操作快得多，大概快3到8倍。而移位操作又比加法操作快10倍以上，核心思想就是把除法尽可能迁移到移位操作上。</p>
-<p>我们（人工）计算取模，用的是 <span class="math display">\[
-r= a\bmod p=a-\left\lfloor \dfrac{a}{p} \right\rfloor *p
-\]</span></p>
-<p>这个计算中有除法，在计算机组成原理中，两个32bit的数相除需要32次移位和32次加减法操作，开销比较大。</p>
-<p>而两个32bit的数相乘只需要32次移位操作。我们希望能用乘法替换除法，计算出
-<span class="math display">\[
-q=\left\lfloor \dfrac{a}{p} \right\rfloor
-\]</span> 我们可以钦定一个整数 k，再弄出一个整数 m，使得 <span
-class="math display">\[
-\dfrac{m}{2^k}\approx\dfrac{1}{p}
-\]</span> 那么 q不就约等于$
-$了吗？这样除法运算就被拆成了一次乘法和k次位移，速度大大加快。</p>
-<p>为了防止算出的商超过实际的商，我们一般取 <span
-class="math display">\[
-m=\left\lfloor \dfrac{2^k}{p} \right\rfloor
-\]</span> 这里，我们取 <span class="math display">\[
-k\ge \lceil 2\log_2 p \rceil\
-\]</span> 也就是使得$ 2<sup>kp</sup>2$。下面我们证明，这样取 k时，<span
-class="math inline">\(0\le
-a-pq&lt;p\)</span>，也就是我们稍后在计算余数<span
-class="math inline">\(a-pq\)</span>
-时，得到的答案<del>至多需要再做一次减法</del> 不需要再调整。</p>
-<blockquote>
-<p>下面是这样设置参数的合理性证明，证明<span class="math inline">\(0\le
-a-pq&lt;p\)</span>：</p>
-<p>由于 <span class="math inline">\(q=\dfrac{am}{2^k}\)</span></p>
-<p>因此 <span
-class="math inline">\(pq=\dfrac{apm}{2^k}，a-pq=\dfrac{a}{2^k}\cdot
-(2^k-pm)\)</span></p>
-<p>第一点，由于<span class="math inline">\(2^k\approx
-p^2\)</span>，而a是模p意义下两个数的乘积，所以<span
-class="math inline">\(a&lt;p^2\)</span></p>
-<p>于是有<span
-class="math inline">\(0&lt;\dfrac{a}{2^k}&lt;1\)</span></p>
-<p>第二点，由于<span class="math inline">\(m=\left\lfloor \dfrac{2^k}{p}
-\right\rfloor\)</span></p>
-<p>所以有$ -1 &lt; m $，进一步推出<span
-class="math inline">\(0\leq(2^k-pm)&lt;p\)</span></p>
-<p>综上可以证明<span class="math inline">\(0\le a-pq&lt;p\)</span></p>
-</blockquote>
-<p>总结这个算法的流程如下：</p>
-<ul>
-<li>根据 p<em>p</em> 的规模选取合适的 k，一般要求 <span
-class="math inline">\(k\ge \lceil 2\log_2 p \rceil\)</span>。</li>
-<li>根据 k,p 预处理出 <span class="math inline">\(m=\left\lfloor
-\dfrac{2^k}{p} \right\rfloor\)</span>。</li>
-<li>实际计算时，用 <span class="math inline">\(q=\dfrac{a\cdot
-m}{2^k}\)</span>计算出商，再用$ r=a-pq$ 得出余数</li>
-</ul>
-<h3 id="c例子">c++例子</h3>
-<p>下面是一个例子：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">RingMultiplier::mulModBarrett</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span>&amp; r, <span class="hljs-type">uint64_t</span> a, <span class="hljs-type">uint64_t</span> b, <span class="hljs-type">uint64_t</span> p, <span class="hljs-type">uint64_t</span> pr)</span> </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">unsigned</span> __int128 mul = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(a) * b;<br>	<span class="hljs-type">uint64_t</span> abot = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(mul);<span class="hljs-comment">//只会返回a*b的低64位</span><br>	<span class="hljs-type">uint64_t</span> atop = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(mul &gt;&gt; <span class="hljs-number">64</span>);<span class="hljs-comment">//得到a*b的高64位</span><br>	<span class="hljs-type">unsigned</span> __int128 tmp = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(abot) * pr;<br>	tmp &gt;&gt;= <span class="hljs-number">64</span>;<br>	tmp += <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(atop) * pr;<br>	tmp &gt;&gt;= kbar2 - <span class="hljs-number">64</span>;<br>	tmp *= p;<br>	tmp = mul - tmp;<br>	r = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(tmp);<br>	<span class="hljs-keyword">if</span>(r &gt;= p) r -= p;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这个函数主要用来计算r=(a*b) mod
-p的结果，采用Barrett乘法算法，其中<span
-class="math inline">\(pr=2^{kbar2} /
-p\)</span>，kbar2是一个预设的常量，模数p的大约满足<span
-class="math inline">\(log_2p = 60\)</span>，所以这里的kbar2 =
-120,于是有<span class="math inline">\(pr \approx p\)</span>。</p>
-<p>算法原理： <span class="math display">\[
-r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
-=mul - mul*\dfrac{pr}{2^k}*p \quad where \quad r=2^k \quad and \quad pr
-= \dfrac{2^k}{p}\\
-这里把mul*pr/2^k变成如下操作,其中abot存放mul的低64位，atop存放高64位\\
-[(abot*pr)&gt;&gt;64+atop*pr]&gt;&gt;(kbar2-64) \\
-=[(abot*pr)+atop*pr*2^{64}]/(2^{kbar2})\\
-这样可以完成barrett的快速求余操作
-\]</span> 算法步骤：</p>
-<ul>
-<li>1）先把a*b的结果存到mul变量中，abot存放mul的低64位，atop存放高64位；</li>
-<li>2）然后把abot乘以预设的pr，得到tmp，并右移64位；</li>
-<li>3）再把atop乘以pr，再加到tmp上；</li>
-<li>4）把tmp右移kbar2-64位，再乘以p；</li>
-<li>5）最后求出mul-tmp，得到r；</li>
-<li>6）最后判断r是否大于p，如果大于，则减去p，得到最终结果。</li>
-</ul>
+\lambda \approx -log(\cfrac{A*log(q)}{n})\cfrac{Bn}{logq} +
+C\sqrt{\cfrac{logq}{n}}log(\cfrac{n}{log(q)})
+\]</span> <img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230309155417529.png" srcset="/img/loading.gif" lazyload
+alt="image-20230309155417529" /></p>
+<h2 id="bgv噪声变化">BGV噪声变化</h2>
 
                 
               </div>
@@ -486,34 +325,6 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/" class="category-chain-item">密码学</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/NTT/">#NTT</a>
-      
-    </div>
   
 </div>
 
@@ -523,8 +334,8 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>NTT的实现及其加速</div>
-      <div>http://example.com/2022/12/14/NTT的实现及其加速/</div>
+      <div></div>
+      <div>http://example.com/2023/03/09/seal库使用/</div>
     </div>
     <div class="license-meta">
       
@@ -536,7 +347,7 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年12月14日</div>
+          <div>2023年3月9日</div>
         </div>
       
       
@@ -568,7 +379,7 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/09/seal%E5%BA%93%E4%BD%BF%E7%94%A8/" title="">
+                      <a href="/2023/03/28/%E8%8D%89%E7%A8%BF/" title="">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
@@ -578,8 +389,8 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/" title="sm2椭圆曲线公钥密码算法">
-                        <span class="hidden-mobile">sm2椭圆曲线公钥密码算法</span>
+                      <a href="/2022/12/14/NTT%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%85%B6%E5%8A%A0%E9%80%9F/" title="NTT的实现及其加速">
+                        <span class="hidden-mobile">NTT的实现及其加速</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

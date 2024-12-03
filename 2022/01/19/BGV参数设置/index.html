@@ -16,24 +16,24 @@
   <meta name="author" content="harper">
   <meta name="keywords" content="">
   
-    <meta name="description" content="难道需要我等你一辈子嘛？">
+    <meta name="description" content="It&#39;s security or not , is a question">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NTT的实现及其加速">
-<meta property="og:url" content="http://example.com/2022/12/14/NTT%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%85%B6%E5%8A%A0%E9%80%9F/index.html">
+<meta property="og:title" content="BGV参数设置">
+<meta property="og:url" content="http://example.com/2022/01/19/BGV%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE/index.html">
 <meta property="og:site_name" content="Harper">
-<meta property="og:description" content="难道需要我等你一辈子嘛？">
+<meta property="og:description" content="It&#39;s security or not , is a question">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-12-14T03:31:21.000Z">
-<meta property="article:modified_time" content="2023-04-20T08:08:33.106Z">
+<meta property="article:published_time" content="2022-01-19T03:31:21.000Z">
+<meta property="article:modified_time" content="2023-03-30T08:52:48.231Z">
 <meta property="article:author" content="harper">
-<meta property="article:tag" content="NTT">
+<meta property="article:tag" content="BGV">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>NTT的实现及其加速 - Harper</title>
+  <title>BGV参数设置 - Harper</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,7 +219,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="NTT的实现及其加速"></span>
+            <span id="subtitle" data-typed-text="BGV参数设置"></span>
           
         </div>
 
@@ -230,8 +230,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-12-14 11:31" pubdate>
-          2022年12月14日 中午
+        <time datetime="2022-01-19 11:31" pubdate>
+          2022年1月19日 中午
         </time>
       </span>
     
@@ -242,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          2.9k 字
         
       </span>
     
@@ -253,7 +253,7 @@
         
         
         
-          32 分钟
+          25 分钟
         
       </span>
     
@@ -299,185 +299,178 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">NTT的实现及其加速</h1>
+            <h1 style="display: none">BGV参数设置</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="ntt的实现及其加速">NTT的实现及其加速</h1>
-<h2 id="ntt快速数论变换原理">NTT快速数论变换原理</h2>
-<h3 id="多项式相乘的困难">多项式相乘的困难</h3>
-<p>假设有多项式A(x)，一共有n项,最高次项为<span
-class="math inline">\(x^{n-1}\)</span>,设其系数为<span
-class="math inline">\(a =
-(a[0],a[1],\cdots,a[n-1])\)</span>，类似的假设另一个多项式B(x),设其系数为<span
-class="math inline">\(b =
-(b[0],b[1],\cdots,b[n-1])\)</span>，如果想要将两个多项式相乘，很明显一共要乘<span
-class="math inline">\(n^2\)</span>次，能不能减少乘法的次数，使其复杂度比<span
-class="math inline">\(O(n^2)\)</span>更少呢？</p>
-<h3
-id="基于fft快速傅里叶变换的多项式相乘">基于FFT(快速傅里叶变换)的多项式相乘</h3>
-<p>把<span
-class="math inline">\(x=x_0\)</span>代入A(x)可以得到多项式在点x0处的值，类似的，我们代入n个这样的点$
-(x_0,x_1,,x_{n-1})<span
-class="math inline">\(,可以得到n个多项式取值\)</span>
-(A(x_0),A(x_1),,A(x_{n-1}))$，可以证明，仅通过这n个多项式取值，我们可以还原出原本的多项式。</p>
-<blockquote>
-<p>证明：</p>
-<p>假设还原出的多项式不唯一，分别设为f(x)和g(x)，这个两个多项式的最高次为n-1,否则还原失败</p>
-<p>令h(x) = f(x)-g(x) ，这个多项式的最高次至少为n-1</p>
-<p>那么代入$
-(x_0,x_1,,x_{n-1})$个点，h(x)均等于0，即这个多项式有n个解</p>
-<p>而即使在复数域上n-1次方程也至多有n-1个解，矛盾</p>
-<p>故只能还原出唯一的一个多项式</p>
-</blockquote>
-<p>类似的，代入多项式B(x)得到$
-(B(x_0),B(x_1),,B(x_{n-1}))$，我们在进行下面的点乘操作得到 <span
+                <h1 id="bgv参数设置">BGV参数设置</h1>
+<h2 id="格知识基础lattice">格知识基础（lattice）</h2>
+<h3 id="格的定义">格的定义</h3>
+<p>格（lattice）就是说在一个空间内，我定义一组basis向量（基向量）。然后这些basis向量加上整数系数构成的所有点就是格了。非常简单。最简单的例子就是我们的直角坐标系，（0，1），（1，0）就是basis向量，其它所有整数点都是格。画图就是：</p>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133652103.png" srcset="/img/loading.gif" lazyload
+alt="image-20230119133652103" />
+<figcaption aria-hidden="true">image-20230119133652103</figcaption>
+</figure>
+<p>我们再看详细的定义：</p>
+<p>令$ v_1,..., v_n ^m$ 是一组线性独立向量.。格<span
+class="math inline">\(L\)</span>是这些向量的线性组合所形成的空间。 <span
 class="math display">\[
-(A(x_0)*B(x_0),A(x_1)*B(x_1),\cdots,A(x_{n-1})*B(x_{n-1}))
-\]</span>
-这是一个n维向量，按照这个向量还原多项式，我们就可以得到两个多项式的乘积
-<span class="math display">\[
-C(x) = A(x)*B(X)
-\]</span>
-注意这里的乘法为多项式乘法，这样多项式相乘就巧妙的转化为点乘，复杂度只有O(n)</p>
-<p>但有个疑问，把点代入多项式计算不是也有计算量吗？这个算法快就是因为，我们可以设置点$
-(x_0,x_1,,x_{n-1})$，这些点经过精心设置，可以在计算例如A(x0)的时候很快。</p>
-<h3 id="基于ct蝴蝶变换的ntt算法">基于CT蝴蝶变换的NTT算法</h3>
-<p>注意这里的参数需要满足一些条件</p>
-<ul>
-<li><p><span class="math inline">\(q \equiv 1 \mod{2n}\)</span></p></li>
-<li><p><span class="math inline">\(n = 2^k,k\in Z_+\)</span></p></li>
-<li><p><span
-class="math inline">\(\psi\)</span>为模数q的2N次单位根，即满足<span
-class="math inline">\(\psi^{2n} \equiv 1 \mod{q}\)</span></p></li>
-<li><p>数组$= (1,<sup>1,</sup>2,,^{n-1}) $</p></li>
-<li><p>数组<span class="math inline">\(\psi_{rev}\)</span>是把数组<span
-class="math inline">\(\phi\)</span>按照bit-reversed顺序重新排列出来的，见下面的例子(多项式次数n
-= 8)</p>
-<blockquote>
-<p>X(0) = X(0,0,0) --&gt; X(0,0,0) = X(0)</p>
-<p>X(1) = X(0,0,1) --&gt; X(1,0,0) = X(4)</p>
-<p>X(2) = X(0,1,0) --&gt; X(0,1,0) = X(2)</p>
-<p>X(3) = X(0,1,1) --&gt; X(1,1,0) = X(6)</p>
-<p>以此类推</p>
-</blockquote></li>
-</ul>
-<p>下面是蝴蝶变换算法</p>
+L = {a_1v_1 + a_2v_2 + ··· + a_nv_n : a_1, a_2,...,a_n} \in \mathbb{Z}
+\]</span> 放在二维中就是坐标系中一系列的点：</p>
 <figure>
 <img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221215122722792.png" srcset="/img/loading.gif" lazyload
-alt="image-20221215122722792" />
-<figcaption aria-hidden="true">image-20221215122722792</figcaption>
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133729955.png" srcset="/img/loading.gif" lazyload
+alt="image-20230119133729955" />
+<figcaption aria-hidden="true">image-20230119133729955</figcaption>
 </figure>
-<h3 id="基于gs蝴蝶变换的ntt逆变换">基于GS蝴蝶变换的NTT逆变换</h3>
+<h3 id="最近向量问题cvp">最近向量问题(CVP)</h3>
+<p><strong>定义 The Closest Vector Problem
+(CVP):</strong>给定一个向量<span class="math inline">\(w \in
+\mathbb{R}^m\)</span>，这个向量不在格L中，我们需要找一个最短的向量<span
+class="math inline">\(v \in L\)</span>，使得欧几里得范数(Euclidean
+norm)：<span class="math inline">\(\|v-w\|\)</span>最小</p>
+<p>如下图所示：</p>
 <figure>
 <img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221215122822035.png" srcset="/img/loading.gif" lazyload
-alt="image-20221215122822035" />
-<figcaption aria-hidden="true">image-20221215122822035</figcaption>
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119141708556.png" srcset="/img/loading.gif" lazyload
+alt="image-20230119141708556" />
+<figcaption aria-hidden="true">image-20230119141708556</figcaption>
 </figure>
-<h3 id="ntt的一些性质">NTT的一些性质</h3>
-<p>假设"$<span
-class="math inline">\(&quot;代表多项式乘法，&quot;\)</span>$"代表分量乘法</p>
+<p>下面给出babai's Algorithm来解决最短向量问题：</p>
 <ul>
-<li>NTT(a) + NTT(b) = NTT(a+b)</li>
-<li>NTT(INTT(a)<span class="math inline">\(\cdot\)</span> INTT(b)) = a
-$$b</li>
-<li></li>
+<li>把向量表示成如下形式（高斯消元法求解线性代数方程）：<span
+class="math inline">\(w = t_1v_1 + t_2v_2 + ··· + t_nv_n \;\; where \;\;
+t _1,...,t_n \in \mathbb{R}\)</span></li>
+<li>令<span class="math inline">\(a_i = round(t_i) \in
+\mathbb{Z}\)</span>，这里的round表示四舍五入取整</li>
+<li>最后得到最短向量<span class="math inline">\(v = a_1v_1 + a_2v_2 +
+··· + a_nv_n \;\; where \;\; a_1,...,a_n \in \mathbb{Z}\)</span></li>
 </ul>
-<h2 id="barrett-reduction-乘法取模加速">Barrett Reduction
-乘法取模加速</h2>
-<h3 id="参考博客">参考博客</h3>
+<p>看起来很合理，但实际上对向量的基有要求，即这些基尽可能的正交，如果不正交，那么会得到错误的结果，如下图所示，这是一个二维的格，如果格的基夹角太小（正交的不好），那么会求得错误的结果</p>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119142638087.png" srcset="/img/loading.gif" lazyload
+alt="image-20230119142638087" />
+<figcaption aria-hidden="true">image-20230119142638087</figcaption>
+</figure>
+<p><font color="red">也就是说，我们有必要把格的基正交化</font></p>
+<h3 id="正交化">正交化</h3>
+<p>我们介绍几种正交化方法：</p>
 <ul>
-<li><a
-href="https://blog.csdn.net/YKRY35/article/details/79179285">(37条消息)
-大数取模运算Barrett reduction_YKRY35的博客-CSDN博客_大数取模</a></li>
-<li><a
-href="https://www.luogu.com.cn/blog/Sweetlemon/barrett-reduction">Barrett
-Reduction 乘法取模加速 - Sweetlemon 的博客 - 洛谷博客
-(luogu.com.cn)</a></li>
+<li>高斯算法，只能处理二维向量</li>
+<li>LLL格约算法，可以处理高维向量，让高维的基正交化</li>
 </ul>
-<p>Barrett
-reduction是一种求模运算的优化方法，它可以将求模运算的时间复杂度从O(n)降低到O(log
-n)。</p>
-<h3 id="原理简述">原理简述</h3>
-<p>一般来说，32位整数加法操作比乘法操作快得多，大概快3到8倍。而移位操作又比加法操作快10倍以上，核心思想就是把除法尽可能迁移到移位操作上。</p>
-<p>我们（人工）计算取模，用的是 <span class="math display">\[
-r= a\bmod p=a-\left\lfloor \dfrac{a}{p} \right\rfloor *p
+<p>当维度很高的时候，正交化的时间复杂度较高，导致解密时间很长</p>
+<h2 id="lwe困难问题">LWE困难问题</h2>
+<h3 id="lwe基本介绍">LWE基本介绍</h3>
+<p>假设一个如下线性方程组： <span class="math display">\[
+\begin{equation}
+\left\{
+\begin{array}{c}
+    a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n=y_1 \\
+    a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n=y_2 \\
+    \cdots \\
+    a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n=y_n
+\end{array}
+\right.
+\end{equation}
 \]</span></p>
-<p>这个计算中有除法，在计算机组成原理中，两个32bit的数相除需要32次移位和32次加减法操作，开销比较大。</p>
-<p>而两个32bit的数相乘只需要32次移位操作。我们希望能用乘法替换除法，计算出
+<p>要解这样一个方程很容易，只需要用高斯消元法可以一步步求解，但我们思考一个变式。如果把每一项都加上一个误差项呢？
+$$ <span class="math display">\[\begin{equation}
+\left\{
+\begin{array}{c}
+    a_{11}x_1+a_{12}x_2   + \varepsilon_2=y_2 \\
+   
+\end{array}
+\right.
+\end{equation}\]</span> $$
+是不是这个问题就变得困难起来了，我们再仔细观察，很类似于CVP问题</p>
+<p><img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144312367.png" srcset="/img/loading.gif" lazyload
+alt="image-20230119144312367" />在这个例子中<span
+class="math inline">\(\vec{v_i} =
+(a_{i1},a_{i2},\dots,a_{in})\)</span>为格中第<span
+class="math inline">\(i\)</span>个基向量，而<span
+class="math inline">\((x_1,x_2,\dots,x_n)\)</span>为我们要求解的系数，而<span
+class="math inline">\(\vec{w} =
+(y_1,y_2,\dots,y_n)\)</span>为随机向量。</p>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144605227.png" srcset="/img/loading.gif" lazyload
+alt="image-20230119144605227" />
+<figcaption aria-hidden="true">image-20230119144605227</figcaption>
+</figure>
+<h3 id="rlwe介绍">RLWE介绍</h3>
+<p>原理与LEW类似，只不过把运算域搬到了多项式环上，其优点是：</p>
+<ul>
+<li>加密的密钥更小</li>
+<li>有了NTT优化多项式运算，加密时间更短</li>
+</ul>
+<h2 id="bgv参数设置-1">BGV参数设置</h2>
+<p>提出了一个经验推导的公式，该公式将给定密文模数大小logq的安全级别λ与维数n联系起来，从而推导安全性公式。</p>
+<h3 id="lattices-and-hermite-factor">Lattices and Hermite Factor</h3>
+<p>给定一个矩阵<span class="math inline">\(B =
+(\vec{b_1},\vec{b_2},\dots,\vec{b_n})\)</span>，以此作为基向量格的定义：
 <span class="math display">\[
-q=\left\lfloor \dfrac{a}{p} \right\rfloor
-\]</span> 我们可以钦定一个整数 k，再弄出一个整数 m，使得 <span
-class="math display">\[
-\dfrac{m}{2^k}\approx\dfrac{1}{p}
-\]</span> 那么 q不就约等于$
-$了吗？这样除法运算就被拆成了一次乘法和k次位移，速度大大加快。</p>
-<p>为了防止算出的商超过实际的商，我们一般取 <span
-class="math display">\[
-m=\left\lfloor \dfrac{2^k}{p} \right\rfloor
-\]</span> 这里，我们取 <span class="math display">\[
-k\ge \lceil 2\log_2 p \rceil\
-\]</span> 也就是使得$ 2<sup>kp</sup>2$。下面我们证明，这样取 k时，<span
-class="math inline">\(0\le
-a-pq&lt;p\)</span>，也就是我们稍后在计算余数<span
-class="math inline">\(a-pq\)</span>
-时，得到的答案<del>至多需要再做一次减法</del> 不需要再调整。</p>
+L = L(B) = \{\sum^k_{i=1}\gamma_i*\vec{b_i}:\gamma_i \in
+\mathbb{Z},\vec{b_i} \in B \}
+\]</span></p>
+<p>假设有一个格<span
+class="math inline">\(L\)</span>，那么他的体积表示为<span
+class="math inline">\(Vol(L) = \sqrt{det(B^TB)}\)</span></p>
+<p>定义Hermite Factor: <span class="math display">\[
+\delta^k_0 = \|b_1\|/Vol(L)^{1/k}
+\]</span> 这里的<span
+class="math inline">\(b_i\)</span>为格L约简之后的基中的最短向量。</p>
+<h3 id="基于rlwe的安全方案">基于RLWE的安全方案</h3>
+<p>我们回顾LWE的方案：</p>
 <blockquote>
-<p>下面是这样设置参数的合理性证明，证明<span class="math inline">\(0\le
-a-pq&lt;p\)</span>：</p>
-<p>由于 <span class="math inline">\(q=\dfrac{am}{2^k}\)</span></p>
-<p>因此 <span
-class="math inline">\(pq=\dfrac{apm}{2^k}，a-pq=\dfrac{a}{2^k}\cdot
-(2^k-pm)\)</span></p>
-<p>第一点，由于<span class="math inline">\(2^k\approx
-p^2\)</span>，而a是模p意义下两个数的乘积，所以<span
-class="math inline">\(a&lt;p^2\)</span></p>
-<p>于是有<span
-class="math inline">\(0&lt;\dfrac{a}{2^k}&lt;1\)</span></p>
-<p>第二点，由于<span class="math inline">\(m=\left\lfloor \dfrac{2^k}{p}
-\right\rfloor\)</span></p>
-<p>所以有$ -1 &lt; m $，进一步推出<span
-class="math inline">\(0\leq(2^k-pm)&lt;p\)</span></p>
-<p>综上可以证明<span class="math inline">\(0\le a-pq&lt;p\)</span></p>
+<p>密钥<span class="math inline">\(s\in
+\mathbb{Z}^n_q\)</span>,给定一个<span class="math inline">\(b\in
+\mathbb{Z}^m_q\)</span>和<span class="math inline">\(A \in
+\mathbb{Z}^{m×n}_q\)</span>,满足<span class="math inline">\(A*s+e = b
+\mod{q}\)</span>，这里e从误差分布中采样</p>
 </blockquote>
-<p>总结这个算法的流程如下：</p>
+<p>基于LWE的方案的安全性取决于这个问题的难解性，而对这些方案的攻击是找到有效的算法来解决它们。有很多方案来解决LWE问题，其中大部分是基于格约简。也就是说，从一个差的格基，找到一个更好的，更正交的基。</p>
+<p>实际中使用的最有名的格约简算法是BKZ(块Korkin-Zolotarev约简)。在这些算法中，时间复杂性和约化基的正交性由Hermite因子来表征。具体地说，算法的复杂度由Hermite因子来表示：
+<span class="math display">\[
+log(t_{BKZ}(\delta_o)) = \omega(-
+\frac{log(log(\delta_0))}{log(\delta_0)})
+\]</span></p>
+<h3 id="bgv安全性分析">BGV安全性分析</h3>
+<p>我们考虑满秩的格L，格的最短向量的范数为<span
+class="math inline">\(\|\vec{b_1}\| =
+\delta^kq^{n/k}\)</span>,攻击者选择一个采样数M，使得<span
+class="math inline">\(\|b_1\| = \delta^Mq^{n/M}\)</span></p>
+<p>最小，前几年的工作表明，当<span class="math inline">\(M =
+\sqrt{nlog(q)/log \delta_0}\)</span>的时候，可以缩减最短向量<span
+class="math inline">\(\|\vec{b_1}\| = q\)</span>，这表明 <span
+class="math display">\[
+log q = log(\delta_0^M q^{n/M}) = 2\sqrt{nlog(q)log(\delta_0)}
+\\
+\Rightarrow n  = log(q)/(4log(\delta_0))
+\]</span> 我们把这个等式代入到，等式(6)，可以得到对应的BGV参数设置 <span
+class="math display">\[
+\lambda \approx -log(\cfrac{A*log(q)}{n})\cfrac{Bn}{logq} +
+C\sqrt{\cfrac{logq}{n}}log(\cfrac{n}{log(q)})
+\]</span> 其中<span
+class="math inline">\(\lambda\)</span>为安全参数，<span
+class="math inline">\(log(q)\)</span>为密文模数的比特数</p>
+<p>当错误分布为高斯分布的时候:</p>
 <ul>
-<li>根据 p<em>p</em> 的规模选取合适的 k，一般要求 <span
-class="math inline">\(k\ge \lceil 2\log_2 p \rceil\)</span>。</li>
-<li>根据 k,p 预处理出 <span class="math inline">\(m=\left\lfloor
-\dfrac{2^k}{p} \right\rfloor\)</span>。</li>
-<li>实际计算时，用 <span class="math inline">\(q=\dfrac{a\cdot
-m}{2^k}\)</span>计算出商，再用$ r=a-pq$ 得出余数</li>
+<li>A = 0.65</li>
+<li>B = 0.53</li>
+<li>C = 22.88</li>
 </ul>
-<h3 id="c例子">c++例子</h3>
-<p>下面是一个例子：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">RingMultiplier::mulModBarrett</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span>&amp; r, <span class="hljs-type">uint64_t</span> a, <span class="hljs-type">uint64_t</span> b, <span class="hljs-type">uint64_t</span> p, <span class="hljs-type">uint64_t</span> pr)</span> </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">unsigned</span> __int128 mul = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(a) * b;<br>	<span class="hljs-type">uint64_t</span> abot = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(mul);<span class="hljs-comment">//只会返回a*b的低64位</span><br>	<span class="hljs-type">uint64_t</span> atop = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(mul &gt;&gt; <span class="hljs-number">64</span>);<span class="hljs-comment">//得到a*b的高64位</span><br>	<span class="hljs-type">unsigned</span> __int128 tmp = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(abot) * pr;<br>	tmp &gt;&gt;= <span class="hljs-number">64</span>;<br>	tmp += <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(atop) * pr;<br>	tmp &gt;&gt;= kbar2 - <span class="hljs-number">64</span>;<br>	tmp *= p;<br>	tmp = mul - tmp;<br>	r = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(tmp);<br>	<span class="hljs-keyword">if</span>(r &gt;= p) r -= p;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这个函数主要用来计算r=(a*b) mod
-p的结果，采用Barrett乘法算法，其中<span
-class="math inline">\(pr=2^{kbar2} /
-p\)</span>，kbar2是一个预设的常量，模数p的大约满足<span
-class="math inline">\(log_2p = 60\)</span>，所以这里的kbar2 =
-120,于是有<span class="math inline">\(pr \approx p\)</span>。</p>
-<p>算法原理： <span class="math display">\[
-r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
-=mul - mul*\dfrac{pr}{2^k}*p \quad where \quad r=2^k \quad and \quad pr
-= \dfrac{2^k}{p}\\
-这里把mul*pr/2^k变成如下操作,其中abot存放mul的低64位，atop存放高64位\\
-[(abot*pr)&gt;&gt;64+atop*pr]&gt;&gt;(kbar2-64) \\
-=[(abot*pr)+atop*pr*2^{64}]/(2^{kbar2})\\
-这样可以完成barrett的快速求余操作
-\]</span> 算法步骤：</p>
-<ul>
-<li>1）先把a*b的结果存到mul变量中，abot存放mul的低64位，atop存放高64位；</li>
-<li>2）然后把abot乘以预设的pr，得到tmp，并右移64位；</li>
-<li>3）再把atop乘以pr，再加到tmp上；</li>
-<li>4）把tmp右移kbar2-64位，再乘以p；</li>
-<li>5）最后求出mul-tmp，得到r；</li>
-<li>6）最后判断r是否大于p，如果大于，则减去p，得到最终结果。</li>
-</ul>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119153735221.png" srcset="/img/loading.gif" lazyload
+alt="image-20230119153735221" />
+<figcaption aria-hidden="true">image-20230119153735221</figcaption>
+</figure>
 
                 
               </div>
@@ -511,7 +504,7 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/NTT/">#NTT</a>
+        <a href="/tags/BGV/">#BGV</a>
       
     </div>
   
@@ -523,8 +516,8 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>NTT的实现及其加速</div>
-      <div>http://example.com/2022/12/14/NTT的实现及其加速/</div>
+      <div>BGV参数设置</div>
+      <div>http://example.com/2022/01/19/BGV参数设置/</div>
     </div>
     <div class="license-meta">
       
@@ -536,7 +529,7 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年12月14日</div>
+          <div>2022年1月19日</div>
         </div>
       
       
@@ -568,21 +561,15 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/09/seal%E5%BA%93%E4%BD%BF%E7%94%A8/" title="">
+                      <a href="/2022/10/03/hello-world/" title="Hello World">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">Hello World</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/" title="sm2椭圆曲线公钥密码算法">
-                        <span class="hidden-mobile">sm2椭圆曲线公钥密码算法</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>

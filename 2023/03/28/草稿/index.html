@@ -16,24 +16,23 @@
   <meta name="author" content="harper">
   <meta name="keywords" content="">
   
-    <meta name="description" content="难道需要我等你一辈子嘛？">
+    <meta name="description" content="同态加密算法BGV的优化 基础知识 单位根与分圆多项式  有一个域\(F\),元素\(\omega \in F\)如果满足\(\omega^m \equiv 1\),那么w是m次单位根，如果找不到一个比\(m\)更小的数\(m’\)，使得\(\omega^{m&#39;} \equiv 1\)是F中最小次数的根，那么\(\omega\)称为m次单位原根。 如果\(\omega\)是m">
 <meta property="og:type" content="article">
-<meta property="og:title" content="NTT的实现及其加速">
-<meta property="og:url" content="http://example.com/2022/12/14/NTT%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8F%8A%E5%85%B6%E5%8A%A0%E9%80%9F/index.html">
+<meta property="og:title" content="Harper">
+<meta property="og:url" content="http://example.com/2023/03/28/%E8%8D%89%E7%A8%BF/index.html">
 <meta property="og:site_name" content="Harper">
-<meta property="og:description" content="难道需要我等你一辈子嘛？">
+<meta property="og:description" content="同态加密算法BGV的优化 基础知识 单位根与分圆多项式  有一个域\(F\),元素\(\omega \in F\)如果满足\(\omega^m \equiv 1\),那么w是m次单位根，如果找不到一个比\(m\)更小的数\(m’\)，使得\(\omega^{m&#39;} \equiv 1\)是F中最小次数的根，那么\(\omega\)称为m次单位原根。 如果\(\omega\)是m">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-12-14T03:31:21.000Z">
-<meta property="article:modified_time" content="2023-04-20T08:08:33.106Z">
+<meta property="article:published_time" content="2023-03-28T01:59:40.542Z">
+<meta property="article:modified_time" content="2023-06-15T13:02:11.893Z">
 <meta property="article:author" content="harper">
-<meta property="article:tag" content="NTT">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>NTT的实现及其加速 - Harper</title>
+  <title>Harper</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -219,7 +218,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="NTT的实现及其加速"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -230,8 +229,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-12-14 11:31" pubdate>
-          2022年12月14日 中午
+        <time datetime="2023-03-28 09:59" pubdate>
+          2023年3月28日 上午
         </time>
       </span>
     
@@ -242,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.7k 字
+          3k 字
         
       </span>
     
@@ -253,7 +252,7 @@
         
         
         
-          32 分钟
+          25 分钟
         
       </span>
     
@@ -299,184 +298,161 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">NTT的实现及其加速</h1>
+            <h1 style="display: none"></h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="ntt的实现及其加速">NTT的实现及其加速</h1>
-<h2 id="ntt快速数论变换原理">NTT快速数论变换原理</h2>
-<h3 id="多项式相乘的困难">多项式相乘的困难</h3>
-<p>假设有多项式A(x)，一共有n项,最高次项为<span
-class="math inline">\(x^{n-1}\)</span>,设其系数为<span
-class="math inline">\(a =
-(a[0],a[1],\cdots,a[n-1])\)</span>，类似的假设另一个多项式B(x),设其系数为<span
-class="math inline">\(b =
-(b[0],b[1],\cdots,b[n-1])\)</span>，如果想要将两个多项式相乘，很明显一共要乘<span
-class="math inline">\(n^2\)</span>次，能不能减少乘法的次数，使其复杂度比<span
-class="math inline">\(O(n^2)\)</span>更少呢？</p>
-<h3
-id="基于fft快速傅里叶变换的多项式相乘">基于FFT(快速傅里叶变换)的多项式相乘</h3>
-<p>把<span
-class="math inline">\(x=x_0\)</span>代入A(x)可以得到多项式在点x0处的值，类似的，我们代入n个这样的点$
-(x_0,x_1,,x_{n-1})<span
-class="math inline">\(,可以得到n个多项式取值\)</span>
-(A(x_0),A(x_1),,A(x_{n-1}))$，可以证明，仅通过这n个多项式取值，我们可以还原出原本的多项式。</p>
-<blockquote>
-<p>证明：</p>
-<p>假设还原出的多项式不唯一，分别设为f(x)和g(x)，这个两个多项式的最高次为n-1,否则还原失败</p>
-<p>令h(x) = f(x)-g(x) ，这个多项式的最高次至少为n-1</p>
-<p>那么代入$
-(x_0,x_1,,x_{n-1})$个点，h(x)均等于0，即这个多项式有n个解</p>
-<p>而即使在复数域上n-1次方程也至多有n-1个解，矛盾</p>
-<p>故只能还原出唯一的一个多项式</p>
-</blockquote>
-<p>类似的，代入多项式B(x)得到$
-(B(x_0),B(x_1),,B(x_{n-1}))$，我们在进行下面的点乘操作得到 <span
+                <h1 id="同态加密算法bgv的优化">同态加密算法BGV的优化</h1>
+<h2 id="基础知识">基础知识</h2>
+<h3 id="单位根与分圆多项式">单位根与分圆多项式</h3>
+<ul>
+<li><p>有一个域<span class="math inline">\(F\)</span>,元素<span
+class="math inline">\(\omega \in F\)</span>如果满足<span
+class="math inline">\(\omega^m \equiv
+1\)</span>,那么w是m次单位根，如果找不到一个比<span
+class="math inline">\(m\)</span>更小的数<span
+class="math inline">\(m’\)</span>，使得<span
+class="math inline">\(\omega^{m&#39;} \equiv
+1\)</span>是F中最小次数的根，那么<span
+class="math inline">\(\omega\)</span>称为m次单位原根。</p></li>
+<li><p>如果<span
+class="math inline">\(\omega\)</span>是m次原单位根，那么有如下两条性质</p>
+<ul>
+<li>性质1：对于唯一的一个<span class="math inline">\(j \in
+\mathbb{Z}_m\)</span>每一个m次单位根都能被写为<span
+class="math inline">\(\omega^j\)</span>，这是因为<span
+class="math inline">\(\omega^{jm} \equiv
+1\)</span>，所以也是m次单位根。</li>
+<li>性质2：对于唯一的一个<span class="math inline">\(j \in
+\mathbb{Z}^*_m\)</span>，每一个m次单位原根都能被写为<span
+class="math inline">\(\omega^j\)</span>。这是因为<span
+class="math inline">\(\omega^j\)</span>是m次单位根，其次找不到比m还小的值使得<span
+class="math inline">\(\omega^{jm} \equiv
+1\)</span>成立（假设d|m，那么<span class="math inline">\(\omega^{d} \neq
+1\)</span>从而<span class="math inline">\(\omega^{jd} \neq
+1\)</span>，因为j和d互素，jd必不可能是m的倍数）。</li>
+</ul></li>
+<li><p>假设<span class="math inline">\(\omega = e^{2\pi
+i/m}\)</span>是复数域的m次根，定义分圆多项式： <span
 class="math display">\[
-(A(x_0)*B(x_0),A(x_1)*B(x_1),\cdots,A(x_{n-1})*B(x_{n-1}))
-\]</span>
-这是一个n维向量，按照这个向量还原多项式，我们就可以得到两个多项式的乘积
-<span class="math display">\[
-C(x) = A(x)*B(X)
-\]</span>
-注意这里的乘法为多项式乘法，这样多项式相乘就巧妙的转化为点乘，复杂度只有O(n)</p>
-<p>但有个疑问，把点代入多项式计算不是也有计算量吗？这个算法快就是因为，我们可以设置点$
-(x_0,x_1,,x_{n-1})$，这些点经过精心设置，可以在计算例如A(x0)的时候很快。</p>
-<h3 id="基于ct蝴蝶变换的ntt算法">基于CT蝴蝶变换的NTT算法</h3>
-<p>注意这里的参数需要满足一些条件</p>
+\Phi_m(X):=\prod\limits_{j\in\mathbb{Z}_m^*}(X-\omega^j)\in\mathbb{C}[X].
+\]</span> 有如下性质:</p>
 <ul>
-<li><p><span class="math inline">\(q \equiv 1 \mod{2n}\)</span></p></li>
-<li><p><span class="math inline">\(n = 2^k,k\in Z_+\)</span></p></li>
-<li><p><span
-class="math inline">\(\psi\)</span>为模数q的2N次单位根，即满足<span
-class="math inline">\(\psi^{2n} \equiv 1 \mod{q}\)</span></p></li>
-<li><p>数组$= (1,<sup>1,</sup>2,,^{n-1}) $</p></li>
-<li><p>数组<span class="math inline">\(\psi_{rev}\)</span>是把数组<span
-class="math inline">\(\phi\)</span>按照bit-reversed顺序重新排列出来的，见下面的例子(多项式次数n
-= 8)</p>
-<blockquote>
-<p>X(0) = X(0,0,0) --&gt; X(0,0,0) = X(0)</p>
-<p>X(1) = X(0,0,1) --&gt; X(1,0,0) = X(4)</p>
-<p>X(2) = X(0,1,0) --&gt; X(0,1,0) = X(2)</p>
-<p>X(3) = X(0,1,1) --&gt; X(1,1,0) = X(6)</p>
-<p>以此类推</p>
-</blockquote></li>
+<li>分圆多项式有多项式次数<span
+class="math inline">\(\phi(m)\)</span>，j的个数是与m互素的个数</li>
+<li><span class="math inline">\(\Phi_m(X)\in\mathbb{Z}[X]\)</span></li>
+<li>分圆多项式在有理数域上不可约</li>
+<li><span
+class="math inline">\(X^m-1=\prod\limits_{d|m}\Phi_d(X)\)</span>以及他的变式<span
+class="math inline">\(\Phi_m(X)=\dfrac{X^m-1}{\prod\limits_{d\mid
+m}\Phi_d(X)}\)</span>。显然，如果m是个素数p，那么<span
+class="math inline">\(\Phi_{p}(x)=\frac{x^{p}-1}{x-1}=\sum^{p-1}_{i=0}{x^i}\)</span></li>
+</ul></li>
 </ul>
-<p>下面是蝴蝶变换算法</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221215122722792.png" srcset="/img/loading.gif" lazyload
-alt="image-20221215122722792" />
-<figcaption aria-hidden="true">image-20221215122722792</figcaption>
-</figure>
-<h3 id="基于gs蝴蝶变换的ntt逆变换">基于GS蝴蝶变换的NTT逆变换</h3>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221215122822035.png" srcset="/img/loading.gif" lazyload
-alt="image-20221215122822035" />
-<figcaption aria-hidden="true">image-20221215122822035</figcaption>
-</figure>
-<h3 id="ntt的一些性质">NTT的一些性质</h3>
-<p>假设"$<span
-class="math inline">\(&quot;代表多项式乘法，&quot;\)</span>$"代表分量乘法</p>
+<h3 id="规范嵌入和无穷范数">规范嵌入和无穷范数</h3>
+<p><strong>基本思想</strong>：定义<span
+class="math inline">\(\mathcal{A}:=\mathbb{Z}[X]/(\Phi_m(X))\)</span>，<span
+class="math inline">\(\omega\)</span>是一个m次单位原根，有一个多项式<span
+class="math inline">\(a=[f(X)\text{mod}\Phi_m(X)]\in\mathcal{A}\)</span>，我们可以清晰的定义<span
+class="math inline">\(\boldsymbol{a}(\omega^j):=f(\omega^j)\)</span>，而不用在乎<span
+class="math inline">\(f(X)\)</span>的具体取值(因为模了一个分圆多项式)。</p>
 <ul>
-<li>NTT(a) + NTT(b) = NTT(a+b)</li>
-<li>NTT(INTT(a)<span class="math inline">\(\cdot\)</span> INTT(b)) = a
-$$b</li>
-<li></li>
+<li>规范嵌入：多项式<span
+class="math inline">\(a\in\mathcal{A}\)</span>的规范嵌入是一个向量</li>
 </ul>
-<h2 id="barrett-reduction-乘法取模加速">Barrett Reduction
-乘法取模加速</h2>
-<h3 id="参考博客">参考博客</h3>
-<ul>
-<li><a
-href="https://blog.csdn.net/YKRY35/article/details/79179285">(37条消息)
-大数取模运算Barrett reduction_YKRY35的博客-CSDN博客_大数取模</a></li>
-<li><a
-href="https://www.luogu.com.cn/blog/Sweetlemon/barrett-reduction">Barrett
-Reduction 乘法取模加速 - Sweetlemon 的博客 - 洛谷博客
-(luogu.com.cn)</a></li>
-</ul>
-<p>Barrett
-reduction是一种求模运算的优化方法，它可以将求模运算的时间复杂度从O(n)降低到O(log
-n)。</p>
-<h3 id="原理简述">原理简述</h3>
-<p>一般来说，32位整数加法操作比乘法操作快得多，大概快3到8倍。而移位操作又比加法操作快10倍以上，核心思想就是把除法尽可能迁移到移位操作上。</p>
-<p>我们（人工）计算取模，用的是 <span class="math display">\[
-r= a\bmod p=a-\left\lfloor \dfrac{a}{p} \right\rfloor *p
+<p><span class="math display">\[
+\operatorname{cannon}(\boldsymbol a):=\Big(\boldsymbol
+a(\omega^j)\Big)_{j\in\mathbb Z_m^*}.
 \]</span></p>
-<p>这个计算中有除法，在计算机组成原理中，两个32bit的数相除需要32次移位和32次加减法操作，开销比较大。</p>
-<p>而两个32bit的数相乘只需要32次移位操作。我们希望能用乘法替换除法，计算出
-<span class="math display">\[
-q=\left\lfloor \dfrac{a}{p} \right\rfloor
-\]</span> 我们可以钦定一个整数 k，再弄出一个整数 m，使得 <span
-class="math display">\[
-\dfrac{m}{2^k}\approx\dfrac{1}{p}
-\]</span> 那么 q不就约等于$
-$了吗？这样除法运算就被拆成了一次乘法和k次位移，速度大大加快。</p>
-<p>为了防止算出的商超过实际的商，我们一般取 <span
-class="math display">\[
-m=\left\lfloor \dfrac{2^k}{p} \right\rfloor
-\]</span> 这里，我们取 <span class="math display">\[
-k\ge \lceil 2\log_2 p \rceil\
-\]</span> 也就是使得$ 2<sup>kp</sup>2$。下面我们证明，这样取 k时，<span
-class="math inline">\(0\le
-a-pq&lt;p\)</span>，也就是我们稍后在计算余数<span
-class="math inline">\(a-pq\)</span>
-时，得到的答案<del>至多需要再做一次减法</del> 不需要再调整。</p>
-<blockquote>
-<p>下面是这样设置参数的合理性证明，证明<span class="math inline">\(0\le
-a-pq&lt;p\)</span>：</p>
-<p>由于 <span class="math inline">\(q=\dfrac{am}{2^k}\)</span></p>
-<p>因此 <span
-class="math inline">\(pq=\dfrac{apm}{2^k}，a-pq=\dfrac{a}{2^k}\cdot
-(2^k-pm)\)</span></p>
-<p>第一点，由于<span class="math inline">\(2^k\approx
-p^2\)</span>，而a是模p意义下两个数的乘积，所以<span
-class="math inline">\(a&lt;p^2\)</span></p>
-<p>于是有<span
-class="math inline">\(0&lt;\dfrac{a}{2^k}&lt;1\)</span></p>
-<p>第二点，由于<span class="math inline">\(m=\left\lfloor \dfrac{2^k}{p}
-\right\rfloor\)</span></p>
-<p>所以有$ -1 &lt; m $，进一步推出<span
-class="math inline">\(0\leq(2^k-pm)&lt;p\)</span></p>
-<p>综上可以证明<span class="math inline">\(0\le a-pq&lt;p\)</span></p>
-</blockquote>
-<p>总结这个算法的流程如下：</p>
 <ul>
-<li>根据 p<em>p</em> 的规模选取合适的 k，一般要求 <span
-class="math inline">\(k\ge \lceil 2\log_2 p \rceil\)</span>。</li>
-<li>根据 k,p 预处理出 <span class="math inline">\(m=\left\lfloor
-\dfrac{2^k}{p} \right\rfloor\)</span>。</li>
-<li>实际计算时，用 <span class="math inline">\(q=\dfrac{a\cdot
-m}{2^k}\)</span>计算出商，再用$ r=a-pq$ 得出余数</li>
+<li>无穷范数：使用常见的无穷范数作为多项式<span class="math inline">\(a
+\in
+\mathcal{A}\)</span>的大小（size），取规范嵌入后向量元素的最大值即可</li>
 </ul>
-<h3 id="c例子">c++例子</h3>
-<p>下面是一个例子：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">RingMultiplier::mulModBarrett</span><span class="hljs-params">(<span class="hljs-type">uint64_t</span>&amp; r, <span class="hljs-type">uint64_t</span> a, <span class="hljs-type">uint64_t</span> b, <span class="hljs-type">uint64_t</span> p, <span class="hljs-type">uint64_t</span> pr)</span> </span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">unsigned</span> __int128 mul = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(a) * b;<br>	<span class="hljs-type">uint64_t</span> abot = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(mul);<span class="hljs-comment">//只会返回a*b的低64位</span><br>	<span class="hljs-type">uint64_t</span> atop = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(mul &gt;&gt; <span class="hljs-number">64</span>);<span class="hljs-comment">//得到a*b的高64位</span><br>	<span class="hljs-type">unsigned</span> __int128 tmp = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(abot) * pr;<br>	tmp &gt;&gt;= <span class="hljs-number">64</span>;<br>	tmp += <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">unsigned</span> __int128&gt;(atop) * pr;<br>	tmp &gt;&gt;= kbar2 - <span class="hljs-number">64</span>;<br>	tmp *= p;<br>	tmp = mul - tmp;<br>	r = <span class="hljs-built_in">static_cast</span>&lt;<span class="hljs-type">uint64_t</span>&gt;(tmp);<br>	<span class="hljs-keyword">if</span>(r &gt;= p) r -= p;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>这个函数主要用来计算r=(a*b) mod
-p的结果，采用Barrett乘法算法，其中<span
-class="math inline">\(pr=2^{kbar2} /
-p\)</span>，kbar2是一个预设的常量，模数p的大约满足<span
-class="math inline">\(log_2p = 60\)</span>，所以这里的kbar2 =
-120,于是有<span class="math inline">\(pr \approx p\)</span>。</p>
-<p>算法原理： <span class="math display">\[
-r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
-=mul - mul*\dfrac{pr}{2^k}*p \quad where \quad r=2^k \quad and \quad pr
-= \dfrac{2^k}{p}\\
-这里把mul*pr/2^k变成如下操作,其中abot存放mul的低64位，atop存放高64位\\
-[(abot*pr)&gt;&gt;64+atop*pr]&gt;&gt;(kbar2-64) \\
-=[(abot*pr)+atop*pr*2^{64}]/(2^{kbar2})\\
-这样可以完成barrett的快速求余操作
-\]</span> 算法步骤：</p>
+<p><span class="math display">\[
+\quad\|\boldsymbol a\|:=\|\mathrm{cannon}(\boldsymbol a)\|_\infty =
+\max\{|\boldsymbol a(\omega^j)|:j\in\mathbb Z^*_m\},
+\]</span></p>
+<h3 id="编码拉格朗日插值">编码——拉格朗日插值</h3>
+<blockquote>
+<p><strong>目前的困境：</strong>BGV的明文为一个<span
+class="math inline">\(N-1\)</span>次多项式m(x)，我们如何把<span
+class="math inline">\(N\)</span>个数值<span
+class="math inline">\((a_0,a_1,\dots,a_{N-1})\)</span>编码进一个明文多项式<span
+class="math inline">\(m_1(x)\)</span>，另外N个数值<span
+class="math inline">\((b_0,b_1,\dots,b_{N-1})\)</span>编码进多项式<span
+class="math inline">\(m_2(x)\)</span>。使得当明文多项式做多项式乘法后<span
+class="math inline">\(m(x) = m_1(x)*m_2(x)\)</span>，解码<span
+class="math inline">\(m(x)\)</span>得到的是对应数值的点乘形式<span
+class="math inline">\((a_0*b_0,a_1*b_1,\dots,a_{N-1}*b_{N-1})\)</span></p>
+</blockquote>
+<p><strong>先介绍一下拉格朗日插值：</strong></p>
+<p>假设我们有一些已知点 <span class="math inline">\((x_i,
+y_i)\)</span>，我们想要找到一个函数 <span
+class="math inline">\(f(x)\)</span>，它在这些点上与 <span
+class="math inline">\(y_i\)</span>
+相等，同时在这些点之间光滑连续。拉格朗日插值的想法是使用一个多项式来近似这个函数，多项式的系数可以通过在这些点上求解一系列的线性方程来获得。</p>
+<p>下面是一个使用拉格朗日插值计算多项式的示例。假设我们有三个点 <span
+class="math inline">\((0, 1)\)</span>，<span class="math inline">\((1,
+2)\)</span> 和 <span class="math inline">\((2,
+3)\)</span>。我们可以使用一个二次多项式来近似这些点，形式为 <span
+class="math inline">\(f(x) = a + bx +
+cx^2\)</span>。我们可以通过求解以下三个方程来确定多项式的系数： <span
+class="math display">\[
+\begin{matrix}f(0)=a+0b+0c=1\\ f(1)=a+1b+1c=2\\
+f(2)=a+2b+4c=3\end{matrix}
+\]</span></p>
+<p>通过求解这些方程，我们可以得到多项式的系数 <span
+class="math inline">\(a = 1\)</span>，<span class="math inline">\(b =
+1\)</span> 和 <span class="math inline">\(c =
+-\frac{1}{2}\)</span>。因此，我们的多项式为 <span
+class="math inline">\(f(x) = 1 + x - \frac{1}{2}x^2\)</span>。</p>
+<p>现在，我们可以将上述思想扩展到任意数量的点。具体来说，我们要使用一个
+<span class="math inline">\(n-1\)</span> 次多项式来拟合 <span
+class="math inline">\(n\)</span> 个已知点。设 <span
+class="math inline">\((x_i, y_i)\)</span> 是这些已知点中的第 <span
+class="math inline">\(i\)</span> 个点，我们的多项式可以写成以下形式：
+<span class="math display">\[
+f(x)=\sum_{i=1}^ny_iL_i(x)\quad\text{}
+\]</span></p>
+<p>其中 <span class="math inline">\(L_i(x)\)</span>
+是拉格朗日基函数，定义为： <span class="math display">\[
+L_i(x)=\prod_{j=1,j\neq i}^n\frac{x-x_j}{x_i-x_j}
+\]</span></p>
+<p>这个基函数的作用是将多项式 <span class="math inline">\(f(x)\)</span>
+在 <span class="math inline">\(x_i\)</span> 处变为 <span
+class="math inline">\(y_i\)</span>，同时在其他点处为零。因此，我们可以将多项式表示为所有基函数的线性组合。</p>
+<p><strong>解决方案：</strong></p>
+<p>假设多项式是在模<span
+class="math inline">\(q\)</span>意义下进行的，我们预计算出一个<span
+class="math inline">\(N\)</span>次原根<span
+class="math inline">\(\omega\)</span>满足<span
+class="math inline">\(\omega^N \equiv 1 \mod{q}\)</span>，我们选取N个点
+<span class="math display">\[
+(\omega^0,a_0),(\omega^1,a_1),\dots,(\omega^{N-1},a_{N-1})
+\]</span> 使用拉格朗日插值确定一个多项式<span
+class="math inline">\(m_1(x)\)</span>，同理对另外N个点 <span
+class="math display">\[
+(\omega^0,b_0),(\omega^1,b_1),\dots,(\omega^{N-1},b_{N-1})
+\]</span> 确定另一个多项式<span
+class="math inline">\(m_2(x)\)</span>，这样多项式乘法<span
+class="math inline">\(m(x) =
+m_1(x)*m_2(x)\)</span>后，代入N个横坐标值<span
+class="math inline">\((\omega^0,\dots,\omega^{N-1})\)</span>之后得到的纵坐标即为对应位数的点乘<span
+class="math inline">\((a_0*b_0,a_1*b_1,\dots,a_{N-1}*b_{N-1})\)</span></p>
+<p><strong>注意：</strong></p>
 <ul>
-<li>1）先把a*b的结果存到mul变量中，abot存放mul的低64位，atop存放高64位；</li>
-<li>2）然后把abot乘以预设的pr，得到tmp，并右移64位；</li>
-<li>3）再把atop乘以pr，再加到tmp上；</li>
-<li>4）把tmp右移kbar2-64位，再乘以p；</li>
-<li>5）最后求出mul-tmp，得到r；</li>
-<li>6）最后判断r是否大于p，如果大于，则减去p，得到最终结果。</li>
+<li>为什么要选取<span class="math inline">\(N\)</span>次原根<span
+class="math inline">\(\omega\)</span> ?因为有良好的性质，即<span
+class="math inline">\((\omega^0,\dots,\omega^{N-1})\)</span>在模q意义下每个数都各不相同（如果相同那么<span
+class="math inline">\(\omega\)</span>不是<span
+class="math inline">\(N\)</span>次原根）</li>
+<li>如何找<span class="math inline">\(N\)</span>次原根<span
+class="math inline">\(\omega\)</span>
+?首先找到一个模q的原根g，然后使用快速幂运算去计算<span
+class="math inline">\(g^{(q-1)/N}\)</span>即可得到<span
+class="math inline">\(\omega\)</span></li>
 </ul>
 
                 
@@ -486,34 +462,6 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6/" class="category-chain-item">密码学</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/NTT/">#NTT</a>
-      
-    </div>
   
 </div>
 
@@ -523,8 +471,8 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>NTT的实现及其加速</div>
-      <div>http://example.com/2022/12/14/NTT的实现及其加速/</div>
+      <div></div>
+      <div>http://example.com/2023/03/28/草稿/</div>
     </div>
     <div class="license-meta">
       
@@ -536,7 +484,7 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年12月14日</div>
+          <div>2023年3月28日</div>
         </div>
       
       
@@ -568,7 +516,7 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/09/seal%E5%BA%93%E4%BD%BF%E7%94%A8/" title="">
+                      <a href="/2023/05/17/%E5%B8%B8%E7%94%A8python%E5%87%BD%E6%95%B0/" title="">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
@@ -578,8 +526,8 @@ r = mul - \left\lfloor \dfrac{mul}{p}\right\rfloor*p \\
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/" title="sm2椭圆曲线公钥密码算法">
-                        <span class="hidden-mobile">sm2椭圆曲线公钥密码算法</span>
+                      <a href="/2023/03/09/seal%E5%BA%93%E4%BD%BF%E7%94%A8/" title="">
+                        <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
