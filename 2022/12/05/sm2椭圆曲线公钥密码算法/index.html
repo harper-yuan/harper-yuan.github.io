@@ -24,8 +24,13 @@
 <meta property="og:description" content="人民有信仰，国家有希望">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E6%A0%B7%E4%BE%8B.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205130657777.png">
 <meta property="og:image" content="http://example.com/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E4%BA%A4%E7%82%B9%E5%9B%BE.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205131119418.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205132805302.png">
 <meta property="og:image" content="http://example.com/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E5%8A%A0%E6%B3%95%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210202636498.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210204747217.png">
 <meta property="article:published_time" content="2022-12-05T04:39:52.000Z">
 <meta property="article:modified_time" content="2023-05-17T15:31:52.010Z">
 <meta property="article:author" content="harper">
@@ -258,7 +263,7 @@
         
         
         
-          93 分钟
+          95 分钟
         
       </span>
     
@@ -309,282 +314,146 @@
             
               <div class="markdown-body">
                 
-                <h1 id="sm2椭圆曲线公钥密码算法">sm2椭圆曲线公钥密码算法</h1>
-<h2 id="背景">背景</h2>
-<h3 id="国密算法介绍">国密算法介绍</h3>
-<p>国密即国家密码局认定的国产密码算法。主要有SM1，SM2，SM3，SM4。<a
-href="https://so.csdn.net/so/search?q=密钥&amp;spm=1001.2101.3001.7020">密钥</a>长度和分组长度均为128位。</p>
+                <h1 id="sm2椭圆曲线公钥密码算法"><a href="#sm2椭圆曲线公钥密码算法" class="headerlink" title="sm2椭圆曲线公钥密码算法"></a>sm2椭圆曲线公钥密码算法</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="国密算法介绍"><a href="#国密算法介绍" class="headerlink" title="国密算法介绍"></a>国密算法介绍</h3><p>国密即国家密码局认定的国产密码算法。主要有SM1，SM2，SM3，SM4。<a href="https://so.csdn.net/so/search?q=%E5%AF%86%E9%92%A5&spm=1001.2101.3001.7020">密钥</a>长度和分组长度均为128位。</p>
 <ul>
-<li><p>SM1
-为对称加密。其加密强度与AES相当。该算法不公开，调用该算法时，需要通过加密芯片的接口进行调用。</p></li>
-<li><p>SM2为非对称加密，基于ECC。该算法已公开。由于该算法基于ECC，故其签名速度与秘钥生成速度都快于RSA。ECC
-256位（SM2采用的就是ECC 256位的一种）安全强度比RSA
-2048位高，但运算速度快于RSA。</p></li>
-<li><p>SM3
-消息摘要。可以用MD5作为对比理解。该算法已公开。校验结果为256位。</p></li>
-<li><p>SM4
-无线局域网标准的分组数据算法。对称加密，密钥长度和分组长度均为128位。</p></li>
+<li><p>SM1 为对称加密。其加密强度与AES相当。该算法不公开，调用该算法时，需要通过加密芯片的接口进行调用。</p>
+</li>
+<li><p>SM2为非对称加密，基于ECC。该算法已公开。由于该算法基于ECC，故其签名速度与秘钥生成速度都快于RSA。ECC 256位（SM2采用的就是ECC 256位的一种）安全强度比RSA 2048位高，但运算速度快于RSA。</p>
+</li>
+<li><p>SM3 消息摘要。可以用MD5作为对比理解。该算法已公开。校验结果为256位。</p>
+</li>
+<li><p>SM4 无线局域网标准的分组数据算法。对称加密，密钥长度和分组长度均为128位。</p>
+</li>
 </ul>
 <p>由于SM1、SM4加解密的分组大小为128bit，故对消息进行加解密时，若消息长度过长，需要进行分组，要消息长度不足，则要进行填充。</p>
-<h3 id="sm2算法简介">SM2算法简介</h3>
-<p>SM2椭圆曲线公钥密码算法是我国自主设计的公钥密码算法，包括SM2-1椭圆曲线数字签名算法，SM2-2椭圆曲线密钥交换协议，SM2-3椭圆曲线公钥加密算法，分别用于实现数字签名密钥协商和数据加密等功能。SM2算法与RSA算法不同的是，SM2算法是基于椭圆曲线上点群离散对数难题，相对于RSA算法，256位的SM2密码强度已经比2048位的RSA密码强度要高。</p>
+<h3 id="SM2算法简介"><a href="#SM2算法简介" class="headerlink" title="SM2算法简介"></a>SM2算法简介</h3><p>SM2椭圆曲线公钥密码算法是我国自主设计的公钥密码算法，包括SM2-1椭圆曲线数字签名算法，SM2-2椭圆曲线密钥交换协议，SM2-3椭圆曲线公钥加密算法，分别用于实现数字签名密钥协商和数据加密等功能。SM2算法与RSA算法不同的是，SM2算法是基于椭圆曲线上点群离散对数难题，相对于RSA算法，256位的SM2密码强度已经比2048位的RSA密码强度要高。</p>
 <p>sm2主要满足电子认证服务系统等应用需求。</p>
-<h2 id="椭圆曲线介绍">椭圆曲线介绍</h2>
-<ul>
-<li><a
-href="https://link.springer.com/content/pdf/10.1007/978-1-4939-1711-2.pdf">参考书籍</a></li>
+<h2 id="椭圆曲线介绍"><a href="#椭圆曲线介绍" class="headerlink" title="椭圆曲线介绍"></a>椭圆曲线介绍</h2><ul>
+<li><a href="https://link.springer.com/content/pdf/10.1007/978-1-4939-1711-2.pdf">参考书籍</a></li>
 </ul>
-<h3 id="基本数学形式">基本数学形式</h3>
-<p>椭圆曲线是下面方程的一组解： <span class="math display">\[
-Y^2 = X^3 + AX + B
-\]</span>
-这种类型的方程也被称为魏尔斯特拉斯方程，得名于19世纪对其进行广泛研究的数学家。下面给两个曲线的实例并画给出图片：
-<span class="math display">\[
-E1 : Y^2 = X^3 − 3X + 3 \;and\; E2 : Y ^2 = X^3 − 6X + 5
-\]</span> <img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E6%A0%B7%E4%BE%8B.png" srcset="/img/loading.gif" lazyload class="椭圆曲线图"></p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205130657777.png" srcset="/img/loading.gif" lazyload
-alt="1" />
-<figcaption aria-hidden="true">1</figcaption>
-</figure>
-<h3 id="实数域上椭圆曲线">实数域上椭圆曲线</h3>
-<h4 id="加法运算">加法运算</h4>
-<p>令E为如下椭圆曲线： <span class="math display">\[
-Y ^2 = X^3 − 15X + 18.
-\]</span> 点P = (7, 16) 和 Q = (1, 2)为椭圆曲线上的两点，并构成直线L:
-<span class="math display">\[
-L : Y = \frac{7}{3}X − 1/3.
-\]</span> 如下图所示，直线L和椭圆曲线E交于三个点P,Q,R</p>
+<h3 id="基本数学形式"><a href="#基本数学形式" class="headerlink" title="基本数学形式"></a>基本数学形式</h3><p>椭圆曲线是下面方程的一组解：<br>$$<br>Y^2 &#x3D; X^3 + AX + B<br>$$<br>这种类型的方程也被称为魏尔斯特拉斯方程，得名于19世纪对其进行广泛研究的数学家。下面给两个曲线的实例并画给出图片：<br>$$<br>E1 : Y^2 &#x3D; X^3 − 3X + 3 ;and; E2 : Y ^2 &#x3D; X^3 − 6X + 5<br>$$</p>
+<img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E6%A0%B7%E4%BE%8B.png" srcset="/img/loading.gif" lazyload class="椭圆曲线图">
+
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205130657777.png" srcset="/img/loading.gif" lazyload alt="1"></p>
+<h3 id="实数域上椭圆曲线"><a href="#实数域上椭圆曲线" class="headerlink" title="实数域上椭圆曲线"></a>实数域上椭圆曲线</h3><h4 id="加法运算"><a href="#加法运算" class="headerlink" title="加法运算"></a>加法运算</h4><p>令E为如下椭圆曲线：<br>$$<br>Y ^2 &#x3D; X^3 − 15X + 18.<br>$$<br>点P &#x3D; (7, 16) 和 Q &#x3D; (1, 2)为椭圆曲线上的两点，并构成直线L:<br>$$<br>L : Y &#x3D; \frac{7}{3}X − 1&#x2F;3.<br>$$<br>如下图所示，直线L和椭圆曲线E交于三个点P,Q,R</p>
 <img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E4%BA%A4%E7%82%B9%E5%9B%BE.png" srcset="/img/loading.gif" lazyload class="椭圆曲线交点图">
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205131119418.png" srcset="/img/loading.gif" lazyload
-alt="image-20221205131119418" />
-<figcaption aria-hidden="true">image-20221205131119418</figcaption>
-</figure>
-<p>点R关于x轴对称得到R',我们定义椭圆曲线d上的加法运算, <span
-class="math display">\[
-P \oplus Q = R&#39;,
-\]</span>
-和我们通常理解的加法不同，这里的加法是在曲线上进行的，也就是说给出两个点，相加一定可以得到椭圆曲线上的第三个点R'，这个点就是加法的结果。</p>
-<h4 id="加法运算瓶颈无穷远点o">加法运算瓶颈——无穷远点O</h4>
-<p>还是按照上面的图片，我们尝试做这样的加法 <span
-class="math display">\[
-R \oplus R&#39;=?
-\]</span>
-按照上一节的加法运算，直线RR‘应该和椭圆曲线交于三个点，但是这里没有第三个点，这时候该怎么办？数学家定义了一个无穷远点<span
-class="math inline">\(O\)</span>,并假设点<span
-class="math inline">\(O\)</span>也在椭圆曲线上，这样RR'就能交于椭圆曲线的点<span
-class="math inline">\(O\)</span>了,于是有 <span class="math display">\[
-R \oplus R&#39;=O.
-\]</span> 基于无穷远点有这样的性质</p>
+
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205131119418.png" srcset="/img/loading.gif" lazyload alt="image-20221205131119418"></p>
+<p>点R关于x轴对称得到R’,我们定义椭圆曲线d上的加法运算,<br>$$<br>P \oplus Q &#x3D; R’,<br>$$<br>和我们通常理解的加法不同，这里的加法是在曲线上进行的，也就是说给出两个点，相加一定可以得到椭圆曲线上的第三个点R’，这个点就是加法的结果。</p>
+<h4 id="加法运算瓶颈——无穷远点O"><a href="#加法运算瓶颈——无穷远点O" class="headerlink" title="加法运算瓶颈——无穷远点O"></a>加法运算瓶颈——无穷远点O</h4><p>还是按照上面的图片，我们尝试做这样的加法<br>$$<br>R \oplus R’&#x3D;?<br>$$<br>按照上一节的加法运算，直线RR‘应该和椭圆曲线交于三个点，但是这里没有第三个点，这时候该怎么办？数学家定义了一个无穷远点$O$,并假设点$O$也在椭圆曲线上，这样RR’就能交于椭圆曲线的点$O$了,于是有<br>$$<br>R \oplus R’&#x3D;O.<br>$$<br>基于无穷远点有这样的性质</p>
 <ul>
-<li>无穷远点<span
-class="math inline">\(O\)</span>和椭圆曲线上任意点P的连线一定是垂直于x轴的</li>
+<li>无穷远点$O$和椭圆曲线上任意点P的连线一定是垂直于x轴的</li>
 </ul>
-<p>结合之前的加法运算，于是有公式： <span class="math display">\[
-P \oplus O = P
-\]</span>
-<font color='red'>这是不是很类似于一个零点，任何点加这个点都是其本身</font></p>
-<p>除此之外，基于无穷远点还有如下性质 <span class="math display">\[
-P + O = O + P = P \; for \;all\; P ∈ E\\
-P + (−P) = O \; for \;all\; P ∈ E\\
-(P + Q) + R = P + (Q + R) \; for \;all\;P, Q, R ∈ E\\
-P + Q = Q + P  \; for \;all\; P, Q ∈ E
-\]</span>
-四条公式分别代表Albel群(交换群)的4条性质：存在零元，存在逆元，结合律，交换律</p>
-<h4 id="加法运算公式">加法运算公式</h4>
-<p>这里给一张图片，很好的讲述了加法的运算公式</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205132805302.png" srcset="/img/loading.gif" lazyload
-alt="1" />
-<figcaption aria-hidden="true">1</figcaption>
-</figure>
+<p>结合之前的加法运算，于是有公式：<br>$$<br>P \oplus O &#x3D; P<br>$$<br><font color='red'>这是不是很类似于一个零点，任何点加这个点都是其本身</font></p>
+<p>除此之外，基于无穷远点还有如下性质<br>$$<br>P + O &#x3D; O + P &#x3D; P ; for ;all; P ∈ E\<br>P + (−P) &#x3D; O ; for ;all; P ∈ E\<br>(P + Q) + R &#x3D; P + (Q + R) ; for ;all;P, Q, R ∈ E\<br>P + Q &#x3D; Q + P  ; for ;all; P, Q ∈ E<br>$$<br>四条公式分别代表Albel群(交换群)的4条性质：存在零元，存在逆元，结合律，交换律</p>
+<h4 id="加法运算公式"><a href="#加法运算公式" class="headerlink" title="加法运算公式"></a>加法运算公式</h4><p>这里给一张图片，很好的讲述了加法的运算公式</p>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205132805302.png" srcset="/img/loading.gif" lazyload alt="1"></p>
 <img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E5%8A%A0%E6%B3%95%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99.png" srcset="/img/loading.gif" lazyload class="加法运算法则">
-<h4 id="减法运算公式">减法运算公式</h4>
-<p>定义负数元的概念：如果椭圆曲线上的一个点P=(a,b)，那么点P的负数元为<span
-class="math inline">\(\ominus P = (a,-b)\)</span></p>
+
+<h4 id="减法运算公式"><a href="#减法运算公式" class="headerlink" title="减法运算公式"></a>减法运算公式</h4><p>定义负数元的概念：如果椭圆曲线上的一个点P&#x3D;(a,b)，那么点P的负数元为$\ominus P &#x3D; (a,-b)$</p>
 <p>这样定义有很好的性质：</p>
 <blockquote>
 <ul>
-<li><span class="math inline">\(P\ominus P = O\)</span></li>
+<li>$P\ominus P &#x3D; O$</li>
 </ul>
 </blockquote>
 <p>相当于实数域加减法的相反数的概念。</p>
-<h3 id="有限域上椭圆曲线">有限域上椭圆曲线</h3>
-<h4 id="有限域上椭圆曲线定义">有限域上椭圆曲线定义</h4>
-<p>从上一节的介绍上可以看到，椭圆曲线上的加法运算构成一个群，所有的点可以是小数，也可以整数。那我们能不能加以限制，令椭圆曲线上的点全部都集中在某个域中呢？</p>
-<p><strong>定义1.</strong>令<span
-class="math inline">\(p\)</span>是一个奇素数，在有限域<span
-class="math inline">\(\mathbb{F}_p\)</span>上的椭圆曲线有如下形式, <span
-class="math display">\[
-E : Y ^2 = X^3 + AX + B \;with\; A, B \in \mathbb{F}_p \;satisfying\;
-4A^3 + 27B^2 \neq 0
-\]</span> 这里<span class="math inline">\(4A^3 + 27B^2 \neq
-0\)</span>是保证椭圆曲线上没有奇异点。</p>
-<p>则定义在有限域上的椭圆曲线坐标是集合. <span class="math display">\[
-E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2
-= x^3 + Ax + B\}∪ \{O\}
-\]</span></p>
+<h3 id="有限域上椭圆曲线"><a href="#有限域上椭圆曲线" class="headerlink" title="有限域上椭圆曲线"></a>有限域上椭圆曲线</h3><h4 id="有限域上椭圆曲线定义"><a href="#有限域上椭圆曲线定义" class="headerlink" title="有限域上椭圆曲线定义"></a>有限域上椭圆曲线定义</h4><p>从上一节的介绍上可以看到，椭圆曲线上的加法运算构成一个群，所有的点可以是小数，也可以整数。那我们能不能加以限制，令椭圆曲线上的点全部都集中在某个域中呢？</p>
+<p>**定义1.**令$p$是一个奇素数，在有限域$\mathbb{F}_p$上的椭圆曲线有如下形式,<br>$$<br>E : Y ^2 &#x3D; X^3 + AX + B ;with; A, B \in \mathbb{F}_p ;satisfying; 4A^3 + 27B^2 \neq 0<br>$$<br>这里$4A^3 + 27B^2 \neq 0$是保证椭圆曲线上没有奇异点。</p>
+<p>则定义在有限域上的椭圆曲线坐标是集合.<br>$$<br>E(\mathbb{F}_p) &#x3D; {(x, y) | x, y \in \mathbb{F}_p ; satisfying ; y^2 &#x3D; x^3 + Ax + B}∪ {O}<br>$$</p>
 <blockquote>
-<p>一个例子,考虑下面的椭圆曲线： <span class="math display">\[
-E(\mathbb{F}_{13}) : Y ^2 = X^3 + 3X + 8 \;over \;the \;field
-\;\mathbb{F}_{13}
-\]</span> 我们取X=0,得到<span
-class="math inline">\(Y^2=8\pmod{13}\)</span>，但我们解不出这个Y，因为方程无解</p>
-<p>我们再取X = 1,得到<span
-class="math inline">\(Y^2=12\pmod{13}\)</span>，解出两个解Y=5或者Y=8，那么得到在<span
-class="math inline">\(E(\mathbb{F}_{13})\)</span>有两个点(1,5)和(1,8)</p>
-<p>X遍历有限域<span
-class="math inline">\(\mathbb{F}_{13}\)</span>,我们可以用类似的方法得到下面所有点
-<span class="math display">\[
-E(\mathbb{F}_{13}) = \{O,(1, 5),(1, 8),(2, 3),(2, 10),(9, 6),(9, 7),(12,
-2),(12, 11)\}
-\]</span></p>
+<p>一个例子,考虑下面的椭圆曲线：<br>$$<br>E(\mathbb{F}<em>{13}) : Y ^2 &#x3D; X^3 + 3X + 8 ;over ;the ;field ;\mathbb{F}</em>{13}<br>$$<br>我们取X&#x3D;0,得到$Y^2&#x3D;8\pmod{13}$，但我们解不出这个Y，因为方程无解</p>
+<p>我们再取X &#x3D; 1,得到$Y^2&#x3D;12\pmod{13}$，解出两个解Y&#x3D;5或者Y&#x3D;8，那么得到在$E(\mathbb{F}_{13})$有两个点(1,5)和(1,8)</p>
+<p>X遍历有限域$\mathbb{F}<em>{13}$,我们可以用类似的方法得到下面所有点<br>$$<br>E(\mathbb{F}</em>{13}) &#x3D; {O,(1, 5),(1, 8),(2, 3),(2, 10),(9, 6),(9, 7),(12, 2),(12, 11)}<br>$$</p>
 </blockquote>
-<h4 id="有限域上椭圆曲线运算">有限域上椭圆曲线运算</h4>
-<p>类似与实数域上的加法运算，有限域上椭圆曲线的运算，除法用模逆运算代替，所有运算均在有限域上进行（算完之后要模一个p）。这里还是举个例子</p>
+<h4 id="有限域上椭圆曲线运算"><a href="#有限域上椭圆曲线运算" class="headerlink" title="有限域上椭圆曲线运算"></a>有限域上椭圆曲线运算</h4><p>类似与实数域上的加法运算，有限域上椭圆曲线的运算，除法用模逆运算代替，所有运算均在有限域上进行（算完之后要模一个p）。这里还是举个例子</p>
 <blockquote>
-<p>椭圆曲线： <span class="math display">\[
-E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2
-= x^3 + Ax + B\}∪ \{O\}
-\]</span> 计算P=(9,7)和Q=(1,8)的和 $$ λ = (y_2 − y_1)/(x_2 − x_1) = (8 −
-7)/(1 − 9) = 1/(-8) = 1/5 = 5^{-1} =8\</p>
-<p>x_3 = λ^2 − x_1 − x_2 = 64 − 9 − 1 = 54 = 2\ y_3 = λ(x_1-x_3)-y_1 =
-8*(9-2) - 7 = 49 = 10 $$ 最终得到P+Q=(2,10)</p>
+<p>椭圆曲线：<br>$$<br>E(\mathbb{F}_p) &#x3D; {(x, y) | x, y \in \mathbb{F}_p ; satisfying ; y^2 &#x3D; x^3 + Ax + B}∪ {O}<br>$$<br>计算P&#x3D;(9,7)和Q&#x3D;(1,8)的和<br>$$<br>λ &#x3D; (y_2 − y_1)&#x2F;(x_2 − x_1)<br>  &#x3D; (8 − 7)&#x2F;(1 − 9) &#x3D; 1&#x2F;(-8) &#x3D; 1&#x2F;5 &#x3D; 5^{-1} \mod 13 &#x3D;8\</p>
+<p> x_3 &#x3D; λ^2 − x_1 − x_2 &#x3D; 64 − 9 − 1 &#x3D; 54 &#x3D; 2\<br> y_3 &#x3D; λ(x_1-x_3)-y_1 &#x3D; 8*(9-2) - 7 &#x3D; 49 \mod{13}&#x3D; 10<br>$$<br>最终得到P+Q&#x3D;(2,10)</p>
 </blockquote>
-<h3 id="椭圆曲线的一些名词">椭圆曲线的一些名词</h3>
-<h4 id="椭圆曲线的阶">椭圆曲线的阶</h4>
-<p>我们之前说到每个在有限域上的椭圆曲线都由有限个点组成。那么我们不禁要问：到底是多少个点？</p>
-<p>首先，我们要定义一下
-在一个群有多少个点就叫做这个群的“阶”（order）【在此放上wiki<a
-href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Order_(group_theory)">关于order的解释</a>】。</p>
+<h3 id="椭圆曲线的一些名词"><a href="#椭圆曲线的一些名词" class="headerlink" title="椭圆曲线的一些名词"></a>椭圆曲线的一些名词</h3><h4 id="椭圆曲线的阶"><a href="#椭圆曲线的阶" class="headerlink" title="椭圆曲线的阶"></a>椭圆曲线的阶</h4><p>我们之前说到每个在有限域上的椭圆曲线都由有限个点组成。那么我们不禁要问：到底是多少个点？</p>
+<p>首先，我们要定义一下 在一个群有多少个点就叫做这个群的“阶”（order）【在此放上wiki<a href="https://link.zhihu.com/?target=https://en.wikipedia.org/wiki/Order_(group_theory)">关于order的解释</a>】。</p>
 <blockquote>
-<p>椭圆曲线<span class="math inline">\(E(\mathbb{F}_{13}) : Y ^2 = X^3 +
-3X + 8 \;over \;the \;field
-\;\mathbb{F}_{13}\)</span>的阶为9，因为总共有9个点</p>
+<p>椭圆曲线$E(\mathbb{F}<em>{13}) : Y ^2 &#x3D; X^3 + 3X + 8 ;over ;the ;field ;\mathbb{F}</em>{13}$的阶为9，因为总共有9个点</p>
 </blockquote>
-<h4 id="椭圆曲线的基点">椭圆曲线的基点</h4>
-<p>先介绍一下循环子群的概率，方便我们之后基点的讨论</p>
-<h5 id="数乘和循环子群"><strong>数乘和循环子群</strong></h5>
-<p>在实数域乘法的定义是： <span class="math display">\[
-nP=\underbrace{P+P+⋯+P}_{n个p}
-\]</span> 使用倍加运算可以实现，其时间复杂度我们之后再讨论</p>
+<h4 id="椭圆曲线的基点"><a href="#椭圆曲线的基点" class="headerlink" title="椭圆曲线的基点"></a>椭圆曲线的基点</h4><p>先介绍一下循环子群的概率，方便我们之后基点的讨论</p>
+<h5 id="数乘和循环子群"><a href="#数乘和循环子群" class="headerlink" title="数乘和循环子群"></a><strong>数乘和循环子群</strong></h5><p>在实数域乘法的定义是：<br>$$<br>nP&#x3D;\underbrace{P+P+⋯+P}_{n个p}<br>$$<br>使用倍加运算可以实现，其时间复杂度我们之后再讨论</p>
 <blockquote>
 <p>举个例子：</p>
-<p>已知椭圆曲线 <span class="math display">\[
-E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2
-= x^3 + 3x + 8\}∪ \{O\}
-\]</span> 取其上一点P(9,7)，其倍点运算为：</p>
+<p>已知椭圆曲线<br>$$<br>E(\mathbb{F}_p) &#x3D; {(x, y) | x, y \in \mathbb{F}_p ; satisfying ; y^2 &#x3D; x^3 + 3x + 8}∪ {O}<br>$$<br>取其上一点P(9,7)，其倍点运算为：</p>
 <ul>
-<li><p>P = (9,7)</p></li>
-<li><p>2P = (9,6)</p></li>
-<li><p>3P = (1,12)</p></li>
-<li><p>4P = (9,7)</p></li>
+<li><p>P &#x3D; (9,7)</p>
+</li>
+<li><p>2P &#x3D; (9,6)</p>
+</li>
+<li><p>3P &#x3D; (1,12)</p>
+</li>
+<li><p>4P &#x3D; (9,7)</p>
+</li>
 </ul>
 </blockquote>
 <p>可以看出，点P运算4次还是点P，这就是循环子群的概念，可以看出点P的运算结果可以构成一个有限的集合，这种群算方式可以看成群的运算，从而构成循环子群。</p>
-<h5 id="基点的概念">基点的概念</h5>
-<p>可以看出基点就是椭圆曲线上的一个点，基点有一个阶n，点加运算n次即可得到再次得到基点。</p>
-<h5 id="基点的生成">基点的生成</h5>
-<p>基点可以构成一个循环子群，sm2椭圆加密就是在这个子群上进行运算。</p>
-<p>假设椭圆曲线的阶为N，对于椭圆曲线上的每一个点，我们都有<span
-class="math inline">\(NP =
-O\)</span>，同时基点G（其阶为n）也能构成一个元素个数的为n的子群，由群论的拉格朗日定理，一定有<span
-class="math inline">\(n|N\)</span>，我们设置一个辅因子<span
-class="math inline">\(h =
-N/n\)</span>，随机取椭圆曲线上的一点，可以看出点hP循环n次就是无穷远点，如果n为素数，那么点hp生成的子群阶就是n
-<span class="math display">\[
-n*h*p = O
-\]</span>
-通过下面的运算步骤，我们可以寻找到阶为n的椭圆曲线下的子群。</p>
+<h5 id="基点的概念"><a href="#基点的概念" class="headerlink" title="基点的概念"></a>基点的概念</h5><p>可以看出基点就是椭圆曲线上的一个点，基点有一个阶n，点加运算n次即可得到再次得到基点。</p>
+<h5 id="基点的生成"><a href="#基点的生成" class="headerlink" title="基点的生成"></a>基点的生成</h5><p>基点可以构成一个循环子群，sm2椭圆加密就是在这个子群上进行运算。</p>
+<p>假设椭圆曲线的阶为N，对于椭圆曲线上的每一个点，我们都有$NP &#x3D; O$，同时基点G（其阶为n）也能构成一个元素个数的为n的子群，由群论的拉格朗日定理，一定有$n|N$，我们设置一个辅因子$h &#x3D; N&#x2F;n$，随机取椭圆曲线上的一点，可以看出点hP循环n次就是无穷远点，如果n为素数，那么点hp生成的子群阶就是n<br>$$<br>n<em>h</em>p &#x3D; O<br>$$<br>通过下面的运算步骤，我们可以寻找到阶为n的椭圆曲线下的子群。</p>
 <blockquote>
 <ul>
 <li>计算椭圆曲线的阶 N 。</li>
 <li>选择一个阶为 n 的子群。n必须是素数且必须是 N 的因子。</li>
-<li>计算辅因子 h=N/n 。</li>
+<li>计算辅因子 h&#x3D;N&#x2F;n 。</li>
 <li>在曲线上选择一个随机的点 P 。</li>
-<li>计算 G=hP 。</li>
-<li>如果 G 是0，那么回到步骤4。否则我们就已经找到了阶为 n 和辅因子是 h
-的子群的基点。</li>
+<li>计算 G&#x3D;hP 。</li>
+<li>如果 G 是0，那么回到步骤4。否则我们就已经找到了阶为 n 和辅因子是 h 的子群的基点。</li>
 </ul>
 </blockquote>
-<h2 id="sm2国密算法流程介绍">sm2国密算法流程介绍</h2>
-<p>最详尽的算法流程步骤请参见这个pdf：<a
-href="https://oscca.gov.cn/sca/xxgk/2010-12/17/1002386/files/b791a9f908bb4803875ab6aeeb7b4e03.pdf">sm2技术文档</a>，本人在这里仅仅简单介绍一下流程和步骤，并讲解其中原理。其中流程中的一些符号不给予解释，文档里都有。</p>
-<h3 id="加密算法">加密算法</h3>
-<ul>
-<li>A1：用随机数发生器产生随机数k∈[1,n-1]；</li>
-<li>A2：计算椭圆曲线点C1=[k]G=(x1,y1)，按本文本第1部分4.2.8和4.2.4给出的细节，将C1的数据类
-型转换为比特串；</li>
-<li>A3：计算椭圆曲线点S=[h]PB，若S是无穷远点，则报错并退出；</li>
-<li>A4：计算椭圆曲线点[k]PB=(x2,y2)，将坐标x2、y2 的
-数据类型转换为比特串；</li>
-<li>A5：计算t=KDF(x2 ∥ y2, klen)，若t为全0比特串，则返回A1；</li>
-<li>A6：计算C2 = M ⊕ t；</li>
-<li>A7：计算C3 = Hash(x2 ∥ M ∥ y2)；</li>
-<li>A8：输出密文C = C1 ∥ C2 ∥ C3。</li>
+<h2 id="sm2国密算法流程介绍"><a href="#sm2国密算法流程介绍" class="headerlink" title="sm2国密算法流程介绍"></a>sm2国密算法流程介绍</h2><p>最详尽的算法流程步骤请参见这个pdf：<a href="https://oscca.gov.cn/sca/xxgk/2010-12/17/1002386/files/b791a9f908bb4803875ab6aeeb7b4e03.pdf">sm2技术文档</a>，本人在这里仅仅简单介绍一下流程和步骤，并讲解其中原理。其中流程中的一些符号不给予解释，文档里都有。</p>
+<h3 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h3><ul>
+<li>A1：用随机数发生器产生随机数k∈[1,n-1]； </li>
+<li>A2：计算椭圆曲线点C1&#x3D;[k]G&#x3D;(x1,y1)，按本文本第1部分4.2.8和4.2.4给出的细节，将C1的数据类 型转换为比特串； </li>
+<li>A3：计算椭圆曲线点S&#x3D;[h]PB，若S是无穷远点，则报错并退出； </li>
+<li>A4：计算椭圆曲线点[k]PB&#x3D;(x2,y2)，将坐标x2、y2 的 数据类型转换为比特串； </li>
+<li>A5：计算t&#x3D;KDF(x2 ∥ y2, klen)，若t为全0比特串，则返回A1； </li>
+<li>A6：计算C2 &#x3D; M ⊕ t； </li>
+<li>A7：计算C3 &#x3D; Hash(x2 ∥ M ∥ y2)； </li>
+<li>A8：输出密文C &#x3D; C1 ∥ C2 ∥ C3。</li>
 </ul>
 <p>其中KDF为密钥派生函数，函数原型为KDF(z,klen)可以根据比特串z，和长度klen，从而输出一个长度为klen的比特串。</p>
 <p>下面给一个流程图</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210202636498.png" srcset="/img/loading.gif" lazyload
-alt="image-20221210202636498" />
-<figcaption aria-hidden="true">image-20221210202636498</figcaption>
-</figure>
-<h3 id="加密算法原理的一些理解">加密算法原理的一些理解</h3>
-<ul>
-<li><p>为什么随机数k范围是[1,n-1]，因为如果k=n，那么[k]G =
-O，这样的点G是无法用坐标表示出来的，也无法参加后面的运算</p></li>
-<li><p>真正的密文在C2里，想要获取C2，必须用密钥派生函数KDF得到比特串t的值，而想要得到t的值，又必须计算<span
-class="math inline">\([k]P_B\)</span>，但是k是随机生成的，想要准确的获取k有两种方法。一种是从<span
-class="math inline">\([1,n-1]\)</span>遍历，要知道这样的遍历需要计算<span
-class="math inline">\(n*(n-1)/2\)</span>次加法运算，n一般是个很大的数（数量级为<span
-class="math inline">\(10^{78}\)</span>），这种计算量算到宇宙毁灭也算不出来。另一种是解方程<span
-class="math inline">\([x]G=(x_1,y_1)\)</span>，这就回到椭圆曲线上的困难问题<a
-href="https://baike.baidu.com/item/ECDLP/3324859">ECDLP</a>，所以想要解密是十分的困难。</p></li>
-<li><p>C2的长度为klen，即和密文的长度想当</p></li>
-<li><p>C3是哈希函数，更多的是为验证接受到的密文是否出现改动</p></li>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210202636498.png" srcset="/img/loading.gif" lazyload alt="image-20221210202636498"></p>
+<h3 id="加密算法原理的一些理解"><a href="#加密算法原理的一些理解" class="headerlink" title="加密算法原理的一些理解"></a>加密算法原理的一些理解</h3><ul>
+<li><p>为什么随机数k范围是[1,n-1]，因为如果k&#x3D;n，那么[k]G &#x3D; O，这样的点G是无法用坐标表示出来的，也无法参加后面的运算</p>
+</li>
+<li><p>真正的密文在C2里，想要获取C2，必须用密钥派生函数KDF得到比特串t的值，而想要得到t的值，又必须计算$[k]P_B$，但是k是随机生成的，想要准确的获取k有两种方法。一种是从$[1,n-1]$遍历，要知道这样的遍历需要计算$n*(n-1)&#x2F;2$次加法运算，n一般是个很大的数（数量级为$10^{78}$），这种计算量算到宇宙毁灭也算不出来。另一种是解方程$[x]G&#x3D;(x_1,y_1)$，这就回到椭圆曲线上的困难问题<a href="https://baike.baidu.com/item/ECDLP/3324859">ECDLP</a>，所以想要解密是十分的困难。</p>
+</li>
+<li><p>C2的长度为klen，即和密文的长度想当</p>
+</li>
+<li><p>C3是哈希函数，更多的是为验证接受到的密文是否出现改动</p>
+</li>
 </ul>
-<h3 id="解密算法">解密算法</h3>
-<p>设klen为密文中C2的比特长度。 为了对密文C=C1 ∥ C2 ∥ C3
-进行解密，作为解密者的用户B应实现以下运算步骤：</p>
+<h3 id="解密算法"><a href="#解密算法" class="headerlink" title="解密算法"></a>解密算法</h3><p>设klen为密文中C2的比特长度。 为了对密文C&#x3D;C1 ∥ C2 ∥ C3 进行解密，作为解密者的用户B应实现以下运算步骤： </p>
 <ul>
-<li>B1：从C中取出比特串C1，将C1的数据类型转换为椭圆曲线上的点，验证C1是否满足椭圆曲线方程，若不满足则报错并退出；</li>
-<li>B2：计算椭圆曲线点S=[h]C1，若S是无穷远点，则报错并退出；</li>
-<li>B3：计算[dB]C1=(x2,y2)，将坐标x2、y2的数据类型转 换为比特串；</li>
-<li>B4：计算t=KDF(x2 ∥ y2, klen)，若t为全0比特串，则报错并退出；</li>
-<li>B5：从C中取出比特串C2，计算M′ = C2 ⊕ t；</li>
-<li>B6：计算u = Hash(x2 ∥ M′ ∥ y2)，从C中取出比特串C3，若<span
-class="math inline">\(u \neq C3\)</span>则报错并退出；</li>
+<li>B1：从C中取出比特串C1，将C1的数据类型转换为椭圆曲线上的点，验证C1是否满足椭圆曲线方程，若不满足则报错并退出； </li>
+<li>B2：计算椭圆曲线点S&#x3D;[h]C1，若S是无穷远点，则报错并退出； </li>
+<li>B3：计算[dB]C1&#x3D;(x2,y2)，将坐标x2、y2的数据类型转 换为比特串； </li>
+<li>B4：计算t&#x3D;KDF(x2 ∥ y2, klen)，若t为全0比特串，则报错并退出； </li>
+<li>B5：从C中取出比特串C2，计算M′ &#x3D; C2 ⊕ t； </li>
+<li>B6：计算u &#x3D; Hash(x2 ∥ M′ ∥ y2)，从C中取出比特串C3，若$u \neq C3$则报错并退出；</li>
 <li>B7：输出明文M′。</li>
 </ul>
 <p>还是给出一个流程图</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210204747217.png" srcset="/img/loading.gif" lazyload
-alt="image-20221210204747217" />
-<figcaption aria-hidden="true">image-20221210204747217</figcaption>
-</figure>
-<h3 id="解密算法的一些理解">解密算法的一些理解</h3>
-<ul>
-<li>为什么计算<span
-class="math inline">\([d_B]C_1=[d_B*k]G\)</span>即可得到加密流程中的(x2,y2)，要知道只有<span
-class="math inline">\([k]P_B=(x2,y2)\)</span>，理由是：</li>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210204747217.png" srcset="/img/loading.gif" lazyload alt="image-20221210204747217"></p>
+<h3 id="解密算法的一些理解"><a href="#解密算法的一些理解" class="headerlink" title="解密算法的一些理解"></a>解密算法的一些理解</h3><ul>
+<li>为什么计算$[d_B]C_1&#x3D;[d_B*k]G$即可得到加密流程中的(x2,y2)，要知道只有$[k]P_B&#x3D;(x2,y2)$，理由是：</li>
 </ul>
-<p>密钥对的设定是有规则的，即<span
-class="math inline">\([d_B]G=P_B\)</span>，所以这里可以等价。试想一下，想要根据公钥PB得到私钥<span
-class="math inline">\(d_B\)</span>，又需要解一个ECDLP问题，sm2的安全性就基于此。</p>
-<h2 id="python程序实现">Python程序实现</h2>
-<p>sm2算法的实现有专门的库gmssl，调用其中的库即可实现加解密。</p>
+<p>密钥对的设定是有规则的，即$[d_B]G&#x3D;P_B$，所以这里可以等价。试想一下，想要根据公钥PB得到私钥$d_B$，又需要解一个ECDLP问题，sm2的安全性就基于此。</p>
+<h2 id="Python程序实现"><a href="#Python程序实现" class="headerlink" title="Python程序实现"></a>Python程序实现</h2><p>sm2算法的实现有专门的库gmssl，调用其中的库即可实现加解密。</p>
 <p>这里仿照gmssl库做出了一些改进，实现了sm2的加解密。</p>
 <p>其中椭圆曲线参数的设定和基点的选择参照官方技术文档</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">基点G的阶:     FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFF7203DF6B21C6052B53BBF40939D54123<br>素数p:        FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF<br>基点G横坐标:   32c4ae2c1f1981195f9904466a39c9948fe30bbff2660be1715a4589334c74c7<br>基点G纵坐标:   bc3736a2f4f6779c59bdcee36b692153d0a9877cc62a474002df32e52139f0a0<br>椭圆曲线系数a: FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFC<br>椭圆曲线系数b: 28E9FA9E9D9F5E344D5A9E4BCF6509A7F39789F515AB8F92DDBCBD414D940E93<br></code></pre></td></tr></table></figure>
+
 <p>代码实现如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> binascii<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> choice<br><span class="hljs-keyword">from</span> gmssl <span class="hljs-keyword">import</span> sm3,func<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-comment"># 选择素域，设置椭圆曲线参数</span><br><br>default_ecc_table = \<br>&#123;<br>    <span class="hljs-string">&#x27;n&#x27;</span>: <span class="hljs-string">&#x27;FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFF7203DF6B21C6052B53BBF40939D54123&#x27;</span>,<br>    <span class="hljs-string">&#x27;p&#x27;</span>: <span class="hljs-string">&#x27;FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF&#x27;</span>,<br>    <span class="hljs-string">&#x27;g_x&#x27;</span>: <span class="hljs-string">&#x27;32c4ae2c1f1981195f9904466a39c9948fe30bbff2660be1715a4589334c74c7&#x27;</span>,<br>    <span class="hljs-string">&#x27;g_y&#x27;</span>: <span class="hljs-string">&#x27;bc3736a2f4f6779c59bdcee36b692153d0a9877cc62a474002df32e52139f0a0&#x27;</span>,<br>    <span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-string">&#x27;FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFC&#x27;</span>,<br>    <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-string">&#x27;28E9FA9E9D9F5E344D5A9E4BCF6509A7F39789F515AB8F92DDBCBD414D940E93&#x27;</span>,<br>&#125;<br><br><span class="hljs-comment"># default_ecc_table = \</span><br><span class="hljs-comment"># &#123;</span><br><span class="hljs-comment">#     &#x27;n&#x27;: &#x27;1&#x27;,</span><br><span class="hljs-comment">#     &#x27;p&#x27;: &#x27;D&#x27;,</span><br><span class="hljs-comment">#     &#x27;g_x&#x27;: &#x27;1&#x27;,</span><br><span class="hljs-comment">#     &#x27;g_y&#x27;: &#x27;1&#x27;,</span><br><span class="hljs-comment">#     &#x27;a&#x27;: &#x27;3&#x27;,</span><br><span class="hljs-comment">#     &#x27;b&#x27;: &#x27;8&#x27;,</span><br><span class="hljs-comment"># &#125;</span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">CryptSM2</span>(<span class="hljs-title class_ inherited__">object</span>):<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, private_key, public_key, ecc_table=default_ecc_table</span>):<br>        <span class="hljs-comment">#初始化函数，需要输入公钥和私钥</span><br>        self.private_key = private_key<br>        self.para_len = <span class="hljs-built_in">len</span>(ecc_table[<span class="hljs-string">&#x27;n&#x27;</span>])<br>        self.public_key = self.Str_coordinate_to_jacobian(public_key)<br>        self.ecc_a3 = (<br>            <span class="hljs-built_in">int</span>(ecc_table[<span class="hljs-string">&#x27;a&#x27;</span>], base=<span class="hljs-number">16</span>) + <span class="hljs-number">3</span>) % <span class="hljs-built_in">int</span>(ecc_table[<span class="hljs-string">&#x27;p&#x27;</span>], base=<span class="hljs-number">16</span>)<br>        self.ecc_table = ecc_table<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">double_point</span>(<span class="hljs-params">self, Point</span>):  <span class="hljs-comment"># 倍点</span><br>        l = <span class="hljs-built_in">len</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(Point)) <span class="hljs-comment">#计算点的16进制长度 </span><br>        len_2 = <span class="hljs-number">2</span> * self.para_len<br>        x1 = <span class="hljs-built_in">int</span>(Point[<span class="hljs-number">0</span>], <span class="hljs-number">16</span>)<br>        y1 = <span class="hljs-built_in">int</span>(Point[<span class="hljs-number">1</span>], <span class="hljs-number">16</span>)<br>        z1 = <span class="hljs-built_in">int</span>(Point[<span class="hljs-number">2</span>], <span class="hljs-number">16</span>)<br><br>        p = <span class="hljs-built_in">int</span>(self.ecc_table[<span class="hljs-string">&#x27;p&#x27;</span>], base=<span class="hljs-number">16</span>)<br>        <span class="hljs-comment">#使用计算倍点的公式</span><br>        T6 = (z1 * z1) % p<br>        T2 = (y1 * y1) % p<br>        T3 = (x1 + T6) % p<br>        T4 = (x1 - T6) % p<br>        T1 = (T3 * T4) % p<br>        T3 = (y1 * z1) % p<br>        T4 = (T2 * <span class="hljs-number">8</span>) % p<br>        T5 = (x1 * T4) % p<br>        T1 = (T1 * <span class="hljs-number">3</span>) % p<br>        T6 = (T6 * T6) % p<br>        T6 = (self.ecc_a3 * T6) % p<br>        T1 = (T1 + T6) % p<br>        z3 = (T3 + T3) % p<br>        T3 = (T1 * T1) % p<br>        T2 = (T2 * T4) % p<br>        x3 = (T3 - T5) % p<br><br>        <span class="hljs-keyword">if</span> (T5 % <span class="hljs-number">2</span>) == <span class="hljs-number">1</span>:<br>            T4 = (T5 + ((T5 + p) &gt;&gt; <span class="hljs-number">1</span>) - T3) % p<br>        <span class="hljs-keyword">else</span>:<br>            T4 = (T5 + (T5 &gt;&gt; <span class="hljs-number">1</span>) - T3) % p<br><br>        T1 = (T1 * T4) % p<br>        y3 = (T1 - T2) % p<br><br>        form = <span class="hljs-string">&#x27;%%0%dx&#x27;</span> % self.para_len<br>        <span class="hljs-keyword">return</span> (form % x3, form % y3, form % z3)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">add_point</span>(<span class="hljs-params">self, P1, P2</span>):  <span class="hljs-comment"># 点加函数，P2点为仿射坐标即z=1，P1为Jacobian加重射影坐标</span><br>        p = <span class="hljs-built_in">int</span>(self.ecc_table[<span class="hljs-string">&#x27;p&#x27;</span>], base=<span class="hljs-number">16</span>)<br>        X1 = <span class="hljs-built_in">int</span>(P1[<span class="hljs-number">0</span>], <span class="hljs-number">16</span>)<br>        Y1 = <span class="hljs-built_in">int</span>(P1[<span class="hljs-number">1</span>], <span class="hljs-number">16</span>)<br>        Z1 = <span class="hljs-built_in">int</span>(P1[<span class="hljs-number">2</span>],<span class="hljs-number">16</span>)<br><br>        x2 = <span class="hljs-built_in">int</span>(P2[<span class="hljs-number">0</span>], <span class="hljs-number">16</span>)<br>        y2 = <span class="hljs-built_in">int</span>(P2[<span class="hljs-number">1</span>], <span class="hljs-number">16</span>)<br><br>        T1 = (Z1 * Z1) % p<br>        T2 = (y2 * Z1) % p<br>        T3 = (x2 * T1) % p<br>        T1 = (T1 * T2) % p<br>        T2 = (T3 - X1) % p<br>        T3 = (T3 + X1) % p<br>        T4 = (T2 * T2) % p<br>        T1 = (T1 - Y1) % p<br>        Z3 = (Z1 * T2) % p<br>        T2 = (T2 * T4) % p<br>        T3 = (T3 * T4) % p<br>        T5 = (T1 * T1) % p<br>        T4 = (X1 * T4) % p<br>        X3 = (T5 - T3) % p<br>        T2 = (Y1 * T2) % p<br>        T3 = (T4 - X3) % p<br>        T1 = (T1 * T3) % p<br>        Y3 = (T1 - T2) % p<br><br><br>        form = <span class="hljs-string">&#x27;%%0%dx&#x27;</span> % self.para_len<br>        <br>        <span class="hljs-keyword">return</span> (form % X3, form % Y3, form % Z3)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">kp</span>(<span class="hljs-params">self, k_int, Point_xy</span>):  <br>        <span class="hljs-comment"># kP运算，即k倍点的运算函数</span><br>        Point = Point_xy<br>        k = k_int<br>        mask_str = <span class="hljs-string">&#x27;8&#x27;</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.para_len - <span class="hljs-number">1</span>):<br>            mask_str += <span class="hljs-string">&#x27;0&#x27;</span><br>        mask = <span class="hljs-built_in">int</span>(mask_str, <span class="hljs-number">16</span>)<br>        Temp = Point<br>        flag = <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.para_len * <span class="hljs-number">4</span>): <span class="hljs-comment">#每个16进制4个bit</span><br>            <span class="hljs-keyword">if</span> (flag):<br>                Temp = self.double_point(Temp)<br>            <span class="hljs-keyword">if</span> (k &amp; mask) != <span class="hljs-number">0</span>: <span class="hljs-comment">#用与操作判断k的最高位是否为0</span><br>                <span class="hljs-keyword">if</span> (flag):<br>                    Temp = self.add_point(Temp, Point)<br>                <span class="hljs-keyword">else</span>:<br>                    flag = <span class="hljs-literal">True</span><br>                    Temp = Point<br>            k = k &lt;&lt; <span class="hljs-number">1</span><br>        <span class="hljs-keyword">return</span> self._convert_jacb_to_nor(Temp)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_convert_jacb_to_nor</span>(<span class="hljs-params">self, Point</span>): <span class="hljs-comment"># Jacobian加重射影坐标转换成仿射坐标</span><br>        len_2 = <span class="hljs-number">2</span> * self.para_len<br>        x = <span class="hljs-built_in">int</span>(Point[<span class="hljs-number">0</span>], <span class="hljs-number">16</span>)<br>        y = <span class="hljs-built_in">int</span>(Point[<span class="hljs-number">1</span>], <span class="hljs-number">16</span>)<br>        z = <span class="hljs-built_in">int</span>(Point[<span class="hljs-number">2</span>], <span class="hljs-number">16</span>)<br>        p = <span class="hljs-built_in">int</span>(self.ecc_table[<span class="hljs-string">&#x27;p&#x27;</span>], base=<span class="hljs-number">16</span>)<br>        z_inv = <span class="hljs-built_in">pow</span>(z, p - <span class="hljs-number">2</span>, p)<br>        z_invSquar = (z_inv * z_inv) % p<br>        z_invQube = (z_invSquar * z_inv) % p<br>        x_new = (x * z_invSquar) % p<br>        y_new = (y * z_invQube) % p<br>        z_new = (z * z_inv) % p<br>        <span class="hljs-keyword">if</span> z_new == <span class="hljs-number">1</span>:<br>            form = <span class="hljs-string">&#x27;%%0%dx&#x27;</span> % self.para_len<br>            <br>            <span class="hljs-keyword">return</span> (form % x_new, form % y_new, form % z_new)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">encrypt</span>(<span class="hljs-params">self, data_str</span>):<br>        <span class="hljs-comment"># 加密函数，data消息字符串</span><br>        data = data_str.encode() <span class="hljs-comment">#将消息转化为bytes流</span><br>        msg = data.<span class="hljs-built_in">hex</span>() <span class="hljs-comment"># 消息转化为16进制字符串</span><br>        G = (self.ecc_table[<span class="hljs-string">&#x27;g_x&#x27;</span>],self.ecc_table[<span class="hljs-string">&#x27;g_y&#x27;</span>],<span class="hljs-string">&quot;1&quot;</span>)<br>        k = <span class="hljs-number">2</span><span class="hljs-comment">#int(func.random_hex(self.para_len),16) #1.产生随机数k \in [1,n-1]</span><br>        C1 = self.kp(k,G) <span class="hljs-comment">#2.计算[k]G = (x1,y1)</span><br>        C1 = self._convert_jacb_to_nor(C1)<br>        C1 = C1[<span class="hljs-number">0</span>]+C1[<span class="hljs-number">1</span>]<br>        xy = self.kp(k,self.public_key) <span class="hljs-comment">#3.计算点s = [k]pk</span><br>        x2 = xy[<span class="hljs-number">0</span>]<br>        y2 = xy[<span class="hljs-number">1</span>]<br>        m_len = <span class="hljs-built_in">len</span>(msg)<br>        t = sm3.sm3_kdf((x2+y2).encode(<span class="hljs-string">&#x27;utf8&#x27;</span>), m_len/<span class="hljs-number">2</span>)<span class="hljs-comment">#5.计算t = KDF(x2||y2,klen)</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">int</span>(t,<span class="hljs-number">16</span>)==<span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">else</span>:<br>            form = <span class="hljs-string">&#x27;%%0%dx&#x27;</span> % m_len <span class="hljs-comment">#两个百分号代表%</span><br>            C2 = form % (<span class="hljs-built_in">int</span>(msg, <span class="hljs-number">16</span>) ^ <span class="hljs-built_in">int</span>(t, <span class="hljs-number">16</span>)) <span class="hljs-comment">#6.计算C2 = M 异或 t，C2的长度理应为消息M的长度</span><br>            C3 = sm3.sm3_hash([<br>                i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">bytes</span>.fromhex(<span class="hljs-string">&#x27;%s%s%s&#x27;</span>% (x2,msg,y2))<span class="hljs-comment">#7.计算哈希函数C3 = Hash(x2 || M || y2)</span><br>            ])<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">bytes</span>.fromhex(<span class="hljs-string">&#x27;%s%s%s&#x27;</span> % (C1,C3,C2))<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">decrypt</span>(<span class="hljs-params">self, data</span>):<br>            <span class="hljs-comment"># 解密函数，data密文（bytes）</span><br>            data = data.<span class="hljs-built_in">hex</span>()<br>            len_2 = <span class="hljs-number">2</span> * self.para_len<br>            len_3 = len_2 + <span class="hljs-number">64</span> <br>            C1 = self.Str_coordinate_to_jacobian(data[<span class="hljs-number">0</span>:len_2]) <span class="hljs-comment">#1.提取出C1,并转化为坐标点</span><br>            C3 = data[len_2:len_3]<br>            C2 = data[len_3:]<br>            xyz = self.kp(<span class="hljs-built_in">int</span>(self.private_key,<span class="hljs-number">16</span>),C1)<span class="hljs-comment">#3.计算[sk]C1 = (x2,y2)</span><br>            xy = self._convert_jacb_to_nor(xyz)<br>            <span class="hljs-comment"># print(&#x27;xy = %s&#x27; % xy)</span><br>            x2 = xy[<span class="hljs-number">0</span>]<br>            y2 = xy[<span class="hljs-number">1</span>]<br>            cl = <span class="hljs-built_in">len</span>(C2)<br>            t = sm3.sm3_kdf((x2+y2).encode(<span class="hljs-string">&#x27;utf8&#x27;</span>), cl/<span class="hljs-number">2</span>)<span class="hljs-comment">#4.计算t = KDF(x2||y2,klen)</span><br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">int</span>(t, <span class="hljs-number">16</span>) == <span class="hljs-number">0</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br>            <span class="hljs-keyword">else</span>:<br>                form = <span class="hljs-string">&#x27;%%0%dx&#x27;</span> % cl<br>                M = form % (<span class="hljs-built_in">int</span>(C2,<span class="hljs-number">16</span>) ^ <span class="hljs-built_in">int</span>(t,<span class="hljs-number">16</span>))<span class="hljs-comment">#5.恢复明文M = C2 异或 t</span><br>                u = sm3.sm3_hash([<br>                    i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">bytes</span>.fromhex(<span class="hljs-string">&#x27;%s%s%s&#x27;</span>% (x2,M,y2))<br>                ])<br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">bytes</span>.fromhex(M)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">Str_coordinate_to_jacobian</span>(<span class="hljs-params">self,Point_str</span>):<br>        Point = Point_str<br>        x = Point[<span class="hljs-number">0</span>:self.para_len]<br>        y = Point[self.para_len:<span class="hljs-number">2</span>*self.para_len]<br>        z = <span class="hljs-string">&quot;1&quot;</span><br>        <span class="hljs-keyword">return</span> (x,y,z)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># sm2的公私钥</span><br>    SM2_PRIVATE_KEY = <span class="hljs-string">&#x27;00B9AB0B828FF68872F21A837FC303668428DEA11DCD1B24429D0C99E24EED83D5&#x27;</span><br>    SM2_PUBLIC_KEY = <span class="hljs-string">&#x27;B9C9A6E04E9C91F7BA880429273747D7EF5DDEB0BB2FF6317EB00BEF331A83081A6994B8993F3F5D6EADDDB81872266C87C018FB4162F5AF347B483E24620207&#x27;</span><br>    operator = CryptSM2(SM2_PRIVATE_KEY,SM2_PUBLIC_KEY)<br>    c = operator.encrypt(<span class="hljs-string">&quot;网络空间安全&quot;</span>)<br>    <span class="hljs-built_in">print</span>(base64.b64encode(c))<br>    result = operator.decrypt(c).decode(encoding=<span class="hljs-string">&quot;utf-8&quot;</span>)<br>    <span class="hljs-built_in">print</span>(result)<br><br>    <span class="hljs-comment"># n = int(default_ecc_table[&#x27;n&#x27;],16)</span><br>    <span class="hljs-comment"># G = operator.Str_coordinate_to_jacobian(SM2_PRIVATE_KEY)</span><br>    <span class="hljs-comment"># print(operator.kp(n,G))</span><br>    <br></code></pre></td></tr></table></figure>
+
 
                 
               </div>

@@ -23,11 +23,19 @@
 <meta property="og:site_name" content="Harper">
 <meta property="og:description" content="It&#39;s security or not , is a question">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133652103.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133729955.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119141708556.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119142638087.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144312367.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144605227.png">
+<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119153735221.png">
 <meta property="article:published_time" content="2022-01-19T03:31:21.000Z">
 <meta property="article:modified_time" content="2023-03-30T08:52:48.231Z">
 <meta property="article:author" content="harper">
 <meta property="article:tag" content="BGV">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133652103.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -253,7 +261,7 @@
         
         
         
-          25 分钟
+          24 分钟
         
       </span>
     
@@ -304,173 +312,58 @@
             
               <div class="markdown-body">
                 
-                <h1 id="bgv参数设置">BGV参数设置</h1>
-<h2 id="格知识基础lattice">格知识基础（lattice）</h2>
-<h3 id="格的定义">格的定义</h3>
-<p>格（lattice）就是说在一个空间内，我定义一组basis向量（基向量）。然后这些basis向量加上整数系数构成的所有点就是格了。非常简单。最简单的例子就是我们的直角坐标系，（0，1），（1，0）就是basis向量，其它所有整数点都是格。画图就是：</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133652103.png" srcset="/img/loading.gif" lazyload
-alt="image-20230119133652103" />
-<figcaption aria-hidden="true">image-20230119133652103</figcaption>
-</figure>
+                <h1 id="BGV参数设置"><a href="#BGV参数设置" class="headerlink" title="BGV参数设置"></a>BGV参数设置</h1><h2 id="格知识基础（lattice）"><a href="#格知识基础（lattice）" class="headerlink" title="格知识基础（lattice）"></a>格知识基础（lattice）</h2><h3 id="格的定义"><a href="#格的定义" class="headerlink" title="格的定义"></a>格的定义</h3><p>格（lattice）就是说在一个空间内，我定义一组basis向量（基向量）。然后这些basis向量加上整数系数构成的所有点就是格了。非常简单。最简单的例子就是我们的直角坐标系，（0，1），（1，0）就是basis向量，其它所有整数点都是格。画图就是：</p>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133652103.png" srcset="/img/loading.gif" lazyload alt="image-20230119133652103"></p>
 <p>我们再看详细的定义：</p>
-<p>令$ v_1,..., v_n ^m$ 是一组线性独立向量.。格<span
-class="math inline">\(L\)</span>是这些向量的线性组合所形成的空间。 <span
-class="math display">\[
-L = {a_1v_1 + a_2v_2 + ··· + a_nv_n : a_1, a_2,...,a_n} \in \mathbb{Z}
-\]</span> 放在二维中就是坐标系中一系列的点：</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133729955.png" srcset="/img/loading.gif" lazyload
-alt="image-20230119133729955" />
-<figcaption aria-hidden="true">image-20230119133729955</figcaption>
-</figure>
-<h3 id="最近向量问题cvp">最近向量问题(CVP)</h3>
-<p><strong>定义 The Closest Vector Problem
-(CVP):</strong>给定一个向量<span class="math inline">\(w \in
-\mathbb{R}^m\)</span>，这个向量不在格L中，我们需要找一个最短的向量<span
-class="math inline">\(v \in L\)</span>，使得欧几里得范数(Euclidean
-norm)：<span class="math inline">\(\|v-w\|\)</span>最小</p>
+<p>令$ v_1,…, v_n \in \mathbb{R}^m$  是一组线性独立向量.。格$L$是这些向量的线性组合所形成的空间。<br>$$<br>L &#x3D; {a_1v_1 + a_2v_2 + ··· + a_nv_n : a_1, a_2,…,a_n} \in \mathbb{Z}<br>$$<br>放在二维中就是坐标系中一系列的点：</p>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119133729955.png" srcset="/img/loading.gif" lazyload alt="image-20230119133729955"></p>
+<h3 id="最近向量问题-CVP"><a href="#最近向量问题-CVP" class="headerlink" title="最近向量问题(CVP)"></a>最近向量问题(CVP)</h3><p>**定义 The Closest Vector Problem (CVP):**给定一个向量$w \in \mathbb{R}^m$，这个向量不在格L中，我们需要找一个最短的向量$v \in L$，使得欧几里得范数(Euclidean norm)：$|v-w|$最小</p>
 <p>如下图所示：</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119141708556.png" srcset="/img/loading.gif" lazyload
-alt="image-20230119141708556" />
-<figcaption aria-hidden="true">image-20230119141708556</figcaption>
-</figure>
-<p>下面给出babai's Algorithm来解决最短向量问题：</p>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119141708556.png" srcset="/img/loading.gif" lazyload alt="image-20230119141708556"></p>
+<p>下面给出babai’s Algorithm来解决最短向量问题：</p>
 <ul>
-<li>把向量表示成如下形式（高斯消元法求解线性代数方程）：<span
-class="math inline">\(w = t_1v_1 + t_2v_2 + ··· + t_nv_n \;\; where \;\;
-t _1,...,t_n \in \mathbb{R}\)</span></li>
-<li>令<span class="math inline">\(a_i = round(t_i) \in
-\mathbb{Z}\)</span>，这里的round表示四舍五入取整</li>
-<li>最后得到最短向量<span class="math inline">\(v = a_1v_1 + a_2v_2 +
-··· + a_nv_n \;\; where \;\; a_1,...,a_n \in \mathbb{Z}\)</span></li>
+<li>把向量表示成如下形式（高斯消元法求解线性代数方程）：$w &#x3D; t_1v_1 + t_2v_2 + ··· + t_nv_n ;; where ;; t _1,…,t_n \in \mathbb{R}$</li>
+<li>令$a_i &#x3D; round(t_i) \in \mathbb{Z}$，这里的round表示四舍五入取整</li>
+<li>最后得到最短向量$v &#x3D; a_1v_1 + a_2v_2 + ··· + a_nv_n ;; where ;; a_1,…,a_n \in \mathbb{Z}$</li>
 </ul>
 <p>看起来很合理，但实际上对向量的基有要求，即这些基尽可能的正交，如果不正交，那么会得到错误的结果，如下图所示，这是一个二维的格，如果格的基夹角太小（正交的不好），那么会求得错误的结果</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119142638087.png" srcset="/img/loading.gif" lazyload
-alt="image-20230119142638087" />
-<figcaption aria-hidden="true">image-20230119142638087</figcaption>
-</figure>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119142638087.png" srcset="/img/loading.gif" lazyload alt="image-20230119142638087"></p>
 <p><font color="red">也就是说，我们有必要把格的基正交化</font></p>
-<h3 id="正交化">正交化</h3>
-<p>我们介绍几种正交化方法：</p>
+<h3 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h3><p>我们介绍几种正交化方法：</p>
 <ul>
 <li>高斯算法，只能处理二维向量</li>
 <li>LLL格约算法，可以处理高维向量，让高维的基正交化</li>
 </ul>
 <p>当维度很高的时候，正交化的时间复杂度较高，导致解密时间很长</p>
-<h2 id="lwe困难问题">LWE困难问题</h2>
-<h3 id="lwe基本介绍">LWE基本介绍</h3>
-<p>假设一个如下线性方程组： <span class="math display">\[
-\begin{equation}
-\left\{
-\begin{array}{c}
-    a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n=y_1 \\
-    a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n=y_2 \\
-    \cdots \\
-    a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n=y_n
-\end{array}
-\right.
-\end{equation}
-\]</span></p>
-<p>要解这样一个方程很容易，只需要用高斯消元法可以一步步求解，但我们思考一个变式。如果把每一项都加上一个误差项呢？
-$$ <span class="math display">\[\begin{equation}
-\left\{
-\begin{array}{c}
-    a_{11}x_1+a_{12}x_2   + \varepsilon_2=y_2 \\
-   
-\end{array}
-\right.
-\end{equation}\]</span> $$
-是不是这个问题就变得困难起来了，我们再仔细观察，很类似于CVP问题</p>
-<p><img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144312367.png" srcset="/img/loading.gif" lazyload
-alt="image-20230119144312367" />在这个例子中<span
-class="math inline">\(\vec{v_i} =
-(a_{i1},a_{i2},\dots,a_{in})\)</span>为格中第<span
-class="math inline">\(i\)</span>个基向量，而<span
-class="math inline">\((x_1,x_2,\dots,x_n)\)</span>为我们要求解的系数，而<span
-class="math inline">\(\vec{w} =
-(y_1,y_2,\dots,y_n)\)</span>为随机向量。</p>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144605227.png" srcset="/img/loading.gif" lazyload
-alt="image-20230119144605227" />
-<figcaption aria-hidden="true">image-20230119144605227</figcaption>
-</figure>
-<h3 id="rlwe介绍">RLWE介绍</h3>
-<p>原理与LEW类似，只不过把运算域搬到了多项式环上，其优点是：</p>
+<h2 id="LWE困难问题"><a href="#LWE困难问题" class="headerlink" title="LWE困难问题"></a>LWE困难问题</h2><h3 id="LWE基本介绍"><a href="#LWE基本介绍" class="headerlink" title="LWE基本介绍"></a>LWE基本介绍</h3><p>假设一个如下线性方程组：<br>$$<br>\begin{equation}<br>\left{<br>\begin{array}{c}<br>    a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n&#x3D;y_1 \<br>    a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n&#x3D;y_2 \<br>    \cdots \<br>    a_{n1}x_1+a_{n2}x_2+\cdots+a_{nn}x_n&#x3D;y_n<br>\end{array}<br>\right.<br>\end{equation}<br>$$</p>
+<p>要解这样一个方程很容易，只需要用高斯消元法可以一步步求解，但我们思考一个变式。如果把每一项都加上一个误差项呢？<br>$$<br>\begin{equation}<br>\left{<br>\begin{array}{c}<br>    a_{11}x_1+a_{12}x_2   + \varepsilon_2&#x3D;y_2 \</p>
+<p>\end{array}<br>\right.<br>\end{equation}<br>$$<br>是不是这个问题就变得困难起来了，我们再仔细观察，很类似于CVP问题</p>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144312367.png" srcset="/img/loading.gif" lazyload alt="image-20230119144312367">在这个例子中$\vec{v_i} &#x3D; (a_{i1},a_{i2},\dots,a_{in})$为格中第$i$个基向量，而$(x_1,x_2,\dots,x_n)$为我们要求解的系数，而$\vec{w} &#x3D; (y_1,y_2,\dots,y_n)$为随机向量。</p>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119144605227.png" srcset="/img/loading.gif" lazyload alt="image-20230119144605227"></p>
+<h3 id="RLWE介绍"><a href="#RLWE介绍" class="headerlink" title="RLWE介绍"></a>RLWE介绍</h3><p>原理与LEW类似，只不过把运算域搬到了多项式环上，其优点是：</p>
 <ul>
 <li>加密的密钥更小</li>
 <li>有了NTT优化多项式运算，加密时间更短</li>
 </ul>
-<h2 id="bgv参数设置-1">BGV参数设置</h2>
-<p>提出了一个经验推导的公式，该公式将给定密文模数大小logq的安全级别λ与维数n联系起来，从而推导安全性公式。</p>
-<h3 id="lattices-and-hermite-factor">Lattices and Hermite Factor</h3>
-<p>给定一个矩阵<span class="math inline">\(B =
-(\vec{b_1},\vec{b_2},\dots,\vec{b_n})\)</span>，以此作为基向量格的定义：
-<span class="math display">\[
-L = L(B) = \{\sum^k_{i=1}\gamma_i*\vec{b_i}:\gamma_i \in
-\mathbb{Z},\vec{b_i} \in B \}
-\]</span></p>
-<p>假设有一个格<span
-class="math inline">\(L\)</span>，那么他的体积表示为<span
-class="math inline">\(Vol(L) = \sqrt{det(B^TB)}\)</span></p>
-<p>定义Hermite Factor: <span class="math display">\[
-\delta^k_0 = \|b_1\|/Vol(L)^{1/k}
-\]</span> 这里的<span
-class="math inline">\(b_i\)</span>为格L约简之后的基中的最短向量。</p>
-<h3 id="基于rlwe的安全方案">基于RLWE的安全方案</h3>
-<p>我们回顾LWE的方案：</p>
+<h2 id="BGV参数设置-1"><a href="#BGV参数设置-1" class="headerlink" title="BGV参数设置"></a>BGV参数设置</h2><p>提出了一个经验推导的公式，该公式将给定密文模数大小logq的安全级别λ与维数n联系起来，从而推导安全性公式。</p>
+<h3 id="Lattices-and-Hermite-Factor"><a href="#Lattices-and-Hermite-Factor" class="headerlink" title="Lattices and Hermite Factor"></a>Lattices and Hermite Factor</h3><p>给定一个矩阵$B &#x3D; (\vec{b_1},\vec{b_2},\dots,\vec{b_n})$，以此作为基向量格的定义：<br>$$<br>L &#x3D; L(B) &#x3D; {\sum^k_{i&#x3D;1}\gamma_i*\vec{b_i}:\gamma_i \in \mathbb{Z},\vec{b_i} \in B }<br>$$</p>
+<p>假设有一个格$L$，那么他的体积表示为$Vol(L) &#x3D; \sqrt{det(B^TB)}$</p>
+<p>定义Hermite Factor:<br>$$<br>\delta^k_0 &#x3D; |b_1|&#x2F;Vol(L)^{1&#x2F;k}<br>$$<br>这里的$b_i$为格L约简之后的基中的最短向量。</p>
+<h3 id="基于RLWE的安全方案"><a href="#基于RLWE的安全方案" class="headerlink" title="基于RLWE的安全方案"></a>基于RLWE的安全方案</h3><p>我们回顾LWE的方案：</p>
 <blockquote>
-<p>密钥<span class="math inline">\(s\in
-\mathbb{Z}^n_q\)</span>,给定一个<span class="math inline">\(b\in
-\mathbb{Z}^m_q\)</span>和<span class="math inline">\(A \in
-\mathbb{Z}^{m×n}_q\)</span>,满足<span class="math inline">\(A*s+e = b
-\mod{q}\)</span>，这里e从误差分布中采样</p>
+<p>密钥$s\in \mathbb{Z}^n_q$,给定一个$b\in \mathbb{Z}^m_q$和$A \in \mathbb{Z}^{m×n}_q$,满足$A*s+e &#x3D; b \mod{q}$，这里e从误差分布中采样</p>
 </blockquote>
 <p>基于LWE的方案的安全性取决于这个问题的难解性，而对这些方案的攻击是找到有效的算法来解决它们。有很多方案来解决LWE问题，其中大部分是基于格约简。也就是说，从一个差的格基，找到一个更好的，更正交的基。</p>
-<p>实际中使用的最有名的格约简算法是BKZ(块Korkin-Zolotarev约简)。在这些算法中，时间复杂性和约化基的正交性由Hermite因子来表征。具体地说，算法的复杂度由Hermite因子来表示：
-<span class="math display">\[
-log(t_{BKZ}(\delta_o)) = \omega(-
-\frac{log(log(\delta_0))}{log(\delta_0)})
-\]</span></p>
-<h3 id="bgv安全性分析">BGV安全性分析</h3>
-<p>我们考虑满秩的格L，格的最短向量的范数为<span
-class="math inline">\(\|\vec{b_1}\| =
-\delta^kq^{n/k}\)</span>,攻击者选择一个采样数M，使得<span
-class="math inline">\(\|b_1\| = \delta^Mq^{n/M}\)</span></p>
-<p>最小，前几年的工作表明，当<span class="math inline">\(M =
-\sqrt{nlog(q)/log \delta_0}\)</span>的时候，可以缩减最短向量<span
-class="math inline">\(\|\vec{b_1}\| = q\)</span>，这表明 <span
-class="math display">\[
-log q = log(\delta_0^M q^{n/M}) = 2\sqrt{nlog(q)log(\delta_0)}
-\\
-\Rightarrow n  = log(q)/(4log(\delta_0))
-\]</span> 我们把这个等式代入到，等式(6)，可以得到对应的BGV参数设置 <span
-class="math display">\[
-\lambda \approx -log(\cfrac{A*log(q)}{n})\cfrac{Bn}{logq} +
-C\sqrt{\cfrac{logq}{n}}log(\cfrac{n}{log(q)})
-\]</span> 其中<span
-class="math inline">\(\lambda\)</span>为安全参数，<span
-class="math inline">\(log(q)\)</span>为密文模数的比特数</p>
+<p>实际中使用的最有名的格约简算法是BKZ(块Korkin-Zolotarev约简)。在这些算法中，时间复杂性和约化基的正交性由Hermite因子来表征。具体地说，算法的复杂度由Hermite因子来表示：<br>$$<br>log(t_{BKZ}(\delta_o)) &#x3D; \omega(- \frac{log(log(\delta_0))}{log(\delta_0)})<br>$$</p>
+<h3 id="BGV安全性分析"><a href="#BGV安全性分析" class="headerlink" title="BGV安全性分析"></a>BGV安全性分析</h3><p>我们考虑满秩的格L，格的最短向量的范数为$|\vec{b_1}| &#x3D; \delta^kq^{n&#x2F;k}$,攻击者选择一个采样数M，使得$|b_1| &#x3D; \delta^Mq^{n&#x2F;M}$</p>
+<p>最小，前几年的工作表明，当$M &#x3D; \sqrt{nlog(q)&#x2F;log \delta_0}$的时候，可以缩减最短向量$|\vec{b_1}| &#x3D; q$，这表明<br>$$<br>log q &#x3D; log(\delta_0^M q^{n&#x2F;M}) &#x3D; 2\sqrt{nlog(q)log(\delta_0)}<br>\<br>\Rightarrow n  &#x3D; log(q)&#x2F;(4log(\delta_0))<br>$$<br>我们把这个等式代入到，等式(6)，可以得到对应的BGV参数设置<br>$$<br>\lambda \approx -log(\cfrac{A*log(q)}{n})\cfrac{Bn}{logq} + C\sqrt{\cfrac{logq}{n}}log(\cfrac{n}{log(q)})<br>$$<br>其中$\lambda$为安全参数，$log(q)$为密文模数的比特数</p>
 <p>当错误分布为高斯分布的时候:</p>
 <ul>
-<li>A = 0.65</li>
-<li>B = 0.53</li>
-<li>C = 22.88</li>
+<li>A &#x3D; 0.65 </li>
+<li>B &#x3D; 0.53 </li>
+<li>C &#x3D; 22.88</li>
 </ul>
-<figure>
-<img
-src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119153735221.png" srcset="/img/loading.gif" lazyload
-alt="image-20230119153735221" />
-<figcaption aria-hidden="true">image-20230119153735221</figcaption>
-</figure>
+<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20230119153735221.png" srcset="/img/loading.gif" lazyload alt="image-20230119153735221"></p>
 
                 
               </div>

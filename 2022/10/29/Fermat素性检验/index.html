@@ -306,9 +306,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="fermat素性检验">Fermat素性检验</h1>
-<h2 id="实验环境">实验环境</h2>
-<blockquote>
+                <h1 id="Fermat素性检验"><a href="#Fermat素性检验" class="headerlink" title="Fermat素性检验"></a>Fermat素性检验</h1><h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><blockquote>
 <ul>
 <li>电脑：联想拯救者R9000p</li>
 <li>cpu：AMD Ryzen 7 5800H</li>
@@ -324,61 +322,31 @@
 <li>理解Fermat素性检验的原理，并编程实现</li>
 <li>测试一些大数，以一定概率检验其素性</li>
 </ul>
-<h2 id="fermat素性检验介绍">Fermat素性检验介绍</h2>
-<h3 id="背景">背景</h3>
-<p><strong>费马素性检验</strong>是一种素数判定法则，利用<a
-href="https://baike.baidu.com/item/随机化算法/6233182?fromModule=lemma_inlink">随机化算法</a>判断一个数是<a
-href="https://baike.baidu.com/item/合数/49186?fromModule=lemma_inlink">合数</a>还是<em>可能是</em>素数。</p>
-<h3 id="fermat小定理">Fermat小定理</h3>
-<p><span class="math display">\[
-对\forall(a,p)=1,p为质数\\
-\exists a^{p-1} \equiv 1 \pmod{p}
-\]</span></p>
+<h2 id="Fermat素性检验介绍"><a href="#Fermat素性检验介绍" class="headerlink" title="Fermat素性检验介绍"></a>Fermat素性检验介绍</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p><strong>费马素性检验</strong>是一种素数判定法则，利用<a href="https://baike.baidu.com/item/%E9%9A%8F%E6%9C%BA%E5%8C%96%E7%AE%97%E6%B3%95/6233182?fromModule=lemma_inlink">随机化算法</a>判断一个数是<a href="https://baike.baidu.com/item/%E5%90%88%E6%95%B0/49186?fromModule=lemma_inlink">合数</a>还是<em>可能是</em>素数。</p>
+<h3 id="Fermat小定理"><a href="#Fermat小定理" class="headerlink" title="Fermat小定理"></a>Fermat小定理</h3><p>$$<br>对\forall(a,p)&#x3D;1,p为质数\<br>\exists a^{p-1} \equiv 1 \pmod{p}<br>$$</p>
 <blockquote>
 <p>证明：</p>
-<p><span
-class="math inline">\(\{1,2,3,4...p-1\}\)</span>是p的既约剩余系</p>
-<p><span class="math inline">\(\because a,p\)</span>互质</p>
-<p><span class="math inline">\(\therefore \{a*1 , a*2 , a*3 , a*4
-,\dots,a*(p-1)\}\)</span>也为p的既约剩余系</p>
-<p><span class="math inline">\(\therefore 1*2*3 \dots
-*(p-1)≡a*2*a*3*a......(p-1)*a \pmod{p}\)</span></p>
-<p>化简得<span class="math inline">\(a^{p-1} \equiv 1
-\pmod{p}\)</span></p>
+<p>${1,2,3,4…p-1}$是p的既约剩余系</p>
+<p>$\because a,p$互质</p>
+<p>$\therefore {a<em>1 , a</em>2 , a<em>3 , a</em>4 ,\dots,a*(p-1)}$也为p的既约剩余系</p>
+<p>$\therefore 1<em>2</em>3 \dots <em>(p-1)≡a</em>2<em>a</em>3*a……(p-1)*a  \pmod{p}$</p>
+<p>化简得$a^{p-1} \equiv 1 \pmod{p}$</p>
 </blockquote>
-<h3 id="fermat素性检验基本原理">Fermat素性检验基本原理</h3>
-<p>根据<a
-href="https://baike.baidu.com/item/费马小定理/4776158?fromModule=lemma_inlink">费马小定理</a>：如果<em>p</em>是素数，<span
-class="math inline">\(1\leq a \leq p-1\)</span></p>
-<p>那么 <span class="math display">\[
-a^{p-1} \equiv 1 \pmod{p}
-\]</span>
-如果我们想知道<em>n</em>是否是素数，我们在中间选取<em>a</em>，看看上面等式是否成立。</p>
+<h3 id="Fermat素性检验基本原理"><a href="#Fermat素性检验基本原理" class="headerlink" title="Fermat素性检验基本原理"></a>Fermat素性检验基本原理</h3><p>根据<a href="https://baike.baidu.com/item/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86/4776158?fromModule=lemma_inlink">费马小定理</a>：如果<em>p</em>是素数，$1\leq a \leq p-1$</p>
+<p>那么<br>$$<br>a^{p-1} \equiv 1 \pmod{p}<br>$$<br>如果我们想知道<em>n</em>是否是素数，我们在中间选取<em>a</em>，看看上面等式是否成立。</p>
 <ul>
 <li>如果对于数值<em>a</em>等式不成立，那么<em>n</em>是合数。</li>
-<li>如果有很多的<em>a</em>能够使等式成立，那么我们可以说<em>n</em>可能是素数，或者<a
-href="https://baike.baidu.com/item/伪素数/9262664?fromModule=lemma_inlink">伪素数</a>。</li>
+<li>如果有很多的<em>a</em>能够使等式成立，那么我们可以说<em>n</em>可能是素数，或者<a href="https://baike.baidu.com/item/%E4%BC%AA%E7%B4%A0%E6%95%B0/9262664?fromModule=lemma_inlink">伪素数</a>。</li>
 </ul>
 <p>在我们检验过程中，有可能我们选取的<em>a</em>都能让等式成立，然而n却是合数，所以最终得到的结果是，<font color = "red">我们以一定概率确定p是否为素数</font></p>
-<h3 id="fermat素性检验流程">Fermat素性检验流程</h3>
-<p>给定奇整数 <span class="math inline">\(m\geq3\)</span> 和安全参数
-<span class="math inline">\(k=5\)</span> （1） 随机选取整数<span
-class="math inline">\(a\)</span>,令<span class="math inline">\(2\leq a
-\leq m-2\)</span> （2） 计算<span class="math inline">\(g=(a,
-m)\)</span>，如果<span class="math inline">\(g
-=1\)</span>，转（3）；否则，跳出，m为合数 （3） 计算<span
-class="math inline">\(r
-=a^{m-1}\pmod{m}\)</span>，如果r=1,m可能是素数，转（1）；否则，跳出，m为合数
-（4） 重复上述过程k次，如果每次得到m可能为素数，则m为素数的概率为<span
-class="math inline">\(1- \frac1{2^k}\)</span> 。</p>
+<h3 id="Fermat素性检验流程"><a href="#Fermat素性检验流程" class="headerlink" title="Fermat素性检验流程"></a>Fermat素性检验流程</h3><p>给定奇整数 $m\geq3$ 和安全参数 $k&#x3D;5$<br>（1） 随机选取整数$a$,令$2\leq a \leq m-2$<br>（2） 计算$g&#x3D;(a, m)$，如果$g &#x3D;1$，转（3）；否则，跳出，m为合数<br>（3） 计算$r &#x3D;a^{m-1}\pmod{m}$，如果r&#x3D;1,m可能是素数，转（1）；否则，跳出，m为合数<br>（4） 重复上述过程k次，如果每次得到m可能为素数，则m为素数的概率为$1- \frac1{2^k}$ 。</p>
 <img src="/2022/10/29/Fermat%E7%B4%A0%E6%80%A7%E6%A3%80%E9%AA%8C/%E6%B5%81%E7%A8%8B%E5%9B%BE.png" srcset="/img/loading.gif" lazyload class="流程图">
-<h2 id="python代码">python代码</h2>
-<p>需要导入math模块求最大公因数</p>
+
+<h2 id="python代码"><a href="#python代码" class="headerlink" title="python代码"></a>python代码</h2><p>需要导入math模块求最大公因数</p>
 <p>需要导入random模块来产生随机数</p>
-<p>求<span class="math inline">\(r
-=a^{m-1}\pmod{m}\)</span>必须使用pow(a,num-1,num)函数一边乘法一边取模运算速度较快，不能先算<span
-class="math inline">\(a^{m-1}\)</span>再取模，否则时间太长算不出来</p>
+<p>求$r &#x3D;a^{m-1}\pmod{m}$必须使用pow(a,num-1,num)函数一边乘法一边取模运算速度较快，不能先算$a^{m-1}$再取模，否则时间太长算不出来</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_prime</span>(<span class="hljs-params">num, k=<span class="hljs-number">7</span></span>):<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(k):<br>        a=random.randrange(<span class="hljs-number">2</span>,num-<span class="hljs-number">2</span>)<br>        <span class="hljs-keyword">if</span> math.gcd(a, num)!=<span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>, <span class="hljs-number">1</span>-(<span class="hljs-number">0.2</span>)**k<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">pow</span>(a,num-<span class="hljs-number">1</span>,num)!=<span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span> , <span class="hljs-number">1</span>-(<span class="hljs-number">0.2</span>)**k<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span> , <span class="hljs-number">1</span>-(<span class="hljs-number">0.2</span>)**k<br>m1 = <span class="hljs-number">743476040059754298379331647007684224429004972336533937786799284757790400765316630522369642718204165253922832684184615021404737105614714107158733905598636152327037707290538422718453498125366750918857659068838460954633737911274770976191590193809661578032117496009853673140977556559136466107768672598883924301125589893895001253674886100289402530711221893</span><br>m2 = <span class="hljs-number">5434520625653357625890820149570485819447986258433769976634917091398967074086679540928507095017715540385352266035820823142060119390272763774034231321959236056764511968630360067353876686142517564224926196131349204754111599877101485686283117193149781387816214484583521923017500621725053392290279263586984207169423800476914654441473576611460323772832328657</span><br>m3 = <span class="hljs-number">876147742992673125957404768949712978720573116974723188491435550196169965040848206868200084918233743662847668000971402407461887306389122707315529364807593342507936022301657320206278702095378618110195051280478534126716517153056984269659532882692418682262081495725304483536777013188527470348249542840277926802938912332306310470632601156641005608958891</span><br>m4 = <span class="hljs-number">9876147742992673125957404768949712978720573116974723188491435550196169965040848206868200084918233743662847668000971402407461887306389122707315529364807593342507936022301657320206278702095378618110195051280478534126716517153056984269659532882692418682262081495725304483536777013188527470348249542840277926802938912332306310470632601156641005608958891</span><br><br>result , pr = is_prime(m4)<br><span class="hljs-keyword">if</span> result:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;该数以&quot;</span>,pr*<span class="hljs-number">100</span>,<span class="hljs-string">&quot;%的概率判定为素数&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;该数不是素数&quot;</span>)<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
