@@ -4,9 +4,9 @@ const ap = new APlayer({
 	autoplay: true, //自动播放
     audio: [
 	{
-        name: "浴室",
-        artist: 'deca joins',
-        url: 'https://m704.music.126.net/20211212133437/6298f876daf4b3a20b984659f71f8968/jdyyaac/000c/560b/5153/7f43625368aa52c4fbb0f968fa2007d2.m4a?authSecret=0000017dad0be60506550aa4681408a0',
+        name: "where we're going",
+        artist: 'elijah woods',
+        url: 'https://m804.music.126.net/20241204022425/3e25279427f6af7e1f8e9f686e38da8f/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/29405971135/b0ee/ccc4/f397/b102c6b41dc18bfa72eeb1f6793adfde.mp3?authSecret=000001938dad4df311c40a3b1db04865',
         cover: 'https://p1.music.126.net/byjfkEIOWI_RmxSKEWTPyw==/18910500486297525.jpg?param=200y200',	
     },
 	]
