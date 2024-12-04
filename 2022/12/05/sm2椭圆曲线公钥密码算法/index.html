@@ -24,13 +24,8 @@
 <meta property="og:description" content="人民有信仰，国家有希望">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E6%A0%B7%E4%BE%8B.png">
-<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205130657777.png">
 <meta property="og:image" content="http://example.com/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E4%BA%A4%E7%82%B9%E5%9B%BE.png">
-<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205131119418.png">
-<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205132805302.png">
 <meta property="og:image" content="http://example.com/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E5%8A%A0%E6%B3%95%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99.png">
-<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210202636498.png">
-<meta property="og:image" content="c:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210204747217.png">
 <meta property="article:published_time" content="2022-12-05T04:39:52.000Z">
 <meta property="article:modified_time" content="2023-05-17T15:31:52.010Z">
 <meta property="article:author" content="harper">
@@ -263,7 +258,7 @@
         
         
         
-          91 分钟
+          93 分钟
         
       </span>
     
@@ -314,123 +309,197 @@
             
               <div class="markdown-body">
                 
-                <h1 id="sm2椭圆曲线公钥密码算法"><a href="#sm2椭圆曲线公钥密码算法" class="headerlink" title="sm2椭圆曲线公钥密码算法"></a>sm2椭圆曲线公钥密码算法</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="国密算法介绍"><a href="#国密算法介绍" class="headerlink" title="国密算法介绍"></a>国密算法介绍</h3><p>国密即国家密码局认定的国产密码算法。主要有SM1，SM2，SM3，SM4。<a href="https://so.csdn.net/so/search?q=密钥&amp;spm=1001.2101.3001.7020">密钥</a>长度和分组长度均为128位。</p>
+                <h1 id="sm2椭圆曲线公钥密码算法">sm2椭圆曲线公钥密码算法</h1>
+<h2 id="背景">背景</h2>
+<h3 id="国密算法介绍">国密算法介绍</h3>
+<p>国密即国家密码局认定的国产密码算法。主要有SM1，SM2，SM3，SM4。<a
+href="https://so.csdn.net/so/search?q=密钥&amp;spm=1001.2101.3001.7020">密钥</a>长度和分组长度均为128位。</p>
 <ul>
-<li><p>SM1 为对称加密。其加密强度与AES相当。该算法不公开，调用该算法时，需要通过加密芯片的接口进行调用。</p>
-</li>
-<li><p>SM2为非对称加密，基于ECC。该算法已公开。由于该算法基于ECC，故其签名速度与秘钥生成速度都快于RSA。ECC 256位（SM2采用的就是ECC 256位的一种）安全强度比RSA 2048位高，但运算速度快于RSA。</p>
-</li>
-<li><p>SM3 消息摘要。可以用MD5作为对比理解。该算法已公开。校验结果为256位。</p>
-</li>
-<li><p>SM4 无线局域网标准的分组数据算法。对称加密，密钥长度和分组长度均为128位。</p>
-</li>
+<li><p>SM1
+为对称加密。其加密强度与AES相当。该算法不公开，调用该算法时，需要通过加密芯片的接口进行调用。</p></li>
+<li><p>SM2为非对称加密，基于ECC。该算法已公开。由于该算法基于ECC，故其签名速度与秘钥生成速度都快于RSA。ECC
+256位（SM2采用的就是ECC 256位的一种）安全强度比RSA
+2048位高，但运算速度快于RSA。</p></li>
+<li><p>SM3
+消息摘要。可以用MD5作为对比理解。该算法已公开。校验结果为256位。</p></li>
+<li><p>SM4
+无线局域网标准的分组数据算法。对称加密，密钥长度和分组长度均为128位。</p></li>
 </ul>
 <p>由于SM1、SM4加解密的分组大小为128bit，故对消息进行加解密时，若消息长度过长，需要进行分组，要消息长度不足，则要进行填充。</p>
-<h3 id="SM2算法简介"><a href="#SM2算法简介" class="headerlink" title="SM2算法简介"></a>SM2算法简介</h3><p>SM2椭圆曲线公钥密码算法是我国自主设计的公钥密码算法，包括SM2-1椭圆曲线数字签名算法，SM2-2椭圆曲线密钥交换协议，SM2-3椭圆曲线公钥加密算法，分别用于实现数字签名密钥协商和数据加密等功能。SM2算法与RSA算法不同的是，SM2算法是基于椭圆曲线上点群离散对数难题，相对于RSA算法，256位的SM2密码强度已经比2048位的RSA密码强度要高。</p>
+<h3 id="sm2算法简介">SM2算法简介</h3>
+<p>SM2椭圆曲线公钥密码算法是我国自主设计的公钥密码算法，包括SM2-1椭圆曲线数字签名算法，SM2-2椭圆曲线密钥交换协议，SM2-3椭圆曲线公钥加密算法，分别用于实现数字签名密钥协商和数据加密等功能。SM2算法与RSA算法不同的是，SM2算法是基于椭圆曲线上点群离散对数难题，相对于RSA算法，256位的SM2密码强度已经比2048位的RSA密码强度要高。</p>
 <p>sm2主要满足电子认证服务系统等应用需求。</p>
-<h2 id="椭圆曲线介绍"><a href="#椭圆曲线介绍" class="headerlink" title="椭圆曲线介绍"></a>椭圆曲线介绍</h2><ul>
-<li><a href="https://link.springer.com/content/pdf/10.1007/978-1-4939-1711-2.pdf">参考书籍</a></li>
-</ul>
-<h3 id="基本数学形式"><a href="#基本数学形式" class="headerlink" title="基本数学形式"></a>基本数学形式</h3><p>椭圆曲线是下面方程的一组解：</p>
-<script type="math/tex; mode=display">
-Y^2 = X^3 + AX + B</script><p>这种类型的方程也被称为魏尔斯特拉斯方程，得名于19世纪对其进行广泛研究的数学家。下面给两个曲线的实例并画给出图片：</p>
-<script type="math/tex; mode=display">
-E1 : Y^2 = X^3 − 3X + 3 \;and\; E2 : Y ^2 = X^3 − 6X + 5</script><img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E6%A0%B7%E4%BE%8B.png" srcset="/img/loading.gif" lazyload class="椭圆曲线图">
-<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205130657777.png" srcset="/img/loading.gif" lazyload alt="1"></p>
-<h3 id="实数域上椭圆曲线"><a href="#实数域上椭圆曲线" class="headerlink" title="实数域上椭圆曲线"></a>实数域上椭圆曲线</h3><h4 id="加法运算"><a href="#加法运算" class="headerlink" title="加法运算"></a>加法运算</h4><p>令E为如下椭圆曲线：</p>
-<script type="math/tex; mode=display">
-Y ^2 = X^3 − 15X + 18.</script><p>点P = (7, 16) 和 Q = (1, 2)为椭圆曲线上的两点，并构成直线L:</p>
-<script type="math/tex; mode=display">
-L : Y = \frac{7}{3}X − 1/3.</script><p>如下图所示，直线L和椭圆曲线E交于三个点P,Q,R</p>
-<img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E4%BA%A4%E7%82%B9%E5%9B%BE.png" srcset="/img/loading.gif" lazyload class="椭圆曲线交点图">
-<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205131119418.png" srcset="/img/loading.gif" lazyload alt="image-20221205131119418"></p>
-<p>点R关于x轴对称得到R’,我们定义椭圆曲线d上的加法运算,</p>
-<script type="math/tex; mode=display">
-P \oplus Q = R',</script><p>和我们通常理解的加法不同，这里的加法是在曲线上进行的，也就是说给出两个点，相加一定可以得到椭圆曲线上的第三个点R’，这个点就是加法的结果。</p>
-<h4 id="加法运算瓶颈——无穷远点O"><a href="#加法运算瓶颈——无穷远点O" class="headerlink" title="加法运算瓶颈——无穷远点O"></a>加法运算瓶颈——无穷远点O</h4><p>还是按照上面的图片，我们尝试做这样的加法</p>
-<script type="math/tex; mode=display">
-R \oplus R'=?</script><p>按照上一节的加法运算，直线RR‘应该和椭圆曲线交于三个点，但是这里没有第三个点，这时候该怎么办？数学家定义了一个无穷远点$O$,并假设点$O$也在椭圆曲线上，这样RR’就能交于椭圆曲线的点$O$了,于是有</p>
-<script type="math/tex; mode=display">
-R \oplus R'=O.</script><p>基于无穷远点有这样的性质</p>
+<h2 id="椭圆曲线介绍">椭圆曲线介绍</h2>
 <ul>
-<li>无穷远点$O$和椭圆曲线上任意点P的连线一定是垂直于x轴的</li>
+<li><a
+href="https://link.springer.com/content/pdf/10.1007/978-1-4939-1711-2.pdf">参考书籍</a></li>
 </ul>
-<p>结合之前的加法运算，于是有公式：</p>
-<script type="math/tex; mode=display">
-P \oplus O = P</script><font color='red'>这是不是很类似于一个零点，任何点加这个点都是其本身</font>
-
-<p>除此之外，基于无穷远点还有如下性质</p>
-<script type="math/tex; mode=display">
+<h3 id="基本数学形式">基本数学形式</h3>
+<p>椭圆曲线是下面方程的一组解： <span class="math display">\[
+Y^2 = X^3 + AX + B
+\]</span>
+这种类型的方程也被称为魏尔斯特拉斯方程，得名于19世纪对其进行广泛研究的数学家。下面给两个曲线的实例并画给出图片：
+<span class="math display">\[
+E1 : Y^2 = X^3 − 3X + 3 \;and\; E2 : Y ^2 = X^3 − 6X + 5
+\]</span> <img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E6%A0%B7%E4%BE%8B.png" srcset="/img/loading.gif" lazyload class="椭圆曲线图"></p>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205130657777.png" srcset="/img/loading.gif" lazyload
+alt="1" />
+<figcaption aria-hidden="true">1</figcaption>
+</figure>
+<h3 id="实数域上椭圆曲线">实数域上椭圆曲线</h3>
+<h4 id="加法运算">加法运算</h4>
+<p>令E为如下椭圆曲线： <span class="math display">\[
+Y ^2 = X^3 − 15X + 18.
+\]</span> 点P = (7, 16) 和 Q = (1, 2)为椭圆曲线上的两点，并构成直线L:
+<span class="math display">\[
+L : Y = \frac{7}{3}X − 1/3.
+\]</span> 如下图所示，直线L和椭圆曲线E交于三个点P,Q,R</p>
+<img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E4%BA%A4%E7%82%B9%E5%9B%BE.png" srcset="/img/loading.gif" lazyload class="椭圆曲线交点图">
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205131119418.png" srcset="/img/loading.gif" lazyload
+alt="image-20221205131119418" />
+<figcaption aria-hidden="true">image-20221205131119418</figcaption>
+</figure>
+<p>点R关于x轴对称得到R',我们定义椭圆曲线d上的加法运算, <span
+class="math display">\[
+P \oplus Q = R&#39;,
+\]</span>
+和我们通常理解的加法不同，这里的加法是在曲线上进行的，也就是说给出两个点，相加一定可以得到椭圆曲线上的第三个点R'，这个点就是加法的结果。</p>
+<h4 id="加法运算瓶颈无穷远点o">加法运算瓶颈——无穷远点O</h4>
+<p>还是按照上面的图片，我们尝试做这样的加法 <span
+class="math display">\[
+R \oplus R&#39;=?
+\]</span>
+按照上一节的加法运算，直线RR‘应该和椭圆曲线交于三个点，但是这里没有第三个点，这时候该怎么办？数学家定义了一个无穷远点<span
+class="math inline">\(O\)</span>,并假设点<span
+class="math inline">\(O\)</span>也在椭圆曲线上，这样RR'就能交于椭圆曲线的点<span
+class="math inline">\(O\)</span>了,于是有 <span class="math display">\[
+R \oplus R&#39;=O.
+\]</span> 基于无穷远点有这样的性质</p>
+<ul>
+<li>无穷远点<span
+class="math inline">\(O\)</span>和椭圆曲线上任意点P的连线一定是垂直于x轴的</li>
+</ul>
+<p>结合之前的加法运算，于是有公式： <span class="math display">\[
+P \oplus O = P
+\]</span>
+<font color='red'>这是不是很类似于一个零点，任何点加这个点都是其本身</font></p>
+<p>除此之外，基于无穷远点还有如下性质 <span class="math display">\[
 P + O = O + P = P \; for \;all\; P ∈ E\\
 P + (−P) = O \; for \;all\; P ∈ E\\
 (P + Q) + R = P + (Q + R) \; for \;all\;P, Q, R ∈ E\\
-P + Q = Q + P  \; for \;all\; P, Q ∈ E</script><p>四条公式分别代表Albel群(交换群)的4条性质：存在零元，存在逆元，结合律，交换律</p>
-<h4 id="加法运算公式"><a href="#加法运算公式" class="headerlink" title="加法运算公式"></a>加法运算公式</h4><p>这里给一张图片，很好的讲述了加法的运算公式</p>
-<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205132805302.png" srcset="/img/loading.gif" lazyload alt="1"></p>
+P + Q = Q + P  \; for \;all\; P, Q ∈ E
+\]</span>
+四条公式分别代表Albel群(交换群)的4条性质：存在零元，存在逆元，结合律，交换律</p>
+<h4 id="加法运算公式">加法运算公式</h4>
+<p>这里给一张图片，很好的讲述了加法的运算公式</p>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221205132805302.png" srcset="/img/loading.gif" lazyload
+alt="1" />
+<figcaption aria-hidden="true">1</figcaption>
+</figure>
 <img src="/2022/12/05/sm2%E6%A4%AD%E5%9C%86%E6%9B%B2%E7%BA%BF%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/%E5%8A%A0%E6%B3%95%E8%BF%90%E7%AE%97%E6%B3%95%E5%88%99.png" srcset="/img/loading.gif" lazyload class="加法运算法则">
-<h4 id="减法运算公式"><a href="#减法运算公式" class="headerlink" title="减法运算公式"></a>减法运算公式</h4><p>定义负数元的概念：如果椭圆曲线上的一个点P=(a,b)，那么点P的负数元为$\ominus P = (a,-b)$</p>
+<h4 id="减法运算公式">减法运算公式</h4>
+<p>定义负数元的概念：如果椭圆曲线上的一个点P=(a,b)，那么点P的负数元为<span
+class="math inline">\(\ominus P = (a,-b)\)</span></p>
 <p>这样定义有很好的性质：</p>
 <blockquote>
 <ul>
-<li>$P\ominus P = O$</li>
+<li><span class="math inline">\(P\ominus P = O\)</span></li>
 </ul>
 </blockquote>
 <p>相当于实数域加减法的相反数的概念。</p>
-<h3 id="有限域上椭圆曲线"><a href="#有限域上椭圆曲线" class="headerlink" title="有限域上椭圆曲线"></a>有限域上椭圆曲线</h3><h4 id="有限域上椭圆曲线定义"><a href="#有限域上椭圆曲线定义" class="headerlink" title="有限域上椭圆曲线定义"></a>有限域上椭圆曲线定义</h4><p>从上一节的介绍上可以看到，椭圆曲线上的加法运算构成一个群，所有的点可以是小数，也可以整数。那我们能不能加以限制，令椭圆曲线上的点全部都集中在某个域中呢？</p>
-<p><strong>定义1.</strong>令$p$是一个奇素数，在有限域$\mathbb{F}_p$上的椭圆曲线有如下形式,</p>
-<script type="math/tex; mode=display">
-E : Y ^2 = X^3 + AX + B \;with\; A, B \in \mathbb{F}_p \;satisfying\; 4A^3 + 27B^2 \neq 0</script><p>这里$4A^3 + 27B^2 \neq 0$是保证椭圆曲线上没有奇异点。</p>
-<p>则定义在有限域上的椭圆曲线坐标是集合.</p>
-<script type="math/tex; mode=display">
-E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2 = x^3 + Ax + B\}∪ \{O\}</script><blockquote>
-<p>一个例子,考虑下面的椭圆曲线：</p>
-<script type="math/tex; mode=display">
-E(\mathbb{F}_{13}) : Y ^2 = X^3 + 3X + 8 \;over \;the \;field \;\mathbb{F}_{13}</script><p>我们取X=0,得到$Y^2=8\pmod{13}$，但我们解不出这个Y，因为方程无解</p>
-<p>我们再取X = 1,得到$Y^2=12\pmod{13}$，解出两个解Y=5或者Y=8，那么得到在$E(\mathbb{F}_{13})$有两个点(1,5)和(1,8)</p>
-<p>X遍历有限域$\mathbb{F}_{13}$,我们可以用类似的方法得到下面所有点</p>
-<script type="math/tex; mode=display">
-E(\mathbb{F}_{13}) = \{O,(1, 5),(1, 8),(2, 3),(2, 10),(9, 6),(9, 7),(12, 2),(12, 11)\}</script></blockquote>
-<h4 id="有限域上椭圆曲线运算"><a href="#有限域上椭圆曲线运算" class="headerlink" title="有限域上椭圆曲线运算"></a>有限域上椭圆曲线运算</h4><p>类似与实数域上的加法运算，有限域上椭圆曲线的运算，除法用模逆运算代替，所有运算均在有限域上进行（算完之后要模一个p）。这里还是举个例子</p>
+<h3 id="有限域上椭圆曲线">有限域上椭圆曲线</h3>
+<h4 id="有限域上椭圆曲线定义">有限域上椭圆曲线定义</h4>
+<p>从上一节的介绍上可以看到，椭圆曲线上的加法运算构成一个群，所有的点可以是小数，也可以整数。那我们能不能加以限制，令椭圆曲线上的点全部都集中在某个域中呢？</p>
+<p><strong>定义1.</strong>令<span
+class="math inline">\(p\)</span>是一个奇素数，在有限域<span
+class="math inline">\(\mathbb{F}_p\)</span>上的椭圆曲线有如下形式, <span
+class="math display">\[
+E : Y ^2 = X^3 + AX + B \;with\; A, B \in \mathbb{F}_p \;satisfying\;
+4A^3 + 27B^2 \neq 0
+\]</span> 这里<span class="math inline">\(4A^3 + 27B^2 \neq
+0\)</span>是保证椭圆曲线上没有奇异点。</p>
+<p>则定义在有限域上的椭圆曲线坐标是集合. <span class="math display">\[
+E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2
+= x^3 + Ax + B\}∪ \{O\}
+\]</span></p>
 <blockquote>
-<p>椭圆曲线：</p>
-<script type="math/tex; mode=display">
-E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2 = x^3 + Ax + B\}∪ \{O\}</script><p>计算P=(9,7)和Q=(1,8)的和</p>
-<script type="math/tex; mode=display">
-λ = (y_2 − y_1)/(x_2 − x_1)
-  = (8 − 7)/(1 − 9) = 1/(-8) = 1/5 = 5^{-1} \mod 13 =8\\
-
- x_3 = λ^2 − x_1 − x_2 = 64 − 9 − 1 = 54 = 2\\
- y_3 = λ(x_1-x_3)-y_1 = 8*(9-2) - 7 = 49 \mod{13}= 10</script><p>最终得到P+Q=(2,10)</p>
+<p>一个例子,考虑下面的椭圆曲线： <span class="math display">\[
+E(\mathbb{F}_{13}) : Y ^2 = X^3 + 3X + 8 \;over \;the \;field
+\;\mathbb{F}_{13}
+\]</span> 我们取X=0,得到<span
+class="math inline">\(Y^2=8\pmod{13}\)</span>，但我们解不出这个Y，因为方程无解</p>
+<p>我们再取X = 1,得到<span
+class="math inline">\(Y^2=12\pmod{13}\)</span>，解出两个解Y=5或者Y=8，那么得到在<span
+class="math inline">\(E(\mathbb{F}_{13})\)</span>有两个点(1,5)和(1,8)</p>
+<p>X遍历有限域<span
+class="math inline">\(\mathbb{F}_{13}\)</span>,我们可以用类似的方法得到下面所有点
+<span class="math display">\[
+E(\mathbb{F}_{13}) = \{O,(1, 5),(1, 8),(2, 3),(2, 10),(9, 6),(9, 7),(12,
+2),(12, 11)\}
+\]</span></p>
 </blockquote>
-<h3 id="椭圆曲线的一些名词"><a href="#椭圆曲线的一些名词" class="headerlink" title="椭圆曲线的一些名词"></a>椭圆曲线的一些名词</h3><h4 id="椭圆曲线的阶"><a href="#椭圆曲线的阶" class="headerlink" title="椭圆曲线的阶"></a>椭圆曲线的阶</h4><p>我们之前说到每个在有限域上的椭圆曲线都由有限个点组成。那么我们不禁要问：到底是多少个点？</p>
-<p>首先，我们要定义一下 在一个群有多少个点就叫做这个群的“阶”（order）【在此放上wiki<a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Order_(group_theory">关于order的解释</a>)】。</p>
+<h4 id="有限域上椭圆曲线运算">有限域上椭圆曲线运算</h4>
+<p>类似与实数域上的加法运算，有限域上椭圆曲线的运算，除法用模逆运算代替，所有运算均在有限域上进行（算完之后要模一个p）。这里还是举个例子</p>
 <blockquote>
-<p>椭圆曲线$E(\mathbb{F}_{13}) : Y ^2 = X^3 + 3X + 8 \;over \;the \;field \;\mathbb{F}_{13}$的阶为9，因为总共有9个点</p>
+<p>椭圆曲线： <span class="math display">\[
+E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2
+= x^3 + Ax + B\}∪ \{O\}
+\]</span> 计算P=(9,7)和Q=(1,8)的和 $$ λ = (y_2 − y_1)/(x_2 − x_1) = (8 −
+7)/(1 − 9) = 1/(-8) = 1/5 = 5^{-1} =8\</p>
+<p>x_3 = λ^2 − x_1 − x_2 = 64 − 9 − 1 = 54 = 2\ y_3 = λ(x_1-x_3)-y_1 =
+8*(9-2) - 7 = 49 = 10 $$ 最终得到P+Q=(2,10)</p>
 </blockquote>
-<h4 id="椭圆曲线的基点"><a href="#椭圆曲线的基点" class="headerlink" title="椭圆曲线的基点"></a>椭圆曲线的基点</h4><p>先介绍一下循环子群的概率，方便我们之后基点的讨论</p>
-<h5 id="数乘和循环子群"><a href="#数乘和循环子群" class="headerlink" title="数乘和循环子群"></a><strong>数乘和循环子群</strong></h5><p>在实数域乘法的定义是：</p>
-<script type="math/tex; mode=display">
-nP=\underbrace{P+P+⋯+P}_{n个p}</script><p>使用倍加运算可以实现，其时间复杂度我们之后再讨论</p>
+<h3 id="椭圆曲线的一些名词">椭圆曲线的一些名词</h3>
+<h4 id="椭圆曲线的阶">椭圆曲线的阶</h4>
+<p>我们之前说到每个在有限域上的椭圆曲线都由有限个点组成。那么我们不禁要问：到底是多少个点？</p>
+<p>首先，我们要定义一下
+在一个群有多少个点就叫做这个群的“阶”（order）【在此放上wiki<a
+href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Order_(group_theory)">关于order的解释</a>】。</p>
+<blockquote>
+<p>椭圆曲线<span class="math inline">\(E(\mathbb{F}_{13}) : Y ^2 = X^3 +
+3X + 8 \;over \;the \;field
+\;\mathbb{F}_{13}\)</span>的阶为9，因为总共有9个点</p>
+</blockquote>
+<h4 id="椭圆曲线的基点">椭圆曲线的基点</h4>
+<p>先介绍一下循环子群的概率，方便我们之后基点的讨论</p>
+<h5 id="数乘和循环子群"><strong>数乘和循环子群</strong></h5>
+<p>在实数域乘法的定义是： <span class="math display">\[
+nP=\underbrace{P+P+⋯+P}_{n个p}
+\]</span> 使用倍加运算可以实现，其时间复杂度我们之后再讨论</p>
 <blockquote>
 <p>举个例子：</p>
-<p>已知椭圆曲线</p>
-<script type="math/tex; mode=display">
-E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2 = x^3 + 3x + 8\}∪ \{O\}</script><p>取其上一点P(9,7)，其倍点运算为：</p>
+<p>已知椭圆曲线 <span class="math display">\[
+E(\mathbb{F}_p) = \{(x, y) | x, y \in \mathbb{F}_p \; satisfying \; y^2
+= x^3 + 3x + 8\}∪ \{O\}
+\]</span> 取其上一点P(9,7)，其倍点运算为：</p>
 <ul>
-<li><p>P = (9,7)</p>
-</li>
-<li><p>2P = (9,6)</p>
-</li>
-<li>3P = (1,12)</li>
-<li>4P = (9,7)</li>
+<li><p>P = (9,7)</p></li>
+<li><p>2P = (9,6)</p></li>
+<li><p>3P = (1,12)</p></li>
+<li><p>4P = (9,7)</p></li>
 </ul>
 </blockquote>
 <p>可以看出，点P运算4次还是点P，这就是循环子群的概念，可以看出点P的运算结果可以构成一个有限的集合，这种群算方式可以看成群的运算，从而构成循环子群。</p>
-<h5 id="基点的概念"><a href="#基点的概念" class="headerlink" title="基点的概念"></a>基点的概念</h5><p>可以看出基点就是椭圆曲线上的一个点，基点有一个阶n，点加运算n次即可得到再次得到基点。</p>
-<h5 id="基点的生成"><a href="#基点的生成" class="headerlink" title="基点的生成"></a>基点的生成</h5><p>基点可以构成一个循环子群，sm2椭圆加密就是在这个子群上进行运算。</p>
-<p>假设椭圆曲线的阶为N，对于椭圆曲线上的每一个点，我们都有$NP = O$，同时基点G（其阶为n）也能构成一个元素个数的为n的子群，由群论的拉格朗日定理，一定有$n|N$，我们设置一个辅因子$h = N/n$，随机取椭圆曲线上的一点，可以看出点hP循环n次就是无穷远点，如果n为素数，那么点hp生成的子群阶就是n</p>
-<script type="math/tex; mode=display">
-n*h*p = O</script><p>通过下面的运算步骤，我们可以寻找到阶为n的椭圆曲线下的子群。</p>
+<h5 id="基点的概念">基点的概念</h5>
+<p>可以看出基点就是椭圆曲线上的一个点，基点有一个阶n，点加运算n次即可得到再次得到基点。</p>
+<h5 id="基点的生成">基点的生成</h5>
+<p>基点可以构成一个循环子群，sm2椭圆加密就是在这个子群上进行运算。</p>
+<p>假设椭圆曲线的阶为N，对于椭圆曲线上的每一个点，我们都有<span
+class="math inline">\(NP =
+O\)</span>，同时基点G（其阶为n）也能构成一个元素个数的为n的子群，由群论的拉格朗日定理，一定有<span
+class="math inline">\(n|N\)</span>，我们设置一个辅因子<span
+class="math inline">\(h =
+N/n\)</span>，随机取椭圆曲线上的一点，可以看出点hP循环n次就是无穷远点，如果n为素数，那么点hp生成的子群阶就是n
+<span class="math display">\[
+n*h*p = O
+\]</span>
+通过下面的运算步骤，我们可以寻找到阶为n的椭圆曲线下的子群。</p>
 <blockquote>
 <ul>
 <li>计算椭圆曲线的阶 N 。</li>
@@ -438,48 +507,79 @@ n*h*p = O</script><p>通过下面的运算步骤，我们可以寻找到阶为n�
 <li>计算辅因子 h=N/n 。</li>
 <li>在曲线上选择一个随机的点 P 。</li>
 <li>计算 G=hP 。</li>
-<li>如果 G 是0，那么回到步骤4。否则我们就已经找到了阶为 n 和辅因子是 h 的子群的基点。</li>
+<li>如果 G 是0，那么回到步骤4。否则我们就已经找到了阶为 n 和辅因子是 h
+的子群的基点。</li>
 </ul>
 </blockquote>
-<h2 id="sm2国密算法流程介绍"><a href="#sm2国密算法流程介绍" class="headerlink" title="sm2国密算法流程介绍"></a>sm2国密算法流程介绍</h2><p>最详尽的算法流程步骤请参见这个pdf：<a href="https://oscca.gov.cn/sca/xxgk/2010-12/17/1002386/files/b791a9f908bb4803875ab6aeeb7b4e03.pdf">sm2技术文档</a>，本人在这里仅仅简单介绍一下流程和步骤，并讲解其中原理。其中流程中的一些符号不给予解释，文档里都有。</p>
-<h3 id="加密算法"><a href="#加密算法" class="headerlink" title="加密算法"></a>加密算法</h3><ul>
-<li>A1：用随机数发生器产生随机数k∈[1,n-1]； </li>
-<li>A2：计算椭圆曲线点C1=[k]G=(x1,y1)，按本文本第1部分4.2.8和4.2.4给出的细节，将C1的数据类 型转换为比特串； </li>
-<li>A3：计算椭圆曲线点S=[h]PB，若S是无穷远点，则报错并退出； </li>
-<li>A4：计算椭圆曲线点[k]PB=(x2,y2)，将坐标x2、y2 的 数据类型转换为比特串； </li>
-<li>A5：计算t=KDF(x2 ∥ y2, klen)，若t为全0比特串，则返回A1； </li>
-<li>A6：计算C2 = M ⊕ t； </li>
-<li>A7：计算C3 = Hash(x2 ∥ M ∥ y2)； </li>
+<h2 id="sm2国密算法流程介绍">sm2国密算法流程介绍</h2>
+<p>最详尽的算法流程步骤请参见这个pdf：<a
+href="https://oscca.gov.cn/sca/xxgk/2010-12/17/1002386/files/b791a9f908bb4803875ab6aeeb7b4e03.pdf">sm2技术文档</a>，本人在这里仅仅简单介绍一下流程和步骤，并讲解其中原理。其中流程中的一些符号不给予解释，文档里都有。</p>
+<h3 id="加密算法">加密算法</h3>
+<ul>
+<li>A1：用随机数发生器产生随机数k∈[1,n-1]；</li>
+<li>A2：计算椭圆曲线点C1=[k]G=(x1,y1)，按本文本第1部分4.2.8和4.2.4给出的细节，将C1的数据类
+型转换为比特串；</li>
+<li>A3：计算椭圆曲线点S=[h]PB，若S是无穷远点，则报错并退出；</li>
+<li>A4：计算椭圆曲线点[k]PB=(x2,y2)，将坐标x2、y2 的
+数据类型转换为比特串；</li>
+<li>A5：计算t=KDF(x2 ∥ y2, klen)，若t为全0比特串，则返回A1；</li>
+<li>A6：计算C2 = M ⊕ t；</li>
+<li>A7：计算C3 = Hash(x2 ∥ M ∥ y2)；</li>
 <li>A8：输出密文C = C1 ∥ C2 ∥ C3。</li>
 </ul>
 <p>其中KDF为密钥派生函数，函数原型为KDF(z,klen)可以根据比特串z，和长度klen，从而输出一个长度为klen的比特串。</p>
 <p>下面给一个流程图</p>
-<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210202636498.png" srcset="/img/loading.gif" lazyload alt="image-20221210202636498"></p>
-<h3 id="加密算法原理的一些理解"><a href="#加密算法原理的一些理解" class="headerlink" title="加密算法原理的一些理解"></a>加密算法原理的一些理解</h3><ul>
-<li><p>为什么随机数k范围是[1,n-1]，因为如果k=n，那么[k]G = O，这样的点G是无法用坐标表示出来的，也无法参加后面的运算</p>
-</li>
-<li><p>真正的密文在C2里，想要获取C2，必须用密钥派生函数KDF得到比特串t的值，而想要得到t的值，又必须计算$[k]P_B$，但是k是随机生成的，想要准确的获取k有两种方法。一种是从$[1,n-1]$遍历，要知道这样的遍历需要计算$n*(n-1)/2$次加法运算，n一般是个很大的数（数量级为$10^{78}$），这种计算量算到宇宙毁灭也算不出来。另一种是解方程$[x]G=(x_1,y_1)$，这就回到椭圆曲线上的困难问题<a href="https://baike.baidu.com/item/ECDLP/3324859">ECDLP</a>，所以想要解密是十分的困难。</p>
-</li>
-<li>C2的长度为klen，即和密文的长度想当</li>
-<li>C3是哈希函数，更多的是为验证接受到的密文是否出现改动</li>
-</ul>
-<h3 id="解密算法"><a href="#解密算法" class="headerlink" title="解密算法"></a>解密算法</h3><p>设klen为密文中C2的比特长度。 为了对密文C=C1 ∥ C2 ∥ C3 进行解密，作为解密者的用户B应实现以下运算步骤： </p>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210202636498.png" srcset="/img/loading.gif" lazyload
+alt="image-20221210202636498" />
+<figcaption aria-hidden="true">image-20221210202636498</figcaption>
+</figure>
+<h3 id="加密算法原理的一些理解">加密算法原理的一些理解</h3>
 <ul>
-<li>B1：从C中取出比特串C1，将C1的数据类型转换为椭圆曲线上的点，验证C1是否满足椭圆曲线方程，若不满足则报错并退出； </li>
-<li>B2：计算椭圆曲线点S=[h]C1，若S是无穷远点，则报错并退出； </li>
-<li>B3：计算[dB]C1=(x2,y2)，将坐标x2、y2的数据类型转 换为比特串； </li>
-<li>B4：计算t=KDF(x2 ∥ y2, klen)，若t为全0比特串，则报错并退出； </li>
-<li>B5：从C中取出比特串C2，计算M′ = C2 ⊕ t； </li>
-<li>B6：计算u = Hash(x2 ∥ M′ ∥ y2)，从C中取出比特串C3，若$u \neq C3$则报错并退出；</li>
+<li><p>为什么随机数k范围是[1,n-1]，因为如果k=n，那么[k]G =
+O，这样的点G是无法用坐标表示出来的，也无法参加后面的运算</p></li>
+<li><p>真正的密文在C2里，想要获取C2，必须用密钥派生函数KDF得到比特串t的值，而想要得到t的值，又必须计算<span
+class="math inline">\([k]P_B\)</span>，但是k是随机生成的，想要准确的获取k有两种方法。一种是从<span
+class="math inline">\([1,n-1]\)</span>遍历，要知道这样的遍历需要计算<span
+class="math inline">\(n*(n-1)/2\)</span>次加法运算，n一般是个很大的数（数量级为<span
+class="math inline">\(10^{78}\)</span>），这种计算量算到宇宙毁灭也算不出来。另一种是解方程<span
+class="math inline">\([x]G=(x_1,y_1)\)</span>，这就回到椭圆曲线上的困难问题<a
+href="https://baike.baidu.com/item/ECDLP/3324859">ECDLP</a>，所以想要解密是十分的困难。</p></li>
+<li><p>C2的长度为klen，即和密文的长度想当</p></li>
+<li><p>C3是哈希函数，更多的是为验证接受到的密文是否出现改动</p></li>
+</ul>
+<h3 id="解密算法">解密算法</h3>
+<p>设klen为密文中C2的比特长度。 为了对密文C=C1 ∥ C2 ∥ C3
+进行解密，作为解密者的用户B应实现以下运算步骤：</p>
+<ul>
+<li>B1：从C中取出比特串C1，将C1的数据类型转换为椭圆曲线上的点，验证C1是否满足椭圆曲线方程，若不满足则报错并退出；</li>
+<li>B2：计算椭圆曲线点S=[h]C1，若S是无穷远点，则报错并退出；</li>
+<li>B3：计算[dB]C1=(x2,y2)，将坐标x2、y2的数据类型转 换为比特串；</li>
+<li>B4：计算t=KDF(x2 ∥ y2, klen)，若t为全0比特串，则报错并退出；</li>
+<li>B5：从C中取出比特串C2，计算M′ = C2 ⊕ t；</li>
+<li>B6：计算u = Hash(x2 ∥ M′ ∥ y2)，从C中取出比特串C3，若<span
+class="math inline">\(u \neq C3\)</span>则报错并退出；</li>
 <li>B7：输出明文M′。</li>
 </ul>
 <p>还是给出一个流程图</p>
-<p><img src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210204747217.png" srcset="/img/loading.gif" lazyload alt="image-20221210204747217"></p>
-<h3 id="解密算法的一些理解"><a href="#解密算法的一些理解" class="headerlink" title="解密算法的一些理解"></a>解密算法的一些理解</h3><ul>
-<li>为什么计算$[d_B]C_1=[d_B*k]G$即可得到加密流程中的(x2,y2)，要知道只有$[k]P_B=(x2,y2)$，理由是：</li>
+<figure>
+<img
+src="C:\Users\24546\AppData\Roaming\Typora\typora-user-images\image-20221210204747217.png" srcset="/img/loading.gif" lazyload
+alt="image-20221210204747217" />
+<figcaption aria-hidden="true">image-20221210204747217</figcaption>
+</figure>
+<h3 id="解密算法的一些理解">解密算法的一些理解</h3>
+<ul>
+<li>为什么计算<span
+class="math inline">\([d_B]C_1=[d_B*k]G\)</span>即可得到加密流程中的(x2,y2)，要知道只有<span
+class="math inline">\([k]P_B=(x2,y2)\)</span>，理由是：</li>
 </ul>
-<p>密钥对的设定是有规则的，即$[d_B]G=P_B$，所以这里可以等价。试想一下，想要根据公钥PB得到私钥$d_B$，又需要解一个ECDLP问题，sm2的安全性就基于此。</p>
-<h2 id="Python程序实现"><a href="#Python程序实现" class="headerlink" title="Python程序实现"></a>Python程序实现</h2><p>sm2算法的实现有专门的库gmssl，调用其中的库即可实现加解密。</p>
+<p>密钥对的设定是有规则的，即<span
+class="math inline">\([d_B]G=P_B\)</span>，所以这里可以等价。试想一下，想要根据公钥PB得到私钥<span
+class="math inline">\(d_B\)</span>，又需要解一个ECDLP问题，sm2的安全性就基于此。</p>
+<h2 id="python程序实现">Python程序实现</h2>
+<p>sm2算法的实现有专门的库gmssl，调用其中的库即可实现加解密。</p>
 <p>这里仿照gmssl库做出了一些改进，实现了sm2的加解密。</p>
 <p>其中椭圆曲线参数的设定和基点的选择参照官方技术文档</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">基点G的阶:     FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFF7203DF6B21C6052B53BBF40939D54123<br>素数p:        FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF<br>基点G横坐标:   32c4ae2c1f1981195f9904466a39c9948fe30bbff2660be1715a4589334c74c7<br>基点G纵坐标:   bc3736a2f4f6779c59bdcee36b692153d0a9877cc62a474002df32e52139f0a0<br>椭圆曲线系数a: FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFC<br>椭圆曲线系数b: 28E9FA9E9D9F5E344D5A9E4BCF6509A7F39789F515AB8F92DDBCBD414D940E93<br></code></pre></td></tr></table></figure>
@@ -735,7 +835,7 @@ n*h*p = O</script><p>通过下面的运算步骤，我们可以寻找到阶为n�
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"> <span>Hexo</span></a>  <i class="iconfont icon-love"></i>  <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <span>Fliud</span></a>  
+       <link rel="stylesheet" href="/dist/APlayer.min.css"> <div id="aplayer"></div> <script type="text/javascript" src="/dist/APlayer.min.js"></script> <script type="text/javascript" src="/js/diy/music.js"></script> <a href="https://hexo.io" target="_blank" rel="nofollow noopener"> <span>Hexo</span></a>  <i class="iconfont icon-love"></i>  <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <span>Fliud</span></a>  
     </div>
   
   
