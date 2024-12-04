@@ -32,6 +32,13 @@ const ap = new APlayer({
             url: 'http://music.163.com/song/media/outer/url?id=2064620976.mp3',
             cover: 'https://p1.music.126.net/i29ug6vPubo0OyOovEs2Aw==/109951168744612304.jpg?param=90y90',	
     },
+    {
+        name: '身骑白马',
+        artist: '徐佳莹',
+        url: 'http://music.163.com/song/media/outer/url?id=5233038.mp3',
+        cover: 'http://p2.music.126.net/jSLMqcE_Yq27rRKDNrRKcA==/109951163187407183.jpg',
+        lrc: 'https://zhouyinglin.cn/lrcs/身骑白马.lrc',
+    },
 	]
 });
 
