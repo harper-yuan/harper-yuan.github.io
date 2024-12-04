@@ -16,12 +16,12 @@
   <meta name="author" content="harper">
   <meta name="keywords" content="">
   
-    <meta name="description" content="同态加密算法BGV的优化基础知识单位根与分圆多项式 有一个域$F$,元素$\omega \in F$如果满足$\omega^m \equiv 1$,那么w是m次单位根，如果找不到一个比$m$更小的数$m’$，使得$\omega^{m’} \equiv 1$是F中最小次数的根，那么$\omega$称为m次单位原根。  如果$\omega$是m次原单位根，那么有如下两条性质  性质1：对于唯一的一个$">
+    <meta name="description" content="同态加密算法BGV的优化 基础知识 单位根与分圆多项式  有一个域\(F\),元素\(\omega \in F\)如果满足\(\omega^m \equiv 1\),那么w是m次单位根，如果找不到一个比\(m\)更小的数\(m’\)，使得\(\omega^{m&#39;} \equiv 1\)是F中最小次数的根，那么\(\omega\)称为m次单位原根。 如果\(\omega\)是m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Harper">
 <meta property="og:url" content="http://example.com/2023/03/28/%E8%8D%89%E7%A8%BF/index.html">
 <meta property="og:site_name" content="Harper">
-<meta property="og:description" content="同态加密算法BGV的优化基础知识单位根与分圆多项式 有一个域$F$,元素$\omega \in F$如果满足$\omega^m \equiv 1$,那么w是m次单位根，如果找不到一个比$m$更小的数$m’$，使得$\omega^{m’} \equiv 1$是F中最小次数的根，那么$\omega$称为m次单位原根。  如果$\omega$是m次原单位根，那么有如下两条性质  性质1：对于唯一的一个$">
+<meta property="og:description" content="同态加密算法BGV的优化 基础知识 单位根与分圆多项式  有一个域\(F\),元素\(\omega \in F\)如果满足\(\omega^m \equiv 1\),那么w是m次单位根，如果找不到一个比\(m\)更小的数\(m’\)，使得\(\omega^{m&#39;} \equiv 1\)是F中最小次数的根，那么\(\omega\)称为m次单位原根。 如果\(\omega\)是m">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-28T01:59:40.542Z">
 <meta property="article:modified_time" content="2023-06-15T13:02:11.893Z">
@@ -303,49 +303,156 @@
             
               <div class="markdown-body">
                 
-                <h1 id="同态加密算法BGV的优化"><a href="#同态加密算法BGV的优化" class="headerlink" title="同态加密算法BGV的优化"></a>同态加密算法BGV的优化</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="单位根与分圆多项式"><a href="#单位根与分圆多项式" class="headerlink" title="单位根与分圆多项式"></a>单位根与分圆多项式</h3><ul>
-<li><p>有一个域$F$,元素$\omega \in F$如果满足$\omega^m \equiv 1$,那么w是m次单位根，如果找不到一个比$m$更小的数$m’$，使得$\omega^{m’} \equiv 1$是F中最小次数的根，那么$\omega$称为m次单位原根。</p>
-</li>
-<li><p>如果$\omega$是m次原单位根，那么有如下两条性质</p>
+                <h1 id="同态加密算法bgv的优化">同态加密算法BGV的优化</h1>
+<h2 id="基础知识">基础知识</h2>
+<h3 id="单位根与分圆多项式">单位根与分圆多项式</h3>
 <ul>
-<li>性质1：对于唯一的一个$j \in \mathbb{Z}_m$每一个m次单位根都能被写为$\omega^j$，这是因为$\omega^{jm} \equiv 1$，所以也是m次单位根。</li>
-<li>性质2：对于唯一的一个$j \in \mathbb{Z}^*_m$，每一个m次单位原根都能被写为$\omega^j$。这是因为$\omega^j$是m次单位根，其次找不到比m还小的值使得$\omega^{jm} \equiv 1$成立（假设d|m，那么$\omega^{d} \neq 1$从而$\omega^{jd} \neq 1$，因为j和d互素，jd必不可能是m的倍数）。</li>
-</ul>
-</li>
-<li><p>假设$\omega &#x3D; e^{2\pi i&#x2F;m}$是复数域的m次根，定义分圆多项式：<br>$$<br>\Phi_m(X):&#x3D;\prod\limits_{j\in\mathbb{Z}_m^*}(X-\omega^j)\in\mathbb{C}[X].<br>$$<br>有如下性质:</p>
+<li><p>有一个域<span class="math inline">\(F\)</span>,元素<span
+class="math inline">\(\omega \in F\)</span>如果满足<span
+class="math inline">\(\omega^m \equiv
+1\)</span>,那么w是m次单位根，如果找不到一个比<span
+class="math inline">\(m\)</span>更小的数<span
+class="math inline">\(m’\)</span>，使得<span
+class="math inline">\(\omega^{m&#39;} \equiv
+1\)</span>是F中最小次数的根，那么<span
+class="math inline">\(\omega\)</span>称为m次单位原根。</p></li>
+<li><p>如果<span
+class="math inline">\(\omega\)</span>是m次原单位根，那么有如下两条性质</p>
 <ul>
-<li>分圆多项式有多项式次数$\phi(m)$，j的个数是与m互素的个数</li>
-<li>$\Phi_m(X)\in\mathbb{Z}[X]$</li>
+<li>性质1：对于唯一的一个<span class="math inline">\(j \in
+\mathbb{Z}_m\)</span>每一个m次单位根都能被写为<span
+class="math inline">\(\omega^j\)</span>，这是因为<span
+class="math inline">\(\omega^{jm} \equiv
+1\)</span>，所以也是m次单位根。</li>
+<li>性质2：对于唯一的一个<span class="math inline">\(j \in
+\mathbb{Z}^*_m\)</span>，每一个m次单位原根都能被写为<span
+class="math inline">\(\omega^j\)</span>。这是因为<span
+class="math inline">\(\omega^j\)</span>是m次单位根，其次找不到比m还小的值使得<span
+class="math inline">\(\omega^{jm} \equiv
+1\)</span>成立（假设d|m，那么<span class="math inline">\(\omega^{d} \neq
+1\)</span>从而<span class="math inline">\(\omega^{jd} \neq
+1\)</span>，因为j和d互素，jd必不可能是m的倍数）。</li>
+</ul></li>
+<li><p>假设<span class="math inline">\(\omega = e^{2\pi
+i/m}\)</span>是复数域的m次根，定义分圆多项式： <span
+class="math display">\[
+\Phi_m(X):=\prod\limits_{j\in\mathbb{Z}_m^*}(X-\omega^j)\in\mathbb{C}[X].
+\]</span> 有如下性质:</p>
+<ul>
+<li>分圆多项式有多项式次数<span
+class="math inline">\(\phi(m)\)</span>，j的个数是与m互素的个数</li>
+<li><span class="math inline">\(\Phi_m(X)\in\mathbb{Z}[X]\)</span></li>
 <li>分圆多项式在有理数域上不可约</li>
-<li>$X^m-1&#x3D;\prod\limits_{d|m}\Phi_d(X)$以及他的变式$\Phi_m(X)&#x3D;\dfrac{X^m-1}{\prod\limits_{d\mid m}\Phi_d(X)}$。显然，如果m是个素数p，那么$\Phi_{p}(x)&#x3D;\frac{x^{p}-1}{x-1}&#x3D;\sum^{p-1}_{i&#x3D;0}{x^i}$</li>
+<li><span
+class="math inline">\(X^m-1=\prod\limits_{d|m}\Phi_d(X)\)</span>以及他的变式<span
+class="math inline">\(\Phi_m(X)=\dfrac{X^m-1}{\prod\limits_{d\mid
+m}\Phi_d(X)}\)</span>。显然，如果m是个素数p，那么<span
+class="math inline">\(\Phi_{p}(x)=\frac{x^{p}-1}{x-1}=\sum^{p-1}_{i=0}{x^i}\)</span></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h3 id="规范嵌入和无穷范数"><a href="#规范嵌入和无穷范数" class="headerlink" title="规范嵌入和无穷范数"></a>规范嵌入和无穷范数</h3><p><strong>基本思想</strong>：定义$\mathcal{A}:&#x3D;\mathbb{Z}[X]&#x2F;(\Phi_m(X))$，$\omega$是一个m次单位原根，有一个多项式$a&#x3D;[f(X)\text{mod}\Phi_m(X)]\in\mathcal{A}$，我们可以清晰的定义$\boldsymbol{a}(\omega^j):&#x3D;f(\omega^j)$，而不用在乎$f(X)$的具体取值(因为模了一个分圆多项式)。</p>
+<h3 id="规范嵌入和无穷范数">规范嵌入和无穷范数</h3>
+<p><strong>基本思想</strong>：定义<span
+class="math inline">\(\mathcal{A}:=\mathbb{Z}[X]/(\Phi_m(X))\)</span>，<span
+class="math inline">\(\omega\)</span>是一个m次单位原根，有一个多项式<span
+class="math inline">\(a=[f(X)\text{mod}\Phi_m(X)]\in\mathcal{A}\)</span>，我们可以清晰的定义<span
+class="math inline">\(\boldsymbol{a}(\omega^j):=f(\omega^j)\)</span>，而不用在乎<span
+class="math inline">\(f(X)\)</span>的具体取值(因为模了一个分圆多项式)。</p>
 <ul>
-<li>规范嵌入：多项式$a\in\mathcal{A}$的规范嵌入是一个向量</li>
+<li>规范嵌入：多项式<span
+class="math inline">\(a\in\mathcal{A}\)</span>的规范嵌入是一个向量</li>
 </ul>
-<p>$$<br>\operatorname{cannon}(\boldsymbol a):&#x3D;\Big(\boldsymbol a(\omega^j)\Big)_{j\in\mathbb Z_m^*}.<br>$$</p>
+<p><span class="math display">\[
+\operatorname{cannon}(\boldsymbol a):=\Big(\boldsymbol
+a(\omega^j)\Big)_{j\in\mathbb Z_m^*}.
+\]</span></p>
 <ul>
-<li>无穷范数：使用常见的无穷范数作为多项式$a \in \mathcal{A}$的大小（size），取规范嵌入后向量元素的最大值即可</li>
+<li>无穷范数：使用常见的无穷范数作为多项式<span class="math inline">\(a
+\in
+\mathcal{A}\)</span>的大小（size），取规范嵌入后向量元素的最大值即可</li>
 </ul>
-<p>$$<br>\quad|\boldsymbol a|:&#x3D;|\mathrm{cannon}(\boldsymbol a)|_\infty &#x3D; \max{|\boldsymbol a(\omega^j)|:j\in\mathbb Z^*_m},<br>$$</p>
-<h3 id="编码——拉格朗日插值"><a href="#编码——拉格朗日插值" class="headerlink" title="编码——拉格朗日插值"></a>编码——拉格朗日插值</h3><blockquote>
-<p><strong>目前的困境：</strong>BGV的明文为一个$N-1$次多项式m(x)，我们如何把$N$个数值$(a_0,a_1,\dots,a_{N-1})$编码进一个明文多项式$m_1(x)$，另外N个数值$(b_0,b_1,\dots,b_{N-1})$编码进多项式$m_2(x)$。使得当明文多项式做多项式乘法后$m(x) &#x3D; m_1(x)<em>m_2(x)$，解码$m(x)$得到的是对应数值的点乘形式$(a_0</em>b_0,a_1*b_1,\dots,a_{N-1}*b_{N-1})$</p>
+<p><span class="math display">\[
+\quad\|\boldsymbol a\|:=\|\mathrm{cannon}(\boldsymbol a)\|_\infty =
+\max\{|\boldsymbol a(\omega^j)|:j\in\mathbb Z^*_m\},
+\]</span></p>
+<h3 id="编码拉格朗日插值">编码——拉格朗日插值</h3>
+<blockquote>
+<p><strong>目前的困境：</strong>BGV的明文为一个<span
+class="math inline">\(N-1\)</span>次多项式m(x)，我们如何把<span
+class="math inline">\(N\)</span>个数值<span
+class="math inline">\((a_0,a_1,\dots,a_{N-1})\)</span>编码进一个明文多项式<span
+class="math inline">\(m_1(x)\)</span>，另外N个数值<span
+class="math inline">\((b_0,b_1,\dots,b_{N-1})\)</span>编码进多项式<span
+class="math inline">\(m_2(x)\)</span>。使得当明文多项式做多项式乘法后<span
+class="math inline">\(m(x) = m_1(x)*m_2(x)\)</span>，解码<span
+class="math inline">\(m(x)\)</span>得到的是对应数值的点乘形式<span
+class="math inline">\((a_0*b_0,a_1*b_1,\dots,a_{N-1}*b_{N-1})\)</span></p>
 </blockquote>
 <p><strong>先介绍一下拉格朗日插值：</strong></p>
-<p>假设我们有一些已知点 $(x_i, y_i)$，我们想要找到一个函数 $f(x)$，它在这些点上与 $y_i$ 相等，同时在这些点之间光滑连续。拉格朗日插值的想法是使用一个多项式来近似这个函数，多项式的系数可以通过在这些点上求解一系列的线性方程来获得。</p>
-<p>下面是一个使用拉格朗日插值计算多项式的示例。假设我们有三个点 $(0, 1)$，$(1, 2)$ 和 $(2, 3)$。我们可以使用一个二次多项式来近似这些点，形式为 $f(x) &#x3D; a + bx + cx^2$。我们可以通过求解以下三个方程来确定多项式的系数：<br>$$<br>\begin{matrix}f(0)&#x3D;a+0b+0c&#x3D;1\ f(1)&#x3D;a+1b+1c&#x3D;2\ f(2)&#x3D;a+2b+4c&#x3D;3\end{matrix}<br>$$</p>
-<p>通过求解这些方程，我们可以得到多项式的系数 $a &#x3D; 1$，$b &#x3D; 1$ 和 $c &#x3D; -\frac{1}{2}$。因此，我们的多项式为 $f(x) &#x3D; 1 + x - \frac{1}{2}x^2$。</p>
-<p>现在，我们可以将上述思想扩展到任意数量的点。具体来说，我们要使用一个 $n-1$ 次多项式来拟合 $n$ 个已知点。设 $(x_i, y_i)$ 是这些已知点中的第 $i$ 个点，我们的多项式可以写成以下形式：<br>$$<br>f(x)&#x3D;\sum_{i&#x3D;1}^ny_iL_i(x)\quad\text{}<br>$$</p>
-<p>其中 $L_i(x)$ 是拉格朗日基函数，定义为：<br>$$<br>L_i(x)&#x3D;\prod_{j&#x3D;1,j\neq i}^n\frac{x-x_j}{x_i-x_j}<br>$$</p>
-<p>这个基函数的作用是将多项式 $f(x)$ 在 $x_i$ 处变为 $y_i$，同时在其他点处为零。因此，我们可以将多项式表示为所有基函数的线性组合。</p>
+<p>假设我们有一些已知点 <span class="math inline">\((x_i,
+y_i)\)</span>，我们想要找到一个函数 <span
+class="math inline">\(f(x)\)</span>，它在这些点上与 <span
+class="math inline">\(y_i\)</span>
+相等，同时在这些点之间光滑连续。拉格朗日插值的想法是使用一个多项式来近似这个函数，多项式的系数可以通过在这些点上求解一系列的线性方程来获得。</p>
+<p>下面是一个使用拉格朗日插值计算多项式的示例。假设我们有三个点 <span
+class="math inline">\((0, 1)\)</span>，<span class="math inline">\((1,
+2)\)</span> 和 <span class="math inline">\((2,
+3)\)</span>。我们可以使用一个二次多项式来近似这些点，形式为 <span
+class="math inline">\(f(x) = a + bx +
+cx^2\)</span>。我们可以通过求解以下三个方程来确定多项式的系数： <span
+class="math display">\[
+\begin{matrix}f(0)=a+0b+0c=1\\ f(1)=a+1b+1c=2\\
+f(2)=a+2b+4c=3\end{matrix}
+\]</span></p>
+<p>通过求解这些方程，我们可以得到多项式的系数 <span
+class="math inline">\(a = 1\)</span>，<span class="math inline">\(b =
+1\)</span> 和 <span class="math inline">\(c =
+-\frac{1}{2}\)</span>。因此，我们的多项式为 <span
+class="math inline">\(f(x) = 1 + x - \frac{1}{2}x^2\)</span>。</p>
+<p>现在，我们可以将上述思想扩展到任意数量的点。具体来说，我们要使用一个
+<span class="math inline">\(n-1\)</span> 次多项式来拟合 <span
+class="math inline">\(n\)</span> 个已知点。设 <span
+class="math inline">\((x_i, y_i)\)</span> 是这些已知点中的第 <span
+class="math inline">\(i\)</span> 个点，我们的多项式可以写成以下形式：
+<span class="math display">\[
+f(x)=\sum_{i=1}^ny_iL_i(x)\quad\text{}
+\]</span></p>
+<p>其中 <span class="math inline">\(L_i(x)\)</span>
+是拉格朗日基函数，定义为： <span class="math display">\[
+L_i(x)=\prod_{j=1,j\neq i}^n\frac{x-x_j}{x_i-x_j}
+\]</span></p>
+<p>这个基函数的作用是将多项式 <span class="math inline">\(f(x)\)</span>
+在 <span class="math inline">\(x_i\)</span> 处变为 <span
+class="math inline">\(y_i\)</span>，同时在其他点处为零。因此，我们可以将多项式表示为所有基函数的线性组合。</p>
 <p><strong>解决方案：</strong></p>
-<p>假设多项式是在模$q$意义下进行的，我们预计算出一个$N$次原根$\omega$满足$\omega^N \equiv 1 \mod{q}$，我们选取N个点<br>$$<br>(\omega^0,a_0),(\omega^1,a_1),\dots,(\omega^{N-1},a_{N-1})<br>$$<br>使用拉格朗日插值确定一个多项式$m_1(x)$，同理对另外N个点<br>$$<br>(\omega^0,b_0),(\omega^1,b_1),\dots,(\omega^{N-1},b_{N-1})<br>$$<br>确定另一个多项式$m_2(x)$，这样多项式乘法$m(x) &#x3D; m_1(x)<em>m_2(x)$后，代入N个横坐标值$(\omega^0,\dots,\omega^{N-1})$之后得到的纵坐标即为对应位数的点乘$(a_0</em>b_0,a_1*b_1,\dots,a_{N-1}*b_{N-1})$</p>
+<p>假设多项式是在模<span
+class="math inline">\(q\)</span>意义下进行的，我们预计算出一个<span
+class="math inline">\(N\)</span>次原根<span
+class="math inline">\(\omega\)</span>满足<span
+class="math inline">\(\omega^N \equiv 1 \mod{q}\)</span>，我们选取N个点
+<span class="math display">\[
+(\omega^0,a_0),(\omega^1,a_1),\dots,(\omega^{N-1},a_{N-1})
+\]</span> 使用拉格朗日插值确定一个多项式<span
+class="math inline">\(m_1(x)\)</span>，同理对另外N个点 <span
+class="math display">\[
+(\omega^0,b_0),(\omega^1,b_1),\dots,(\omega^{N-1},b_{N-1})
+\]</span> 确定另一个多项式<span
+class="math inline">\(m_2(x)\)</span>，这样多项式乘法<span
+class="math inline">\(m(x) =
+m_1(x)*m_2(x)\)</span>后，代入N个横坐标值<span
+class="math inline">\((\omega^0,\dots,\omega^{N-1})\)</span>之后得到的纵坐标即为对应位数的点乘<span
+class="math inline">\((a_0*b_0,a_1*b_1,\dots,a_{N-1}*b_{N-1})\)</span></p>
 <p><strong>注意：</strong></p>
 <ul>
-<li>为什么要选取$N$次原根$\omega$ ?因为有良好的性质，即$(\omega^0,\dots,\omega^{N-1})$在模q意义下每个数都各不相同（如果相同那么$\omega$不是$N$次原根）</li>
-<li>如何找$N$次原根$\omega$ ?首先找到一个模q的原根g，然后使用快速幂运算去计算$g^{(q-1)&#x2F;N}$即可得到$\omega$</li>
+<li>为什么要选取<span class="math inline">\(N\)</span>次原根<span
+class="math inline">\(\omega\)</span> ?因为有良好的性质，即<span
+class="math inline">\((\omega^0,\dots,\omega^{N-1})\)</span>在模q意义下每个数都各不相同（如果相同那么<span
+class="math inline">\(\omega\)</span>不是<span
+class="math inline">\(N\)</span>次原根）</li>
+<li>如何找<span class="math inline">\(N\)</span>次原根<span
+class="math inline">\(\omega\)</span>
+?首先找到一个模q的原根g，然后使用快速幂运算去计算<span
+class="math inline">\(g^{(q-1)/N}\)</span>即可得到<span
+class="math inline">\(\omega\)</span></li>
 </ul>
 
                 

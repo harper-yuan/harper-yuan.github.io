@@ -304,22 +304,53 @@
             
               <div class="markdown-body">
                 
-                <h1 id="BGV全同态加密"><a href="#BGV全同态加密" class="headerlink" title="BGV全同态加密"></a>BGV<strong>全同态加密</strong></h1><h2 id="方案描述"><a href="#方案描述" class="headerlink" title="方案描述"></a>方案描述</h2><ul>
-<li><p><strong>KeyGen</strong>($\lambda$)：根据预设的加密方案的安全性，选择一个安全参数$\lambda$，安全参数的选择将影响密文模数$q$和密文多项式的最高次数$N$。在本文中，选择的参数满足128比特安全性。随机采样$s \leftarrow \mathcal{R}<em>2$，$a \leftarrow \mathcal{U}</em>{q_L}$和$e \leftarrow \mathcal{X}$。之后，计算私钥$sk &#x3D; s$和公钥$pk &#x3D; (pk_1,pk_2) &#x3D; ([-a \cdot s+te]_{q_L} , a)$。</p>
-</li>
-<li><p><strong>KeySwitchGen</strong>($sk$)：模交换能够让同态乘法的次数增加，而模交换需要依赖模交换密钥，首先随机采样多项式$a \leftarrow \mathcal{U}<em>{q_L}$和$e \leftarrow \mathcal{X}$。然后输出$ks &#x3D; (ks_1, ks_2) \equiv ([-a \cdot s + te + sk \cdot sk]</em>{q_L} , a)$作为模交换密钥。</p>
-</li>
-<li><p><strong>Enc</strong>($m,pk$)：给定输入消息$m \in \mathcal{P}$，首先选择三个随机多项式：$u \leftarrow \mathcal{R}<em>2$，$e_1 \leftarrow \mathcal{X}$和$e_2 \leftarrow \mathcal{X}$。然后加密器通过计算生成密文$c$：$c&#x3D;(c_1,c_2)\equiv([pk_1 \cdot u+te_1+m]</em>{q_L},[pk_2 \cdot u+te_2]_{q_L}) \in \mathcal{C}$。</p>
-</li>
-<li><p><strong>Dec</strong>($c,sk$)：解密一个密文$c$，需要在对应的模数链层次$l$执行以下步骤：$\mathrm{i)}$ 计算$m’ &#x3D; [c_1 + c_2 \cdot sk]_{q_l}$，以及$\mathrm{ii)}$ 输出解密后的明文$m &#x3D; m’ \pmod{t}$。</p>
-</li>
+                <h1 id="bgv全同态加密">BGV<strong>全同态加密</strong></h1>
+<h2 id="方案描述">方案描述</h2>
+<ul>
+<li><p><strong>KeyGen</strong>(<span
+class="math inline">\(\lambda\)</span>)：根据预设的加密方案的安全性，选择一个安全参数<span
+class="math inline">\(\lambda\)</span>，安全参数的选择将影响密文模数<span
+class="math inline">\(q\)</span>和密文多项式的最高次数<span
+class="math inline">\(N\)</span>。在本文中，选择的参数满足128比特安全性。随机采样<span
+class="math inline">\(s \leftarrow \mathcal{R}_2\)</span>，<span
+class="math inline">\(a \leftarrow \mathcal{U}_{q_L}\)</span>和<span
+class="math inline">\(e \leftarrow
+\mathcal{X}\)</span>。之后，计算私钥<span class="math inline">\(sk =
+s\)</span>和公钥<span class="math inline">\(pk = (pk_1,pk_2) = ([-a
+\cdot s+te]_{q_L} , a)\)</span>。</p></li>
+<li><p><strong>KeySwitchGen</strong>(<span
+class="math inline">\(sk\)</span>)：模交换能够让同态乘法的次数增加，而模交换需要依赖模交换密钥，首先随机采样多项式<span
+class="math inline">\(a \leftarrow \mathcal{U}_{q_L}\)</span>和<span
+class="math inline">\(e \leftarrow \mathcal{X}\)</span>。然后输出<span
+class="math inline">\(ks = (ks_1, ks_2) \equiv ([-a \cdot s + te + sk
+\cdot sk]_{q_L} , a)\)</span>作为模交换密钥。</p></li>
+<li><p><strong>Enc</strong>(<span
+class="math inline">\(m,pk\)</span>)：给定输入消息<span
+class="math inline">\(m \in
+\mathcal{P}\)</span>，首先选择三个随机多项式：<span
+class="math inline">\(u \leftarrow \mathcal{R}_2\)</span>，<span
+class="math inline">\(e_1 \leftarrow \mathcal{X}\)</span>和<span
+class="math inline">\(e_2 \leftarrow
+\mathcal{X}\)</span>。然后加密器通过计算生成密文<span
+class="math inline">\(c\)</span>：<span
+class="math inline">\(c=(c_1,c_2)\equiv([pk_1 \cdot
+u+te_1+m]_{q_L},[pk_2 \cdot u+te_2]_{q_L}) \in
+\mathcal{C}\)</span>。</p></li>
+<li><p><strong>Dec</strong>(<span
+class="math inline">\(c,sk\)</span>)：解密一个密文<span
+class="math inline">\(c\)</span>，需要在对应的模数链层次<span
+class="math inline">\(l\)</span>执行以下步骤：<span
+class="math inline">\(\mathrm{i)}\)</span> 计算<span
+class="math inline">\(m&#39; = [c_1 + c_2 \cdot
+sk]_{q_l}\)</span>，以及<span
+class="math inline">\(\mathrm{ii)}\)</span> 输出解密后的明文<span
+class="math inline">\(m = m&#39; \pmod{t}\)</span>。</p></li>
 </ul>
-<h2 id="计算模拟"><a href="#计算模拟" class="headerlink" title="计算模拟"></a>计算模拟</h2><p>给出模拟代码</p>
+<h2 id="计算模拟">计算模拟</h2>
+<p>给出模拟代码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">poly_mod_add</span>(<span class="hljs-params">poly1, poly2, mod</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;多项式模环加法&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 确保 poly1 是较长的那个多项式</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(poly2) &gt; <span class="hljs-built_in">len</span>(poly1):<br>        poly1, poly2 = poly2, poly1<br>    <span class="hljs-comment"># 将较短的多项式补零</span><br>    poly2 += [<span class="hljs-number">0</span>] * (<span class="hljs-built_in">len</span>(poly1) - <span class="hljs-built_in">len</span>(poly2))<br>    <span class="hljs-comment"># 对应系数相加并取模</span><br>    result = [(a + b) % mod <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(poly1, poly2)]<br>    <span class="hljs-keyword">return</span> result<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">poly_mod_mult</span>(<span class="hljs-params">poly1, poly2, mod, N</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;多项式模环乘法&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 初始化结果多项式</span><br>    result = [<span class="hljs-number">0</span>] * (<span class="hljs-built_in">len</span>(poly1) + <span class="hljs-built_in">len</span>(poly2) - <span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 对每个系数进行乘法和加法</span><br>    <span class="hljs-keyword">for</span> i, a <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(poly1):<br>        <span class="hljs-keyword">for</span> j, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(poly2):<br>            result[i + j] += a * b<br>            result[i + j] %= mod<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(N):<br>        <span class="hljs-keyword">try</span>:<br>            result[i] = (result[i] - result[i+N]) % mod<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">break</span><br>    <span class="hljs-keyword">return</span> result[<span class="hljs-number">0</span>:N]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">poly_mult_number</span>(<span class="hljs-params">poly, num,mod</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(poly)):<br>        poly[i] = (poly[i] * num) %mod<br>    <span class="hljs-keyword">return</span> poly<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">Gen_pk</span>(<span class="hljs-params">a,s,t,e,mod,N</span>):<br>    pk1 = poly_mod_mult(a,s,mod,N)<br>    pk1 = poly_mult_number(pk1,-<span class="hljs-number">1</span>,mod)<br>    pk1 = poly_mod_add(pk1,poly_mult_number(e,t,mod),mod)<br>    pk2 = a<br>    <span class="hljs-keyword">return</span> [pk1,pk2]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">Enc</span>(<span class="hljs-params">pk,m,u,mod,N</span>):<br>    pk1 = pk[<span class="hljs-number">0</span>]<br>    pk2 = pk[<span class="hljs-number">1</span>]<br>    c1 = poly_mod_mult(pk1,u,mod,N)<br>    c1 = poly_mod_add(c1,m,mod)<br>    c1 = poly_mod_add(c1,poly_mult_number(e1,t,mod),mod)<br><br>    c2 = poly_mod_mult(pk2,u,mod,N)<br>    c2 = poly_mod_add(c2,poly_mult_number(e2,t,mod),mod)<br>    <span class="hljs-keyword">return</span> [c1,c2]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dec</span>(<span class="hljs-params">c,sk,mod,N,t</span>):<br>    temp = poly_mod_mult(c[<span class="hljs-number">1</span>],sk,mod,N)<br>    temp = poly_mod_add(c[<span class="hljs-number">0</span>],temp,mod)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(temp)):<br>        temp[i] = temp[i] % t<br>    <span class="hljs-keyword">return</span> temp<br><span class="hljs-comment"># 示例使用</span><br>m = [-<span class="hljs-number">1</span>,<span class="hljs-number">2</span>]  <span class="hljs-comment"># 表示 2+x</span><br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>]     <span class="hljs-comment"># 表示 1+x</span><br>s = [<span class="hljs-number">1</span>]<br>e = [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]<br>t = <span class="hljs-number">5</span><br>u = [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>]<br>e1 = [<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>e2 = [<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]<br>mod = <span class="hljs-number">133</span>            <span class="hljs-comment"># 模数</span><br>N = <span class="hljs-number">2</span><br><br><span class="hljs-comment"># # 计算多项式模环加法</span><br><span class="hljs-comment"># add_result = poly_mod_add(poly1, poly2, mod)</span><br><span class="hljs-comment"># print(&quot;多项式加法结果:&quot;, add_result)</span><br><span class="hljs-comment"># 计算多项式模环乘法</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原始明文:&quot;</span>,m)<br>pk = Gen_pk(a,s,t,e,mod,N)<br>sk = s<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;公钥pk1:&quot;</span>, pk[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;公钥pk2:&quot;</span>, pk[<span class="hljs-number">1</span>])<br>c = Enc(pk,m,u,mod,N)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;密文c1:&quot;</span>, c[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;密文c2:&quot;</span>, c[<span class="hljs-number">1</span>])<br>result = dec(c,sk,mod,N,t)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;解密后的多项式&quot;</span>,result)<br></code></pre></td></tr></table></figure>
+<h3 id="加密模拟">加密模拟</h3>
 
-
-
-<h3 id="加密模拟"><a href="#加密模拟" class="headerlink" title="加密模拟"></a>加密模拟</h3>
                 
               </div>
             
