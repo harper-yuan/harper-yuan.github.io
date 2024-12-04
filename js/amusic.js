@@ -28,7 +28,7 @@ const ap = new APlayer({
         {
             name: "where we're going",
             artist: 'elijah woods',
-            url: 'http://lzxyh.online:8002/directlink/lzx/xu/music.mp3',
+            url: '//music.163.com/outchain/player?type=2&id=2064620976',
             cover: 'https://p1.music.126.net/i29ug6vPubo0OyOovEs2Aw==/109951168744612304.jpg?param=90y90',	
     },
 	]
