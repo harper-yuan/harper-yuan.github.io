@@ -244,7 +244,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7k 字
+          7.2k 字
         
       </span>
     
@@ -255,7 +255,7 @@
         
         
         
-          59 分钟
+          61 分钟
         
       </span>
     
@@ -306,24 +306,39 @@
             
               <div class="markdown-body">
                 
-                <h1 id="RSA加密系统的20年"><a href="#RSA加密系统的20年" class="headerlink" title="RSA加密系统的20年"></a>RSA加密系统的20年</h1><p><strong>原文：<a href="https://www.ams.org/notices/199902/boneh.pdf">Twenty Years of Attacks on the RSA Cryptosystem</a></strong></p>
-<p><strong>作者：Dan Boneh@Stanford University(<a href="mailto:dabo@cs.stanford.edu">dabo@cs.stanford.edu</a>)</strong></p>
+                <h1 id="rsa加密系统的20年">RSA加密系统的20年</h1>
+<p><strong>原文：<a
+href="https://www.ams.org/notices/199902/boneh.pdf">Twenty Years of
+Attacks on the RSA Cryptosystem</a></strong></p>
+<p><strong>作者：Dan Boneh@Stanford University(<a
+href="mailto:dabo@cs.stanford.edu">dabo@cs.stanford.edu</a>)</strong></p>
 <p><strong>译者：Harper</strong></p>
 <p>参考链接：</p>
 <ul>
-<li><a href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_coppersmith_attack/#boneh-and-durfee-attack">Coppersmith 相关攻击 - CTF Wiki</a></li>
-<li><a href="https://paper.seebug.org/727/">二十年以来对 RSA 密码系统攻击综述</a></li>
+<li><a
+href="https://ctf-wiki.org/crypto/asymmetric/rsa/rsa_coppersmith_attack/#boneh-and-durfee-attack">Coppersmith
+相关攻击 - CTF Wiki</a></li>
+<li><a href="https://paper.seebug.org/727/">二十年以来对 RSA
+密码系统攻击综述</a></li>
 </ul>
-<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>RSA密码系统由Ron Rivest, Adi Shamir和Len Adleman发明，在1977年8月的《科学美国人》杂志上首次公布。密码系统最常用于提供隐私和确保数字数据的真实性。目前，RSA被部署在许多商业系统中。它被网络服务器和浏览器用来保护网络传输，它被用来确保电子邮件的私密性和真实性，它被用来保护远程登录会话，它是电子信用卡支付系统的核心。简而言之，RSA常用于需要考虑数字数据安全性的应用程序中。</p>
+<h2 id="背景介绍">背景介绍</h2>
+<p>RSA密码系统由Ron Rivest, Adi Shamir和Len
+Adleman发明，在1977年8月的《科学美国人》杂志上首次公布。密码系统最常用于提供隐私和确保数字数据的真实性。目前，RSA被部署在许多商业系统中。它被网络服务器和浏览器用来保护网络传输，它被用来确保电子邮件的私密性和真实性，它被用来保护远程登录会话，它是电子信用卡支付系统的核心。简而言之，RSA常用于需要考虑数字数据安全性的应用程序中。</p>
 <img src="/2022/10/29/RSA%E5%8A%A0%E5%AF%86%E7%B3%BB%E7%BB%9F%E7%9A%8420%E5%B9%B4/RSA%E4%BD%9C%E8%80%85.png" srcset="/img/loading.gif" lazyload class="RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）一起提出的。当时他们三人都在麻省理工学院工作。RSA就是他们三人姓氏开头字母拼在一起组成的">
-<h2 id="RSA加密算法"><a href="#RSA加密算法" class="headerlink" title="RSA加密算法"></a>RSA加密算法</h2><p>我们遵循标准命名约定，使用Alice和Bob表示希望相互通信的两个通用方。我们使用Marvin来表示恶意的攻击者，希望窃听或篡改Alice和Bob之间的通信。</p>
-<h3 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h3><ul>
-<li>两个质数$p和q$，再计算得到$N = p*q$</li>
-<li>一个随机整数$e\in (1, φ(N))$,再计算$d \equiv e^{-1} \pmod{\varphi(N)}$</li>
-<li>公钥pk = <N,e></li>
-<li>私钥sk = <N,d></li>
+<h2 id="rsa加密算法">RSA加密算法</h2>
+<p>我们遵循标准命名约定，使用Alice和Bob表示希望相互通信的两个通用方。我们使用Marvin来表示恶意的攻击者，希望窃听或篡改Alice和Bob之间的通信。</p>
+<h3 id="参数设置">参数设置</h3>
+<ul>
+<li>两个质数<span class="math inline">\(p和q\)</span>，再计算得到<span
+class="math inline">\(N = p*q\)</span></li>
+<li>一个随机整数<span class="math inline">\(e\in (1,
+φ(N))\)</span>,再计算<span class="math inline">\(d \equiv e^{-1}
+\pmod{\varphi(N)}\)</span></li>
+<li>公钥pk = &lt;N,e&gt;</li>
+<li>私钥sk = &lt;N,d&gt;</li>
 </ul>
-<h4 id="参数生成方法"><a href="#参数生成方法" class="headerlink" title="参数生成方法"></a>参数生成方法</h4><p><strong>第一步，随机选择两个不相等的质数p和q。</strong></p>
+<h4 id="参数生成方法">参数生成方法</h4>
+<p><strong>第一步，随机选择两个不相等的质数p和q。</strong></p>
 <blockquote>
 <p><strong>Alice</strong>选择了61和53。（实际应用中，这两个质数越大，就越难破解。）</p>
 </blockquote>
@@ -335,13 +350,16 @@
 <p>N的长度就是密钥长度。3233写成二进制是110010100001，一共有12位，所以这个密钥就是12位。实际应用中，RSA密钥一般是1024位，重要场合则为2048位。</p>
 <p><strong>第三步，计算N的欧拉函数φ(N)。</strong></p>
 <blockquote>
-<p>N是质数，则 φ(N)=N-1<br>N = p1 × p2<br>φ(N) = φ(p1p2) = φ(p1)φ(p2)<br>=&gt; φ(N) = (p-1)(q-1)</p>
+<p>N是质数，则 φ(N)=N-1 N = p1 × p2 φ(N) = φ(p1p2) = φ(p1)φ(p2) =&gt;
+φ(N) = (p-1)(q-1)</p>
 </blockquote>
 <p>Alice算出φ(3233)等于60×52，即3120。</p>
-<p><strong>第四步，随机选择一个整数e，条件是1&lt; e &lt; φ(N)，且e与φ(N) 互质。</strong></p>
+<p><strong>第四步，随机选择一个整数e，条件是1&lt; e &lt; φ(N)，且e与φ(N)
+互质。</strong></p>
 <p>Alice就在1到3120之间，随机选择了17。（实际应用中，常常选择65537。）</p>
 <p><strong>第五步，计算e对于φ(N)的模反元素d。</strong></p>
-<p>所谓”模反元素”就是指有一个整数d，可以使得ed被φ(N)除的余数为1,故$d \equiv e^{-1} \pmod{\varphi(N)}$</p>
+<p>所谓”模反元素”就是指有一个整数d，可以使得ed被φ(N)除的余数为1,故<span
+class="math inline">\(d \equiv e^{-1} \pmod{\varphi(N)}\)</span></p>
 <blockquote>
 <p>ed ≡ 1 (mod φ(N))</p>
 </blockquote>
@@ -354,92 +372,226 @@
 <p>ex + φ(N)y = 1</p>
 </blockquote>
 <p><strong>第六步，将N和e封装成公钥，N和d封装成私钥。</strong></p>
-<p>在Alice的例子中，N=3233，e=17，d=2753，所以公钥就是 (3233,17)，私钥就是（3233, 2753）。</p>
-<p>实际应用中，公钥和私钥的数据都采用<a href="https://link.zhihu.com/?target=https%3A//zh.wikipedia.org/zh-cn/ASN.1">ASN.1</a>格式表达。</p>
-<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>密文是一个整数m属于乘法群$\mathbb{Z^<em>_{N}}$，即$m \in \mathbb{Z^</em>_{N}}$</p>
-<p>计算密文ciphertext简称c，需要用到公钥pk=<N,e></p>
+<p>在Alice的例子中，N=3233，e=17，d=2753，所以公钥就是
+(3233,17)，私钥就是（3233, 2753）。</p>
+<p>实际应用中，公钥和私钥的数据都采用<a
+href="https://link.zhihu.com/?target=https%3A//zh.wikipedia.org/zh-cn/ASN.1">ASN.1</a>格式表达。</p>
+<h3 id="加密">加密</h3>
+<p>密文是一个整数m属于乘法群<span
+class="math inline">\(\mathbb{Z^*_{N}}\)</span>，即<span
+class="math inline">\(m \in \mathbb{Z^*_{N}}\)</span></p>
+<p>计算密文ciphertext简称c，需要用到公钥pk=&lt;N,e&gt;</p>
 <blockquote>
-<p>$c \equiv m*e \pmod{N}$</p>
+<p><span class="math inline">\(c \equiv m*e \pmod{N}\)</span></p>
 </blockquote>
-<p>Alice的公钥是 (3233, 17)，Bob的m假设是65，那么可以算出下面的等式：</p>
+<p>Alice的公钥是 (3233,
+17)，Bob的m假设是65，那么可以算出下面的等式：</p>
 <blockquote>
 <p>65^17 ≡ 2790 (mod 3233)</p>
 </blockquote>
 <p>于是，c等于2790，Bob就把2790发给了Alice。</p>
-<h4 id="参数生成的效率"><a href="#参数生成的效率" class="headerlink" title="参数生成的效率"></a>参数生成的效率</h4><p>RSA密钥对的生成方法是随机选取两个$\cfrac{n}{2}$位素数并将其相乘得到N。然后，对于给定的加密$ e &lt; \varphi(N)$，使用扩展欧氏算法计算$d \equiv e^{-1} \pmod{N}$。</p>
-<p>由于素数集非常密集，因此可以快速生成一个随机的$\cfrac{n}{2}$位素数，方法是选取随机的$\cfrac{n}{2}$位整数并用<strong>概率素数检验(如Fermat素性检验法)</strong>来检验每个整数的素数。</p>
+<h4 id="参数生成的效率">参数生成的效率</h4>
+<p>RSA密钥对的生成方法是随机选取两个<span
+class="math inline">\(\cfrac{n}{2}\)</span>位素数并将其相乘得到N。然后，对于给定的加密$
+e &lt; (N)<span class="math inline">\(，使用扩展欧氏算法计算\)</span>d
+e^{-1} $。</p>
+<p>由于素数集非常密集，因此可以快速生成一个随机的<span
+class="math inline">\(\cfrac{n}{2}\)</span>位素数，方法是选取随机的<span
+class="math inline">\(\cfrac{n}{2}\)</span>位整数并用<strong>概率素数检验(如Fermat素性检验法)</strong>来检验每个整数的素数。</p>
 <p>总体来说，生成素数还是比较快的，openssl生成一个1024位的素数在毫秒级即可实现。</p>
-<h3 id="解密"><a href="#解密" class="headerlink" title="解密"></a>解密</h3><p>Alice拿到Bob发来的2790以后，就用自己的私钥(3233, 2753) 进行解密。可以证明，下面的等式一定成立：</p>
+<h3 id="解密">解密</h3>
+<p>Alice拿到Bob发来的2790以后，就用自己的私钥(3233, 2753)
+进行解密。可以证明，下面的等式一定成立：</p>
 <blockquote>
-<p>$m \equiv c^d \pmod{N}$</p>
+<p><span class="math inline">\(m \equiv c^d \pmod{N}\)</span></p>
 </blockquote>
-<p>也就是说，c的d次方除以N的余数为m。现在，c等于2790，私钥是(3233, 2753)，那么，Alice算出</p>
+<p>也就是说，c的d次方除以N的余数为m。现在，c等于2790，私钥是(3233,
+2753)，那么，Alice算出</p>
 <blockquote>
 <p>2790^2753 ≡ 65 (mod 3233)</p>
 </blockquote>
 <p>因此，Alice知道了Bob加密前的原文就是65。</p>
-<h3 id="解密正确性的证明"><a href="#解密正确性的证明" class="headerlink" title="解密正确性的证明"></a>解密正确性的证明</h3><p>这里需要使用<a href="https://zhuanlan.zhihu.com/p/35060143">Euler定理</a>,即</p>
+<h3 id="解密正确性的证明">解密正确性的证明</h3>
+<p>这里需要使用<a
+href="https://zhuanlan.zhihu.com/p/35060143">Euler定理</a>,即</p>
 <blockquote>
-<p>如果正整数 n 和整数 a 互质，那么就有<br>$a^{\varphi(n)}≡1\pmod{n})$<br>其中<strong>欧拉函数</strong> φ(n) 是「小于 n 的正整数中和 n 互质的数」的个数</p>
+<p>如果正整数 n 和整数 a 互质，那么就有 <span
+class="math inline">\(a^{\varphi(n)}≡1\pmod{n})\)</span>
+其中<strong>欧拉函数</strong> φ(n) 是「小于 n 的正整数中和 n
+互质的数」的个数</p>
 </blockquote>
 <p>下面进入正式的证明过程</p>
 <blockquote>
-<script type="math/tex; mode=display">
+<p><span class="math display">\[
 c^d \equiv (m^e)^d \equiv m^{ed} \\
 \because e*d \equiv 1 \pmod{\varphi(N)} \\
 \therefore e*d=k*\varphi(N)+1 \; where \; k \in \mathbf{Z} \\
-\therefore m^{ed} \equiv m^{k*\varphi(N)+1} \equiv m^{k*\varphi(N)} *m \pmod{N} \\
-with\;the \; help \; of \; Euler \;theorem:m^{\varphi(N)} \equiv1 \pmod{N}\\
-so: \; m^{ed} \equiv m^{k*\varphi(N)+1} \equiv m^{k*\varphi(N)} *m \equiv  1*m\equiv m \pmod{N}</script></blockquote>
-<h3 id="安全性分析"><a href="#安全性分析" class="headerlink" title="安全性分析"></a>安全性分析</h3><h4 id="数学难题-大整数的素数分解"><a href="#数学难题-大整数的素数分解" class="headerlink" title="数学难题-大整数的素数分解"></a>数学难题-大整数的素数分解</h4><p>我们可以看到，如果不知道d，就没有办法从c求出m。而前面已经说过，要知道d就必须分解N，这是极难做到的，因为至今为止大整数的素数分解依然是一个难题，所以RSA算法保证了通信安全</p>
-<h4 id="语义安全-semantic-security"><a href="#语义安全-semantic-security" class="headerlink" title="语义安全-semantic security"></a>语义安全-semantic security</h4><p>RSA不是一个语义安全的加密算法，所谓语义安全，我们不能从密文中获得任何关于明文的信息，比如一段话的第一个字母，一段话中某个数字出现的次数等等。</p>
+\therefore m^{ed} \equiv m^{k*\varphi(N)+1} \equiv m^{k*\varphi(N)} *m
+\pmod{N} \\
+with\;the \; help \; of \; Euler \;theorem:m^{\varphi(N)} \equiv1
+\pmod{N}\\
+so: \; m^{ed} \equiv m^{k*\varphi(N)+1} \equiv m^{k*\varphi(N)} *m
+\equiv  1*m\equiv m \pmod{N}
+\]</span></p>
+</blockquote>
+<h3 id="安全性分析">安全性分析</h3>
+<h4 id="数学难题-大整数的素数分解">数学难题-大整数的素数分解</h4>
+<p>我们可以看到，如果不知道d，就没有办法从c求出m。而前面已经说过，要知道d就必须分解N，这是极难做到的，因为至今为止大整数的素数分解依然是一个难题，所以RSA算法保证了通信安全</p>
+<h4 id="语义安全-semantic-security">语义安全-semantic security</h4>
+<p>RSA不是一个语义安全的加密算法，所谓语义安全，我们不能从密文中获得任何关于明文的信息，比如一段话的第一个字母，一段话中某个数字出现的次数等等。</p>
 <p>拿RSA举例，我们可以很简单的获得m在N上的雅各比符号</p>
-<h2 id="基本攻击"><a href="#基本攻击" class="headerlink" title="基本攻击"></a>基本攻击</h2><p>我们首先描述一些老的基本攻击，这些攻击说明了RSA的公然滥用情况。虽然存在许多这样的攻击，但我们仅举两个例子。</p>
-<h3 id="Common-modulus-共模"><a href="#Common-modulus-共模" class="headerlink" title="Common modulus-共模"></a>Common modulus-共模</h3><p>为了避免为每个用户生成不同的模数$N=p*q$，人们可能希望一劳永逸地固定使用一个$N$，所有用户都使用相同的$N$。可信的中央机构可以向用户提供唯一的一对参数$<e_i,d_i>$，用户从其中生成公钥$<N,e_i>$和私钥$<N,d_i>$。</p>
-<p>乍一看，这似乎行得通：为Alice准备的密文$c = m^{e_a} \pmod{N}$无法由Bob解密，因为Bob不知道$d_a$。但是，这是不正确的，由此产生的系统是不安全的。事实上，Bob可以使用他自己的指数$<e_b,d_b>$来分解模数$N$。一旦被分解，Bob就可以从她的公钥中计算出Alice的私钥。Simmons的这一观察结果表明，RSA模不应被一个以上的实体使用。</p>
-<h3 id="Blinding-盲化"><a href="#Blinding-盲化" class="headerlink" title="Blinding-盲化"></a>Blinding-盲化</h3><p>设$<N,d>$是Bob的私钥，而$<N,e>$是相应的公钥。假设攻击者Marvin想要Bob的签名$m^d_{Bob} \pmod{N} \in \mathbb{Z^{\ast}_N}$。当然Bob不傻，他拒绝签署。但是Marvin可以尝试以下方法：他随机选择一个$r \in \mathbb{Z^{\ast}_N}$并设$m’ = r^e*m_{Bob}$。然后他让Bob在随机消息$m’$上签名。Bob可能愿意在看上去没什么问题的上签名，但是回想一下$S’=(m’)^d \mod{N}$，Marvin现在简单地计算$S = S’/r$就得到Bob在初始上的签名$S$。</p>
-<p>事实上：</p>
-<script type="math/tex; mode=display">
-S^e = (S')^e/(r^e)=(M')^{ed}/r^e \equiv M'/r^e = M \pmod{N}</script><p>这种称为盲化的技术使Marvin能够在他选择的消息上获得有效的签名，方法是让Bob在随机的”盲化”消息上签名。Bob不知道他实际在签名的是什么消息。由于大多数签名方案在签名之前对消息应用”单向散列”算法，因此此种攻击倒不是一个严重的问题。尽管我们将盲化描述为一种攻击，但它实际上是实现匿名数字现金所需的一个有用属性(可以用来购买商品的现金，但不会透露购买者的身份）</p>
-<h2 id="Low-Private-Exponent-低解密指数攻击"><a href="#Low-Private-Exponent-低解密指数攻击" class="headerlink" title="Low Private Exponent-低解密指数攻击"></a>Low Private Exponent-低解密指数攻击</h2><h3 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h3><p>解密使用参数d，如果d非常小，那么可以用此方法进行解密。</p>
-<p><strong>Theorem 2 (M. Wiener)</strong> 令 $N = pq$ ，这里 $q &lt; p &lt; 2q$ . 如果$ d &lt; 1/3  N^{1/4}$ 。 给定私钥对$<N,e>$ ，这里$e*d = 1 \mod{\varphi(N)}$ , Marvin 可以快速的复原参数 $d$.</p>
+<h2 id="基本攻击">基本攻击</h2>
+<p>我们首先描述一些老的基本攻击，这些攻击说明了RSA的公然滥用情况。虽然存在许多这样的攻击，但我们仅举两个例子。</p>
+<h3 id="common-modulus-共模">Common modulus-共模</h3>
+<p>为了避免为每个用户生成不同的模数<span
+class="math inline">\(N=p*q\)</span>，人们可能希望一劳永逸地固定使用一个<span
+class="math inline">\(N\)</span>，所有用户都使用相同的<span
+class="math inline">\(N\)</span>。可信的中央机构可以向用户提供唯一的一对参数<span
+class="math inline">\(&lt;e_i,d_i&gt;\)</span>，用户从其中生成公钥<span
+class="math inline">\(&lt;N,e_i&gt;\)</span>和私钥<span
+class="math inline">\(&lt;N,d_i&gt;\)</span>。</p>
+<p>乍一看，这似乎行得通：为Alice准备的密文<span class="math inline">\(c
+= m^{e_a} \pmod{N}\)</span>无法由Bob解密，因为Bob不知道<span
+class="math inline">\(d_a\)</span>。但是，这是不正确的，由此产生的系统是不安全的。事实上，Bob可以使用他自己的指数<span
+class="math inline">\(&lt;e_b,d_b&gt;\)</span>来分解模数<span
+class="math inline">\(N\)</span>。一旦被分解，Bob就可以从她的公钥中计算出Alice的私钥。Simmons的这一观察结果表明，RSA模不应被一个以上的实体使用。</p>
+<h3 id="blinding-盲化">Blinding-盲化</h3>
+<p>设<span
+class="math inline">\(&lt;N,d&gt;\)</span>是Bob的私钥，而<span
+class="math inline">\(&lt;N,e&gt;\)</span>是相应的公钥。假设攻击者Marvin想要Bob的签名<span
+class="math inline">\(m^d_{Bob} \pmod{N} \in
+\mathbb{Z^{\ast}_N}\)</span>。当然Bob不傻，他拒绝签署。但是Marvin可以尝试以下方法：他随机选择一个<span
+class="math inline">\(r \in \mathbb{Z^{\ast}_N}\)</span>并设<span
+class="math inline">\(m&#39; =
+r^e*m_{Bob}\)</span>。然后他让Bob在随机消息<span
+class="math inline">\(m&#39;\)</span>上签名。Bob可能愿意在看上去没什么问题的上签名，但是回想一下<span
+class="math inline">\(S&#39;=(m&#39;)^d
+\mod{N}\)</span>，Marvin现在简单地计算<span class="math inline">\(S =
+S&#39;/r\)</span>就得到Bob在初始上的签名<span
+class="math inline">\(S\)</span>。</p>
+<p>事实上： <span class="math display">\[
+S^e = (S&#39;)^e/(r^e)=(M&#39;)^{ed}/r^e \equiv M&#39;/r^e = M \pmod{N}
+\]</span>
+这种称为盲化的技术使Marvin能够在他选择的消息上获得有效的签名，方法是让Bob在随机的"盲化"消息上签名。Bob不知道他实际在签名的是什么消息。由于大多数签名方案在签名之前对消息应用"单向散列"算法，因此此种攻击倒不是一个严重的问题。尽管我们将盲化描述为一种攻击，但它实际上是实现匿名数字现金所需的一个有用属性(可以用来购买商品的现金，但不会透露购买者的身份）</p>
+<h2 id="low-private-exponent-低解密指数攻击">Low Private
+Exponent-低解密指数攻击</h2>
+<h3 id="理论">理论</h3>
+<p>解密使用参数d，如果d非常小，那么可以用此方法进行解密。</p>
+<p><strong>Theorem 2 (M. Wiener)</strong> 令 <span
+class="math inline">\(N = pq\)</span> ，这里 <span
+class="math inline">\(q &lt; p &lt; 2q\)</span> . 如果$ d &lt; 1/3
+N^{1/4}$ 。 给定私钥对<span class="math inline">\(&lt;N,e&gt;\)</span>
+，这里<span class="math inline">\(e*d = 1 \mod{\varphi(N)}\)</span> ,
+Marvin 可以快速的复原参数 <span class="math inline">\(d\)</span>.</p>
 <blockquote>
-<p>证明详见论文《<strong>TWENTY YEARS OF ATTACKS ON THE RSA CRYPTOSYSTEM</strong>》</p>
-<p>最后给出结论：</p>
-<script type="math/tex; mode=display">
-\left| \cfrac{e} {N} - \cfrac{k} {d} \right| \le \cfrac{1} {dN^{1/4} } < \cfrac{1}  {2d^2} \\
-这里k满足：k\varphi(N)-ed=1</script></blockquote>
-<p>这是一个经典的逼近关系，两个分数在约束内非常逼近。首先$k\varphi(N)-ed=1$,所以$gcd(k,d)=1$，即k和d互素，分数$\cfrac{k} {d}$是一个最简分数。虽然d很小，但也只是相对于N（1024bits）比较小，实际上d也有上百比特的长度，所以$\cfrac{1} {2d^2}$是一个很小的数，由上面的不等式得到$\cfrac{e} {N}$是很接近于$\cfrac{k} {d}$的。大致的思路就是在$\cfrac{e}{N}$附近寻找一个小数，把小数按照分数的形式展开，分母就是我们想要找的参数$d$，但实际上并没有这么简单(论文中使用连分数展开)。</p>
-<p>由于通常都是1024位，因此$d$必须至少256位长才能避免这种攻击。这对于诸如”智能卡”之类的低功耗设备来说是不幸的，因为小就能节省大量能耗。 然而，并不是毫无办法。Wiener提出了许多能够实现快速解密并且不易受其攻击影响的技术</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>使用python库owiener实现</p>
+<p>证明详见论文《<strong>TWENTY YEARS OF ATTACKS ON THE RSA
+CRYPTOSYSTEM</strong>》</p>
+<p>最后给出结论： <span class="math display">\[
+\left| \cfrac{e} {N} - \cfrac{k} {d} \right| \le \cfrac{1} {dN^{1/4} }
+&lt; \cfrac{1}  {2d^2} \\
+这里k满足：k\varphi(N)-ed=1
+\]</span></p>
+</blockquote>
+<p>这是一个经典的逼近关系，两个分数在约束内非常逼近。首先<span
+class="math inline">\(k\varphi(N)-ed=1\)</span>,所以<span
+class="math inline">\(gcd(k,d)=1\)</span>，即k和d互素，分数<span
+class="math inline">\(\cfrac{k}
+{d}\)</span>是一个最简分数。虽然d很小，但也只是相对于N（1024bits）比较小，实际上d也有上百比特的长度，所以<span
+class="math inline">\(\cfrac{1}
+{2d^2}\)</span>是一个很小的数，由上面的不等式得到<span
+class="math inline">\(\cfrac{e} {N}\)</span>是很接近于<span
+class="math inline">\(\cfrac{k} {d}\)</span>的。大致的思路就是在<span
+class="math inline">\(\cfrac{e}{N}\)</span>附近寻找一个小数，把小数按照分数的形式展开，分母就是我们想要找的参数<span
+class="math inline">\(d\)</span>，但实际上并没有这么简单(论文中使用连分数展开)。</p>
+<p>由于通常都是1024位，因此<span
+class="math inline">\(d\)</span>必须至少256位长才能避免这种攻击。这对于诸如"智能卡"之类的低功耗设备来说是不幸的，因为小就能节省大量能耗。
+然而，并不是毫无办法。Wiener提出了许多能够实现快速解密并且不易受其攻击影响的技术</p>
+<h3 id="代码">代码</h3>
+<p>使用python库owiener实现</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> owiener<br>e = <span class="hljs-number">3047442173541658754667464233797118324917469250436575767227172319344577259865313428705759330024959317716760816959590728238918140105663188172228696589411452947738069773833351725455888549656717874059636289036277785342126992626060696063089487811946920569580454880169977542532087635095357205433679009382368108273</span><br><br>n = <span class="hljs-number">135568509670260054049994954417860747085442883428459182441559553532993752593294067458983143521109377661295622146963670193783017382697726454953197805014428888491744355387957923382241961401063461549210355871385000347645387907568135032087942016502668629010859519249039662555733548461551175133582871220209515648241</span><br><br>d = owiener.attack(e, n)<br><br>m=<span class="hljs-number">123123123123123123123123123123123113212312312312</span><br>c = <span class="hljs-built_in">pow</span>(m,e,n)<br>m_decrypted = <span class="hljs-built_in">pow</span>(c,d,n)<br><span class="hljs-built_in">print</span>(m_decrypted)<br></code></pre></td></tr></table></figure>
 <p>计算得到d的值为</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">22299128035876669298809061693021648003426573977341841609779417036458441464337</span><br></code></pre></td></tr></table></figure>
 <p>计算d的位数大概是<strong>254位</strong>,符合上面的分析，运算时间也是很快，用python基本秒出答案。</p>
-<h2 id="Low-Private-Exponent-低加密指数攻击"><a href="#Low-Private-Exponent-低加密指数攻击" class="headerlink" title="Low Private Exponent-低加密指数攻击"></a>Low Private Exponent-低加密指数攻击</h2><p>为了减少加密或签名验证时间，习惯上使用一个小的公共指数。 e 的最小可能值为3，但为了击败某些攻击，建议使用$e = 2^{16} + 1 = 65537$。当使用65537时，签名验证需要 17 次乘法，而使用随机 $e &lt; \varphi(N)$ 时大约需要 1000 次乘法。所以对使用小e的攻击连绵不绝。</p>
-<h3 id="Coppersmith理论"><a href="#Coppersmith理论" class="headerlink" title="Coppersmith理论"></a>Coppersmith理论</h3><p>对低公共指数 RSA 最有效的攻击是基于 Coppersmith的一个定理。 Coppersmith 定理有很多应用，这里只介绍其中的一部分。想要破解RSA，实际上可以看成一个解决函数零点的问题：</p>
-<script type="math/tex; mode=display">
-x^e \equiv c \pmod{N}</script><p>解出这个函数，就是我们想要做的事情，后面关于多项式环的论述也都是基于这个思想。</p>
-<h4 id="前置定理"><a href="#前置定理" class="headerlink" title="前置定理"></a>前置定理</h4><p>首先介绍一个理论：</p>
-<p><strong>Theorem 3 (Coppersmith)</strong>  Let N be an integer and $f \in \mathbb{Z}[x]$ be a monic polynomial of degree d. Set $X = N ^{\frac{1} {d}- \epsilon } $ for some  $\epsilon \ge 0$. Then, given $ &lt; N , f &gt; $  Marvin can effciently find all integers  $\left| x_0 \right| &lt; X $  satisfying $f (x_0 ) = 0 \mod{N} $. The running time is dominated by the time it takes to run the LLL algorithm on a lattice of dimension O (w ) with $w = min(\frac{1} {\epsilon},log_2N )$.</p>
-<font color="red">该定理提供了一种算法，可以有效地找方程$f(x) \equiv 0 \pmod{N}$ 的所有小于 $X = N^{\frac{1}{d}} $的根</font>
-
+<h2 id="low-private-exponent-低加密指数攻击">Low Private
+Exponent-低加密指数攻击</h2>
+<p>为了减少加密或签名验证时间，习惯上使用一个小的公共指数。 e
+的最小可能值为3，但为了击败某些攻击，建议使用<span
+class="math inline">\(e = 2^{16} + 1 =
+65537\)</span>。当使用65537时，签名验证需要 17 次乘法，而使用随机 <span
+class="math inline">\(e &lt; \varphi(N)\)</span> 时大约需要 1000
+次乘法。所以对使用小e的攻击连绵不绝。</p>
+<h3 id="coppersmith理论">Coppersmith理论</h3>
+<p>对低公共指数 RSA 最有效的攻击是基于 Coppersmith的一个定理。
+Coppersmith
+定理有很多应用，这里只介绍其中的一部分。想要破解RSA，实际上可以看成一个解决函数零点的问题：
+<span class="math display">\[
+x^e \equiv c \pmod{N}
+\]</span>
+解出这个函数，就是我们想要做的事情，后面关于多项式环的论述也都是基于这个思想。</p>
+<h4 id="前置定理">前置定理</h4>
+<p>首先介绍一个理论：</p>
+<p><strong>Theorem 3 (Coppersmith)</strong> Let N be an integer and
+<span class="math inline">\(f \in \mathbb{Z}[x]\)</span> be a monic
+polynomial of degree d. Set $X = N ^{ {d}- } $ for some <span
+class="math inline">\(\epsilon \ge 0\)</span>. Then, given $ &lt; N , f
+&gt; $ Marvin can effciently find all integers $| x_0 | &lt; X $
+satisfying $f (x_0 ) = 0 $. The running time is dominated by the time it
+takes to run the LLL algorithm on a lattice of dimension O (w ) with
+<span class="math inline">\(w = min(\frac{1} {\epsilon},log_2N
+)\)</span>.</p>
+<p><font color="red">该定理提供了一种算法，可以有效地找方程<span
+class="math inline">\(f(x) \equiv 0 \pmod{N}\)</span> 的所有小于 $X =
+N^{} $的根</font></p>
 <p>再给出一个引理：</p>
-<p>首先我们定义范数的概念，给出多项式$h(x)=\sum{a_ix^i} \in \mathbb{Z}$,定义范数$|h|^2 = \sum{|a_i|^2}$</p>
-<p><strong><em>Lemma 4</em></strong> <em>Let $h(x) \in \mathbb{Z}$ be a polynomial of degree d and let X be a positive integer. Suppose $|h(xX )| &lt; \cfrac{N}{d^{1/2}} $ . If $|x_0| &lt; X$ satisfies $h(x_0) = 0 \mod{N}$ , then $h(x_0) = 0$ holds over the integers.</em></p>
-<p>这个引理告诉我们：<font color="red">如果满足前置条件，$f(x) \equiv 0 \pmod{N}$的根，也是$f(x)=0$在整数域上的根</font>，但实际上函数$f(x)$一般都没有这么小的范数能满足前置条件。我们可以构造一个函数$h(x)=g(x)*f(x)$，这个函数$h(x)$应该有比较小的范数来满足前置条件。这相当于一个问题，找到$f(x),xf(x),x^2f(x),\dots,x^rf(x)$的一个线性组合，这个线性组合就是函数$h(x)$，且有较低的范数。</p>
-<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>前面我们介绍过，想要找到函数$h(x)$，实际上就是找一个线性组合，Dan Boneh在论文中叙述了一个基于格中LLL算法的解决方案。大家可以细看论文(作者关于格的理论已经忘得差不多了)，以后咱再补充。</p>
-<h3 id="Hastad广播攻击"><a href="#Hastad广播攻击" class="headerlink" title="Hastad广播攻击"></a>Hastad广播攻击</h3><p>所谓广播，就是一个人把消息发给很多人，这里我们假设假设 Bob 希望将加密消息 M 发送给多个参与方 $P_1, P_2, \dots ,P_K $。每一方都有自己的 RSA 密钥 $pk=<N_i,e_i>$ 。我们假设 M 小于所有的$N_i$ ，即$M&lt;min(N_1,N2, \dots , N_K)$。为了发送 M，天真的Bob 使用每个公钥对其进行加密，并将第 i 个密文发送给 第i个参与方$P_i$。攻击者 Marvin 可以在 Bob 视线之外窃听连接并收集 k 个被传输的密文。</p>
+<p>首先我们定义范数的概念，给出多项式<span
+class="math inline">\(h(x)=\sum{a_ix^i} \in
+\mathbb{Z}\)</span>,定义范数<span class="math inline">\(\|h\|^2 =
+\sum{|a_i|^2}\)</span></p>
+<p><strong><em>Lemma 4</em></strong> <em>Let <span
+class="math inline">\(h(x) \in \mathbb{Z}\)</span> be a polynomial of
+degree d and let X be a positive integer. Suppose $|h(xX )| &lt; $ . If
+<span class="math inline">\(|x_0| &lt; X\)</span> satisfies <span
+class="math inline">\(h(x_0) = 0 \mod{N}\)</span> , then <span
+class="math inline">\(h(x_0) = 0\)</span> holds over the
+integers.</em></p>
+<p>这个引理告诉我们：<font color="red">如果满足前置条件，<span
+class="math inline">\(f(x) \equiv 0 \pmod{N}\)</span>的根，也是<span
+class="math inline">\(f(x)=0\)</span>在整数域上的根</font>，但实际上函数<span
+class="math inline">\(f(x)\)</span>一般都没有这么小的范数能满足前置条件。我们可以构造一个函数<span
+class="math inline">\(h(x)=g(x)*f(x)\)</span>，这个函数<span
+class="math inline">\(h(x)\)</span>应该有比较小的范数来满足前置条件。这相当于一个问题，找到<span
+class="math inline">\(f(x),xf(x),x^2f(x),\dots,x^rf(x)\)</span>的一个线性组合，这个线性组合就是函数<span
+class="math inline">\(h(x)\)</span>，且有较低的范数。</p>
+<h4 id="解决方案">解决方案</h4>
+<p>前面我们介绍过，想要找到函数<span
+class="math inline">\(h(x)\)</span>，实际上就是找一个线性组合，Dan
+Boneh在论文中叙述了一个基于格中LLL算法的解决方案。大家可以细看论文(作者关于格的理论已经忘得差不多了)，以后咱再补充。</p>
+<h3 id="hastad广播攻击">Hastad广播攻击</h3>
+<p>所谓广播，就是一个人把消息发给很多人，这里我们假设假设 Bob
+希望将加密消息 M 发送给多个参与方 $P_1, P_2, ,P_K $。每一方都有自己的
+RSA 密钥 <span class="math inline">\(pk=&lt;N_i,e_i&gt;\)</span>
+。我们假设 M 小于所有的<span class="math inline">\(N_i\)</span>
+，即<span class="math inline">\(M&lt;min(N_1,N2, \dots ,
+N_K)\)</span>。为了发送 M，天真的Bob 使用每个公钥对其进行加密，并将第 i
+个密文发送给 第i个参与方<span class="math inline">\(P_i\)</span>。攻击者
+Marvin 可以在 Bob 视线之外窃听连接并收集 k 个被传输的密文。</p>
 <p>为了便于大家理解，我们举一个例子来说明：</p>
-<p>我们假定所有公共指数$e_i=3$，如果参与方的个数$K \ge 3$那么marvin可以破解出明文M，事实上破解只需解下面一个方程即可：</p>
-<script type="math/tex; mode=display">
+<p>我们假定所有公共指数<span
+class="math inline">\(e_i=3\)</span>，如果参与方的个数<span
+class="math inline">\(K \ge
+3\)</span>那么marvin可以破解出明文M，事实上破解只需解下面一个方程即可：
+<span class="math display">\[
 \begin{equation}
     \begin{cases}
     C_1 \equiv M^3 \mod{N_1}\\
     C_2 \equiv M^3 \mod{N_2}\\
     C_3 \equiv M^3 \mod{N_3}
     \end{cases}
-\end{equation}</script><p>这里假定$gcd(N_i,N_j)=1$，即任意两个N之间互素，否则我们可以用$N_i/N_j$很简单的求出他们的公因子，从而复原出$p和q$，这个假定是有意义的。对于上面的方程，我们使用中国剩余定理(CRT)解出结果即为明文。</p>
+\end{equation}
+\]</span> 这里假定<span
+class="math inline">\(gcd(N_i,N_j)=1\)</span>，即任意两个N之间互素，否则我们可以用<span
+class="math inline">\(N_i/N_j\)</span>很简单的求出他们的公因子，从而复原出<span
+class="math inline">\(p和q\)</span>，这个假定是有意义的。对于上面的方程，我们使用中国剩余定理(CRT)解出结果即为明文。</p>
 
                 
               </div>
@@ -887,5 +1039,21 @@ x^e \equiv c \pmod{N}</script><p>解出这个函数，就是我们想要做的�
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>
