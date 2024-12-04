@@ -23,12 +23,13 @@
 const ap = new APlayer({
     container: document.getElementById('aplayer'),
     fixed: true,
-	  autoplay: true, //自动播放
+	autoplay: true, //自动播放
+    volume: 0.5,
     audio: [
         {
-            name: "where we're going",
+            name: "where we\'re going",
             artist: 'elijah woods',
-            url: '//music.163.com/outchain/player?type=2&id=2064620976',
+            url: 'http://music.163.com/song/media/outer/url?id=2064620976.mp3',
             cover: 'https://p1.music.126.net/i29ug6vPubo0OyOovEs2Aw==/109951168744612304.jpg?param=90y90',	
     },
 	]
