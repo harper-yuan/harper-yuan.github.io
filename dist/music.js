@@ -8,7 +8,7 @@ const ap = new APlayer({
 	{
         name: "where we're going",
         artist: 'elijah woods',
-        url: 'https://m804.music.126.net/20241204022425/3e25279427f6af7e1f8e9f686e38da8f/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/29405971135/b0ee/ccc4/f397/b102c6b41dc18bfa72eeb1f6793adfde.mp3?authSecret=000001938dad4df311c40a3b1db04865',
+        url: 'http://lzxyh.online:8002/pd/lzx/xu/obj_wo3DlMOGwrbDjj7DisKw_29405971135_b0ee_ccc4_f397_b102c6b41dc18bfa72eeb1f6793adfde.mp3?signature=3331843bcbdfff00dc17ba441b2263dbec27b77b6c13a35ff3d46a715ffdbc4e805dd30a3765ba45d4fdb781bda644008f074b9ba7b5490008d711846400a37ac79d7704311d2091321c04d07f4110857d56287f481a66792b48b0bbbf664b9998f274718db772ad6742c606c3d9f93a',
         cover: 'https://p1.music.126.net/i29ug6vPubo0OyOovEs2Aw==/109951168744612304.jpg?param=90y90',	
     },
 	]
